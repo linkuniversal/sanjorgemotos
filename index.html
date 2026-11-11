@@ -11,69 +11,62 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#ffffff" id="metaThemeColor" />
 
-  <!-- Tipografías de Precisión Motorsport: Syne + Barlow Condensed + Space Grotesk -->
+  <!-- Tipografías Motorsport de Alta Gama: Syne + Barlow Condensed + Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       VARIABLES MAESTRAS DE COLOR PANTONE / ADOBE MOTORSPORT & PROPORCIÓN ÁUREA
+       VARIABLES MAESTRAS PANTONE / ADOBE MOTORSPORT & PROPORCIÓN ÁUREA
        ========================================================================== */
     :root {
-      /* Colores Base Oficiales Calibrados (Adobe / Pantone System) */
-      --sj-blue: #094F91;         /* Pantone 294 C - Azul Corporativo Profundo */
-      --sj-blue-subtle: #0f365d;
-      --sj-blue-tint: rgba(9, 79, 145, 0.05);
-      --sj-blue-glow: rgba(9, 79, 145, 0.16);
+      --sj-blue: #094F91;         /* Pantone 294 C - Azul San Jorge */
+      --sj-blue-deep: #063461;
+      --sj-blue-tint: rgba(9, 79, 145, 0.06);
 
-      --honda-red: #BF1717;       /* Pantone 186 C - Rojo Honda Motorsport Puro */
+      --honda-red: #BF1717;       /* Pantone 186 C - Rojo Honda Heritage */
       --honda-red-soft: #A31212;
-      --honda-red-tint: rgba(191, 23, 23, 0.06);
 
       --pure-white: #ffffff;
       
-      /* Modo Claro: Acabados en Titanio Blanco y Grafito Suave */
       --bg-chassis: #F7F9FC;
       --surface-card: #FFFFFF;
       --surface-elevated: #F1F4F9;
-      --border-subtle: rgba(9, 79, 145, 0.10);
-      --border-active: rgba(9, 79, 145, 0.32);
+      --border-subtle: rgba(9, 79, 145, 0.12);
+      --border-active: rgba(9, 79, 145, 0.35);
       
       --text-headline: #0C121D;
       --text-body: #3E4B5B;
       --text-dim: #738294;
       
-      --f1-blue-pattern-opacity: 0.045;
-      --shadow-f1: 0 12px 32px -4px rgba(9, 79, 145, 0.07), 0 4px 12px rgba(0, 0, 0, 0.02);
+      --hermes-pattern-opacity: 0.10;
+      --shadow-f1: 0 12px 32px -4px rgba(9, 79, 145, 0.08), 0 4px 12px rgba(0, 0, 0, 0.02);
 
-      /* Chaflanes aerodinámicos F1 (Sin bordes redondeados infantiles) */
       --chamfer-xs: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
       --chamfer-sm: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
       --chamfer-md: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
-      --chamfer-pill: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
 
-      --font-display: 'Barlow Condensed', -apple-system, sans-serif;
+      --font-display: 'Barlow Condensed', sans-serif;
       --font-title: 'Syne', sans-serif;
       --font-telemetry: 'Space Grotesk', monospace, sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg-chassis: #080A0E;
+      --bg-chassis: #07090D;
       --surface-card: #0F131C;
       --surface-elevated: #161B26;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(9, 79, 145, 0.55);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-active: rgba(9, 79, 145, 0.6);
 
       --text-headline: #F2F5FA;
       --text-body: #99A8BC;
       --text-dim: #5E6E82;
 
-      --f1-blue-pattern-opacity: 0.09;
-      --shadow-f1: 0 16px 40px rgba(0, 0, 0, 0.45);
+      --hermes-pattern-opacity: 0.15;
+      --shadow-f1: 0 16px 40px rgba(0, 0, 0, 0.5);
     }
 
-    /* Reset Funcional */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -93,27 +86,23 @@
     }
 
     /* ==========================================================================
-       FONDO MONOCROMÁTICO TOTAL: PATRÓN DE CIRCUITOS F1 & GRILLA AZUL TÉCNICA
+       FONDO PATTERN TIPO HERMÈS MONOGRAM AGGIORNADO A MOTOCICLISMO
+       (Eslabones de transmisión de alta precisión entrelazados geométricamente en azul)
        ========================================================================== */
-    .f1-monochrome-track-bg {
+    .hermes-moto-pattern-bg {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: var(--f1-blue-pattern-opacity);
-      /* Patrón vectorial infinito de circuitos, curvas y grilla milimétrica en azul único */
-      background-image: 
-        radial-gradient(var(--sj-blue) 0.85px, transparent 0.85px),
-        url("data:image/svg+xml,%3Csvg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 40h70c25 0 40 15 40 40v30c0 25 15 40 40 40h50' fill='none' stroke='%23094F91' stroke-width='1.2' stroke-dasharray='4 8'/%3E%3Cpath d='M0 160h60c30 0 50 20 50 50v30' fill='none' stroke='%23094F91' stroke-width='1.5'/%3E%3Ccircle cx='130' cy='110' r='18' fill='none' stroke='%23094F91' stroke-width='1' stroke-dasharray='2 4'/%3E%3Cpath d='M180 20l25 25m0-25l-25 25' stroke='%23094F91' stroke-width='0.8'/%3E%3Cpath d='M30 200l20 20' stroke='%23094F91' stroke-width='1'/%3E%3C/svg%3E");
-      background-size: 28px 28px, 240px 240px;
-      background-position: 0 0, 0 0;
+      opacity: var(--hermes-pattern-opacity);
+      background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23094F91' stroke-width='1.4'%3E%3Cpath d='M16 22 h40 a7 7 0 0 1 7 7 a7 7 0 0 1 -7 7 h-40 a7 7 0 0 1 -7 -7 a7 7 0 0 1 7 -7 z'/%3E%3Ccircle cx='18' cy='29' r='3.2' stroke-width='1.1'/%3E%3Ccircle cx='54' cy='29' r='3.2' stroke-width='1.1'/%3E%3Cpath d='M-20 58 h40 a7 7 0 0 1 7 7 a7 7 0 0 1 -7 7 h-40 a7 7 0 0 1 -7 -7 a7 7 0 0 1 7 -7 z'/%3E%3Ccircle cx='-18' cy='65' r='3.2' stroke-width='1.1'/%3E%3Ccircle cx='18' cy='65' r='3.2' stroke-width='1.1'/%3E%3Cpath d='M52 58 h40 a7 7 0 0 1 7 7 a7 7 0 0 1 -7 7 h-40 a7 7 0 0 1 -7 -7 a7 7 0 0 1 7 -7 z'/%3E%3Ccircle cx='54' cy='65' r='3.2' stroke-width='1.1'/%3E%3Ccircle cx='90' cy='65' r='3.2' stroke-width='1.1'/%3E%3Cpath d='M36 0 v14 M36 43 v15' stroke-dasharray='3 3' stroke-width='0.9' opacity='0.7'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 54px 54px;
       background-repeat: repeat;
       will-change: transform;
     }
 
-    /* Contenedor Ergonómico Centrado en Proporción Áurea */
     .app-chassis {
       position: relative;
       z-index: 1;
@@ -126,9 +115,7 @@
       flex-direction: column;
     }
 
-    /* ==========================================================================
-       BARRA DE TELEMETRÍA SUPERIOR (HORARIOS EN TIEMPO REAL & CONTROLES F1)
-       ========================================================================== */
+    /* TELEMETRÍA SUPERIOR */
     .telemetry-header {
       display: flex;
       align-items: center;
@@ -138,7 +125,7 @@
       border: 1px solid var(--border-subtle);
       clip-path: var(--chamfer-xs);
       box-shadow: var(--shadow-f1);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .telemetry-status {
@@ -204,67 +191,60 @@
       color: var(--sj-blue);
     }
 
-    /* ==========================================================================
-       HERO LOGO LIBRE: SIN RECUADRO, CON MÁXIMA JERARQUÍA & FIRMA HONDA
-       ========================================================================== */
+    /* HERO: LOGOS CON JERARQUÍA PURA (SIN RECUADROS) */
     .hero-stage {
-      padding: 10px 4px 18px;
+      padding: 6px 0 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      position: relative;
     }
 
     .hero-logo-wrapper {
       width: 100%;
-      max-width: 320px;
+      max-width: 325px;
       margin: 0 auto;
       display: block;
-      /* Eliminado todo recuadro y sombra vulgar */
     }
-
     .hero-logo-wrapper svg {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    /* Firma Honda: Refinada, editorial, sin caja */
-    .honda-signature {
+    /* FIRMA EDITORIAL BY HONDA (LOGO COMPLETO ALA + LETRAS) */
+    .honda-editorial-signature {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 12px;
       margin-top: 14px;
-      padding: 4px 0;
+      padding: 6px 0;
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    .honda-signature-label {
+    .by-pretitle {
       font-family: var(--font-display);
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 800;
       letter-spacing: 0.24em;
       color: var(--text-dim);
       text-transform: uppercase;
     }
 
-    .honda-wing-vector {
-      width: 36px;
-      height: 16px;
+    .honda-complete-vector {
+      width: 96px;
+      height: 30px;
       display: flex;
       align-items: center;
     }
-    .honda-wing-vector svg {
+    .honda-complete-vector svg {
       width: 100%;
       height: 100%;
       fill: var(--honda-red);
     }
 
-    /* ==========================================================================
-       MARQUESINA INFINITA CONTINUA (F1 SPEED TICKER STREAM)
-       ========================================================================== */
+    /* MARQUESINA CONTINUA INFINITA */
     .marquee-container {
       width: 100%;
       overflow: hidden;
@@ -273,7 +253,6 @@
       border-bottom: 1px solid var(--border-subtle);
       padding: 8px 0;
       margin: 14px 0 18px;
-      position: relative;
       white-space: nowrap;
       user-select: none;
     }
@@ -312,9 +291,7 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* ==========================================================================
-       PROMO NOVIEMBRE: TARJETA DE ALTA GAMA HONDA CB 300F TWISTER
-       ========================================================================== */
+    /* PROMO NOVIEMBRE CB 300F TWISTER */
     .card-promo-telemetry {
       position: relative;
       background: var(--surface-card);
@@ -405,9 +382,7 @@
       transform: scale(1.06);
     }
 
-    /* ==========================================================================
-       BLOQUES DUO-MODULARES DE COLOR (COLOR BLOCKING ARMONIZADO PANTONE)
-       ========================================================================== */
+    /* COLOR BLOCKING PANTONE */
     .f1-blocks-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -432,13 +407,11 @@
       transform: translateY(-2px);
     }
 
-    /* Tile Azul Pantone Calibrado */
     .tile-blue-pantone {
       background: linear-gradient(145deg, #094F91 0%, #073B6C 100%);
       color: #ffffff;
       box-shadow: 0 10px 24px -2px rgba(9, 79, 145, 0.22);
     }
-    /* Tile Rojo Honda Calibrado */
     .tile-red-pantone {
       background: linear-gradient(145deg, #BF1717 0%, #941010 100%);
       color: #ffffff;
@@ -485,469 +458,15 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-
-    /* ==========================================================================
-       BOTONERA TÁCTICA DE ACCIONES TÉCNICAS (CONVERSION ENGINE)
-       ========================================================================== */
-    .tactical-list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-bottom: 16px;
-    }
-
-    .tactical-cell {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-sm);
-      text-decoration: none;
-      color: var(--text-headline);
-      box-shadow: var(--shadow-f1);
-      cursor: pointer;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background-color 0.2s;
-    }
-    .tactical-cell::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--sj-blue);
-      transition: width 0.2s;
-    }
-    .tactical-cell.accent-red::before {
-      background: var(--honda-red);
-    }
-    .tactical-cell:hover {
-      transform: translateX(3px);
-      border-color: var(--border-active);
-      background: var(--surface-elevated);
-    }
-    .tactical-cell:hover::before {
-      width: 5px;
-    }
-
-    .cell-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .cell-icon-wrap {
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-xs);
-      color: var(--sj-blue);
-      flex-shrink: 0;
-      transition: background-color 0.2s, color 0.2s;
-    }
-    .tactical-cell.accent-red .cell-icon-wrap {
-      color: var(--honda-red);
-    }
-    .tactical-cell:hover .cell-icon-wrap {
-      background: var(--sj-blue);
-      color: #fff;
-    }
-    .tactical-cell.accent-red:hover .cell-icon-wrap {
-      background: var(--honda-red);
-      color: #fff;
-    }
-
-    .cell-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cell-category {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .cell-label {
-      font-family: var(--font-title);
-      font-size: 0.90rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text-headline);
-      line-height: 1.2;
-    }
-
-    .cell-arrow {
-      color: var(--text-dim);
-      transition: transform 0.2s, color 0.2s;
-    }
-    .tactical-cell:hover .cell-arrow {
-      color: var(--sj-blue);
-      transform: translate(2px, -2px);
-    }
-    .tactical-cell.accent-red:hover .cell-arrow {
-      color: var(--honda-red);
-    }
-
-    /* ==========================================================================
-       SHOWROOM INTERACTIVO F1: CÁPSULA TÉCNICA DE MODELOS
-       ========================================================================== */
-    .showroom-chassis {
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-md);
-      padding: 16px;
-      box-shadow: var(--shadow-f1);
-      margin-bottom: 16px;
-    }
-
-    .showroom-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-    }
-
-    .showroom-title {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-headline);
-    }
-
-    .showroom-subhead {
-      font-size: 0.68rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: var(--sj-blue);
-      text-transform: uppercase;
-    }
-    [data-theme="dark"] .showroom-subhead {
-      color: #4da3ff;
-    }
-
-    .model-nav-pills {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      scrollbar-width: none;
-    }
-    .model-nav-pills::-webkit-scrollbar {
-      display: none;
-    }
-
-    .model-nav-btn {
-      flex: 0 0 auto;
-      padding: 6px 12px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-body);
-      font-family: var(--font-telemetry);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      clip-path: var(--chamfer-xs);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .model-nav-btn.active, .model-nav-btn:hover {
-      background: var(--sj-blue);
-      border-color: var(--sj-blue);
-      color: #ffffff;
-    }
-
-    .model-viewport {
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-sm);
-      padding: 14px;
-      margin-top: 4px;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .viewport-media-frame {
-      width: 100%;
-      height: 168px;
-      clip-path: var(--chamfer-xs);
-      overflow: hidden;
-      margin-bottom: 12px;
-      background: #000000;
-      position: relative;
-      border: 1px solid var(--border-subtle);
-    }
-    .viewport-media-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.3s;
-    }
-
-    .viewport-headline {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .model-tag-name {
-      font-family: var(--font-title);
-      font-size: 1.18rem;
-      font-weight: 900;
-      color: var(--text-headline);
-      text-transform: uppercase;
-    }
-
-    .model-status-chip {
-      font-size: 0.64rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      padding: 3px 8px;
-      background: rgba(0, 186, 74, 0.12);
-      border: 1px solid rgba(0, 186, 74, 0.35);
-      color: #00993d;
-      clip-path: var(--chamfer-xs);
-      text-transform: uppercase;
-    }
-    [data-theme="dark"] .model-status-chip {
-      color: #00df59;
-    }
-
-    .telemetry-specs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin: 10px 0 12px;
-    }
-
-    .spec-telemetry-box {
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
-      border-left: 2px solid var(--sj-blue);
-      padding: 6px 8px;
-    }
-
-    .spec-legend {
-      font-size: 0.58rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .spec-metric {
-      font-family: var(--font-display);
-      font-size: 0.94rem;
-      font-weight: 800;
-      color: var(--text-headline);
-    }
-
-    .btn-consult-model {
-      width: 100%;
-      padding: 12px;
-      background: var(--honda-red);
-      color: #ffffff;
-      border: none;
-      clip-path: var(--chamfer-xs);
-      font-family: var(--font-title);
-      font-size: 0.82rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      transition: background-color 0.2s, transform 0.2s;
-    }
-    .btn-consult-model:hover {
-      background: var(--honda-red-soft);
-      transform: translateY(-1px);
-    }
-
-    /* ==========================================================================
-       UBICACIÓN TÉCNICA Y ASISTENCIA (JANGADERO 35 - PUERTO IGUAZÚ)
-       ========================================================================== */
-    .location-terminal {
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-md);
-      padding: 16px;
-      box-shadow: var(--shadow-f1);
-      margin-bottom: 20px;
-    }
-
-    .location-terminal-head {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--text-headline);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .terminal-coords {
-      font-weight: 700;
-      color: var(--sj-blue);
-      font-size: 0.84rem;
-      margin-bottom: 4px;
-    }
-    [data-theme="dark"] .terminal-coords {
-      color: #4da3ff;
-    }
-
-    .terminal-brief {
-      font-size: 0.78rem;
-      color: var(--text-body);
-      line-height: 1.45;
-      margin-bottom: 12px;
-    }
-
-    .direct-lines-deck {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .line-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-subtle);
-      padding: 7px 12px;
-      clip-path: var(--chamfer-xs);
-      color: var(--text-headline);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-    .line-chip:hover {
-      border-color: #25D366;
-      color: #25D366;
-      transform: translateY(-1px);
-    }
-
-    /* Footer F1 */
-    .footer-chassis {
-      text-align: center;
-      padding: 12px 0 6px;
-      border-top: 1px solid var(--border-subtle);
-    }
-    .footer-stamp {
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      line-height: 1.5;
-    }
-
-    /* Modal Fast Contact */
-    .f1-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 10, 14, 0.75);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    .f1-modal-overlay.open {
-      display: flex;
-    }
-
-    .f1-modal-window {
-      background: var(--surface-card);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-md);
-      padding: 22px 18px;
-      width: 100%;
-      max-width: 400px;
-      position: relative;
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-close-trigger {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-
-    .modal-title-text {
-      font-family: var(--font-title);
-      font-size: 1.1rem;
-      font-weight: 900;
-      color: var(--text-headline);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .modal-explainer {
-      font-size: 0.76rem;
-      color: var(--text-dim);
-      margin-bottom: 16px;
-    }
-
-    .modal-action-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 13px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-subtle);
-      clip-path: var(--chamfer-xs);
-      text-decoration: none;
-      color: var(--text-headline);
-      font-family: var(--font-title);
-      font-size: 0.84rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-    }
-    .modal-action-link:hover {
-      background: #25D366;
-      border-color: #25D366;
-      color: #ffffff;
-    }
   </style>
 </head>
 <body>
-  <!-- FONDO TÉCNICO MONOCROMÁTICO CONTINUO (CIRCUITOS F1 & GRILLA AZUL) -->
-  <div class="f1-monochrome-track-bg" aria-hidden="true"></div>
+  <!-- PATTERN HERMÈS MOTORSPORT CONTINUO -->
+  <div class="hermes-moto-pattern-bg" aria-hidden="true"></div>
 
   <main class="app-chassis">
 
-    <!-- TELEMETRÍA SUPERIOR: STATUS HORARIO PUERTO IGUAZÚ & CONTROLES -->
+    <!-- TELEMETRÍA SUPERIOR -->
     <header class="telemetry-header">
       <div class="telemetry-status">
         <span class="telemetry-beacon" id="statusBeacon"></span>
@@ -955,7 +474,7 @@
       </div>
 
       <div class="telemetry-actions">
-        <button class="btn-f1-control audio-feedback" id="audioToggleBtn" title="Activar/Silenciar Audio Mecánico" aria-label="Audio">
+        <button class="btn-f1-control audio-feedback" id="audioToggleBtn" title="Activar/Silenciar Audio" aria-label="Audio">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -970,7 +489,7 @@
       </div>
     </header>
 
-    <!-- HERO SECTION: LOGO OFICIAL CON MÁXIMA JERARQUÍA (SIN RECUADROS NI SOMBRAS) -->
+    <!-- HERO SECTION: LOGOS VECTORIALES PUROS (SIN RECUADRO) -->
     <section class="hero-stage">
       <div class="hero-logo-wrapper">
         <svg id="SanJorgeLogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1768.8 591.03" role="img" aria-label="San Jorge Motos">
@@ -1017,10 +536,10 @@
         </svg>
       </div>
 
-      <!-- FIRMA EDITORIAL BY HONDA: ELEGANTE, MINIMALISTA Y SIN RECUADRO -->
-      <div class="honda-signature">
-        <span class="honda-signature-label">By</span>
-        <div class="honda-wing-vector" aria-label="Honda Wing">
+      <!-- FIRMA HONDA EDITORIAL COMPLETA (ALA + LETRAS H-O-N-D-A INTACTAS) -->
+      <div class="honda-editorial-signature">
+        <span class="by-pretitle">By</span>
+        <div class="honda-complete-vector" aria-label="Logo Oficial Honda">
           <svg viewBox="-1181 -632 2000 1605" xmlns="http://www.w3.org/2000/svg">
             <path d="M-860.666,696.668c0,0-12.333-40.002-34-61.668S-1083.334,446.334-1108,421.667s-73-72.665-73-142.666
               c0-70,59-120,130.333-148.667S180.667-369,266.667-405s209.667-91.333,265.667-118S747-624.75,752.25-627.583
@@ -1036,16 +555,39 @@
             <path d="M275,267.5c-1.817,0.413-1151.667,215.833-1151.667,215.833l99.667,92.166l531.835-66.999
               c0,0-10-3.666-10-14s9.833-14.167,15.5-15.167s273.667-40.335,305.167-45.002s83.333-15.5,127-61.5s86.668-97,88.334-99
               s1.915-3.248,1.915-4.248S281.5,266.5,279,266.5C278.334,266.5,276.833,267.084,275,267.5z"/>
+            <polygon points="-753.333,597 -646.666,697 57.334,697 -206,533 "/>
+            <path d="M-789.78,773c3-0.333,28.333-4,28.333-4v-29.667h-179.886V769c0,0,25.333,3.667,28.333,4
+              s16.333,3.333,16.333,18.333v37.669h-138.78v-37.669c0-15,13.333-18,16.333-18.333s28.333-4,28.333-4v-29.667h-179.886V769
+              c0,0,25.333,3.667,28.333,4s16.333,3.333,16.333,18.333v121.256c0,15-13.333,18-16.333,18.333s-28.333,3.15-28.333,3.15v29.667
+              h179.886v-29.667c0,0-25.333-2.817-28.333-3.15s-16.333-3.333-16.333-18.333v-37.92h138.78v37.92c0,15-13.333,18-16.333,18.333
+              s-28.333,3.15-28.333,3.15v29.667h179.886v-29.667c0,0-25.333-2.817-28.333-3.15s-16.333-3.333-16.333-18.333V791.333
+              C-806.113,776.333-792.78,773.333-789.78,773z"/>
+            <path d="M-568.333,732.002c-116,0-183.667,42.098-183.667,120.123s67.667,120.123,183.667,120.123
+              s183.667-42.098,183.667-120.123S-452.333,732.002-568.333,732.002z M-568.333,930.796c-22.667,0-79.667,0.662-79.667-78.671
+              s57-78.671,79.667-78.671s79.667-0.662,79.667,78.671S-545.666,930.796-568.333,930.796z"/>
+            <path d="M-121.833,769.5v-30.501h144.5v30c0,0-25.167,2.501-30.042,3.126S-23,777.625-23,791.375S-23,955.25-23,964
+              c0,0-106.333,0-111.667,0s-13.083-1.5-17.583-7S-274.5,797.5-274.5,797.5c0,13.75,0,108.25,0,117s8.625,14.625,15,15.5
+              s30.5,3.917,30.5,3.917V964v-30.083V964l-144.667,0.001v-30c0,0,25.167-2.501,30.042-3.126s15.625-5.5,15.625-19.25
+              s0-114.125,0-122.875s-8.625-14.625-15-15.5s-30.5-3.5-30.5-3.5V739c0,0,151.833,0,157.167,0s13.083,1.5,17.583,7
+              S-76.5,905.5-76.5,905.5c0-13.75,0-108.25,0-117s-8.625-14.625-15-15.5S-121.833,769.5-121.833,769.5V739"/>
+            <path d="M270.669,739c-43.595,0-232.835,0-232.835,0v30.75c0,0,24.125,2.625,30.5,3.5s15,6.75,15,15.5
+              s0,109.125,0,122.875s-10.75,18.625-15.625,19.25s-30.042,3.126-30.042,3.126v30L270.669,964c75.419,0,139.081-35,139.081-113.5
+              S338,739,270.669,739z M248,921.334h-77.333v-139c0,0,49,0,77.667,0s57.333,9.666,57.333,68.333S283,921.334,248,921.334z"/>
+            <path d="M787,930.625c-11.625-1.25-17.625-12.375-19.125-14.625S661.625,753.875,657.5,747.875
+              s-12.375-8.5-16.625-8.5s-173.875,0-173.875,0v30.5c0,0,36.875,3.625,41.5,4.125s9.375,9,9.375,11.875s-1.625,5.625-2.625,7.375
+              s-74.875,122.375-78.75,128.375s-10.375,8.75-15.125,9.125S392,933.335,392,933.335v30.666h143.333v-29.666l-28.999-3.668
+              c-6.5-1.167-8.333-8.5-8.333-10.333s1-4.667,2.833-7.5c0.414-0.64,4.604-7.412,10.835-17.499h138.349
+              c6.656,10.087,11.121,16.859,11.535,17.499c1.833,2.833,2.833,5.667,2.833,7.5s-1.833,9.166-8.333,10.333L623,933.335v30.666
+              h194.333v-29.666C817.333,934.335,798.625,931.875,787,930.625z M535.946,856.001C556.524,822.646,578.5,787,578.5,787
+              s23.537,35.646,45.557,69.001H535.946z"/>
           </svg>
         </div>
-        <span class="honda-signature-label">HONDA</span>
       </div>
     </section>
 
-    <!-- BANNER CORREDIZO INFINITO F1 (MARQUESINA FLUIDA CONTINUA) -->
+    <!-- MARQUESINA INFINITA CONTINUA (F1 TICKER STREAM) -->
     <div class="marquee-container" aria-label="Información Oficial">
       <div class="marquee-track">
-        <!-- Bloque A -->
         <div class="marquee-segment">
           <span>AGENTE OFICIAL HONDA</span>
           <span class="marquee-divider">//</span>
@@ -1058,7 +600,6 @@
           <span>ENTREGA INMEDIATA 0KM</span>
           <span class="marquee-divider">//</span>
         </div>
-        <!-- Bloque B (Duplicado idéntico para continuidad infinita seamless) -->
         <div class="marquee-segment" aria-hidden="true">
           <span>AGENTE OFICIAL HONDA</span>
           <span class="marquee-divider">//</span>
@@ -1091,9 +632,8 @@
       </div>
     </a>
 
-    <!-- COLOR BLOCKING MODULAR PANTONE MOTORSPORT -->
+    <!-- COLOR BLOCKING MODULAR PANTONE -->
     <div class="f1-blocks-grid">
-      <!-- Tarjeta Azul Pantone: Financiación con DNI -->
       <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20consultar%20por%20la%20financiacion%20solo%20con%20DNI." target="_blank" rel="noopener noreferrer" class="f1-tile tile-blue-pantone audio-feedback">
         <div class="tile-geo-accent"></div>
         <div class="tile-meta">CRÉDITOS EN EL ACTO</div>
@@ -1104,7 +644,6 @@
         </div>
       </a>
 
-      <!-- Tarjeta Roja Honda Heritage: Asesor WhatsApp Directo -->
       <a href="javascript:void(0)" onclick="openContactModal('Ventas WhatsApp')" class="f1-tile tile-red-pantone audio-feedback">
         <div class="tile-geo-accent"></div>
         <div class="tile-meta">ATENCIÓN COMERCIAL</div>
@@ -1115,8 +654,459 @@
         </div>
       </a>
     </div>
+<style>
+      /* ==========================================================================
+         COMPLEMENTO CSS: BOTONERA TÁCTICA, SHOWROOM, TERMINAL & MODAL
+         ========================================================================== */
+      .tactical-list {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        margin-bottom: 16px;
+      }
 
-    <!-- BOTONERA TÁCTICA DE ACCIONES TÉCNICAS (CONVERSION ENGINE) -->
+      .tactical-cell {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 14px;
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-sm);
+        text-decoration: none;
+        color: var(--text-headline);
+        box-shadow: var(--shadow-f1);
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background-color 0.2s;
+      }
+      .tactical-cell::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--sj-blue);
+        transition: width 0.2s;
+      }
+      .tactical-cell.accent-red::before {
+        background: var(--honda-red);
+      }
+      .tactical-cell:hover {
+        transform: translateX(3px);
+        border-color: var(--border-active);
+        background: var(--surface-elevated);
+      }
+      .tactical-cell:hover::before {
+        width: 5px;
+      }
+
+      .cell-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .cell-icon-wrap {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-xs);
+        color: var(--sj-blue);
+        flex-shrink: 0;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      .tactical-cell.accent-red .cell-icon-wrap {
+        color: var(--honda-red);
+      }
+      .tactical-cell:hover .cell-icon-wrap {
+        background: var(--sj-blue);
+        color: #ffffff;
+      }
+      .tactical-cell.accent-red:hover .cell-icon-wrap {
+        background: var(--honda-red);
+        color: #ffffff;
+      }
+
+      .cell-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cell-category {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .cell-label {
+        font-family: var(--font-title);
+        font-size: 0.90rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-headline);
+        line-height: 1.2;
+      }
+
+      .cell-arrow {
+        color: var(--text-dim);
+        transition: transform 0.2s, color 0.2s;
+      }
+      .tactical-cell:hover .cell-arrow {
+        color: var(--sj-blue);
+        transform: translate(2px, -2px);
+      }
+      .tactical-cell.accent-red:hover .cell-arrow {
+        color: var(--honda-red);
+      }
+
+      /* SHOWROOM CHASSIS */
+      .showroom-chassis {
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-md);
+        padding: 16px;
+        box-shadow: var(--shadow-f1);
+        margin-bottom: 16px;
+      }
+
+      .showroom-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+      }
+
+      .showroom-title {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-headline);
+      }
+
+      .showroom-subhead {
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: var(--sj-blue);
+        text-transform: uppercase;
+      }
+      [data-theme="dark"] .showroom-subhead {
+        color: #4da3ff;
+      }
+
+      .model-nav-pills {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scrollbar-width: none;
+      }
+      .model-nav-pills::-webkit-scrollbar {
+        display: none;
+      }
+
+      .model-nav-btn {
+        flex: 0 0 auto;
+        padding: 6px 12px;
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        color: var(--text-body);
+        font-family: var(--font-telemetry);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        clip-path: var(--chamfer-xs);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .model-nav-btn.active, .model-nav-btn:hover {
+        background: var(--sj-blue);
+        border-color: var(--sj-blue);
+        color: #ffffff;
+      }
+
+      .model-viewport {
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-sm);
+        padding: 14px;
+        margin-top: 4px;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .viewport-media-frame {
+        width: 100%;
+        height: 168px;
+        clip-path: var(--chamfer-xs);
+        overflow: hidden;
+        margin-bottom: 12px;
+        background: #000000;
+        position: relative;
+        border: 1px solid var(--border-subtle);
+      }
+      .viewport-media-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s;
+      }
+
+      .viewport-headline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .model-tag-name {
+        font-family: var(--font-title);
+        font-size: 1.18rem;
+        font-weight: 900;
+        color: var(--text-headline);
+        text-transform: uppercase;
+      }
+
+      .model-status-chip {
+        font-size: 0.64rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        padding: 3px 8px;
+        background: rgba(0, 186, 74, 0.12);
+        border: 1px solid rgba(0, 186, 74, 0.35);
+        color: #00993d;
+        clip-path: var(--chamfer-xs);
+        text-transform: uppercase;
+      }
+      [data-theme="dark"] .model-status-chip {
+        color: #00df59;
+      }
+
+      .telemetry-specs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin: 10px 0 12px;
+      }
+
+      .spec-telemetry-box {
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        border-left: 2px solid var(--sj-blue);
+        padding: 6px 8px;
+      }
+
+      .spec-legend {
+        font-size: 0.58rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .spec-metric {
+        font-family: var(--font-display);
+        font-size: 0.94rem;
+        font-weight: 800;
+        color: var(--text-headline);
+      }
+
+      .btn-consult-model {
+        width: 100%;
+        padding: 12px;
+        background: var(--honda-red);
+        color: #ffffff;
+        border: none;
+        clip-path: var(--chamfer-xs);
+        font-family: var(--font-title);
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: background-color 0.2s, transform 0.2s;
+      }
+      .btn-consult-model:hover {
+        background: var(--honda-red-soft);
+        transform: translateY(-1px);
+      }
+
+      /* TERMINAL DE UBICACIÓN */
+      .location-terminal {
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-md);
+        padding: 16px;
+        box-shadow: var(--shadow-f1);
+        margin-bottom: 20px;
+      }
+
+      .location-terminal-head {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--text-headline);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+
+      .terminal-coords {
+        font-weight: 700;
+        color: var(--sj-blue);
+        font-size: 0.84rem;
+        margin-bottom: 4px;
+      }
+      [data-theme="dark"] .terminal-coords {
+        color: #4da3ff;
+      }
+
+      .terminal-brief {
+        font-size: 0.78rem;
+        color: var(--text-body);
+        line-height: 1.45;
+        margin-bottom: 12px;
+      }
+
+      .direct-lines-deck {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .line-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.74rem;
+        font-weight: 700;
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        padding: 7px 12px;
+        clip-path: var(--chamfer-xs);
+        color: var(--text-headline);
+        text-decoration: none;
+        transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      }
+      .line-chip:hover {
+        border-color: #25D366;
+        color: #25D366;
+        transform: translateY(-1px);
+      }
+
+      /* FOOTER */
+      .footer-chassis {
+        text-align: center;
+        padding: 12px 0 6px;
+        border-top: 1px solid var(--border-subtle);
+      }
+      .footer-stamp {
+        font-family: var(--font-display);
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        line-height: 1.5;
+      }
+
+      /* MODAL */
+      .f1-modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 10, 14, 0.75);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      .f1-modal-overlay.open {
+        display: flex;
+      }
+
+      .f1-modal-window {
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-md);
+        padding: 22px 18px;
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close-trigger {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: transparent;
+        border: none;
+        color: var(--text-dim);
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
+
+      .modal-title-text {
+        font-family: var(--font-title);
+        font-size: 1.1rem;
+        font-weight: 900;
+        color: var(--text-headline);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .modal-explainer {
+        font-size: 0.76rem;
+        color: var(--text-dim);
+        margin-bottom: 16px;
+      }
+
+      .modal-action-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 13px;
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-subtle);
+        clip-path: var(--chamfer-xs);
+        text-decoration: none;
+        color: var(--text-headline);
+        font-family: var(--font-title);
+        font-size: 0.84rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+      }
+      .modal-action-link:hover {
+        background: #25D366;
+        border-color: #25D366;
+        color: #ffffff;
+      }
+    </style>
+
+    <!-- BOTONERA TÁCTICA DE ACCIONES TÉCNICAS -->
     <div class="tactical-list">
       
       <!-- Honda Plan de Ahorro -->
@@ -1147,7 +1137,7 @@
         <svg class="cell-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </a>
 
-      <!-- Indumentaria y Cascos -->
+      <!-- Cascos y Equipamiento -->
       <a href="https://wa.me/5493757679972?text=Hola!%20Quiero%20ver%20el%20catalogo%20de%20cascos%20y%20accesorios%20disponibles%20en%20el%20local." target="_blank" rel="noopener noreferrer" class="tactical-cell audio-feedback">
         <div class="cell-left">
           <div class="cell-icon-wrap">
@@ -1161,7 +1151,7 @@
         <svg class="cell-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
       </a>
 
-      <!-- Instagram Oficial Iguazú -->
+      <!-- Instagram Oficial -->
       <a href="https://www.instagram.com/sanjorgemotosiguazu" target="_blank" rel="noopener noreferrer" class="tactical-cell audio-feedback">
         <div class="cell-left">
           <div class="cell-icon-wrap">
@@ -1177,7 +1167,7 @@
 
     </div>
 
-    <!-- SHOWROOM INTERACTIVO TÉCNICO DE MODELOS DISPONIBLES -->
+    <!-- SHOWROOM INTERACTIVO TÉCNICO -->
     <section class="showroom-chassis">
       <div class="showroom-header">
         <h3 class="showroom-title">LINE-UP OFICIAL</h3>
@@ -1228,7 +1218,7 @@
       </div>
     </section>
 
-    <!-- TERMINAL DE UBICACIÓN & DATOS DE SALÓN PUERTO IGUAZÚ -->
+    <!-- TERMINAL DE UBICACIÓN & CONTACTO -->
     <section class="location-terminal">
       <div class="location-terminal-head">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--honda-red)" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1248,7 +1238,7 @@
       </div>
     </section>
 
-    <!-- FOOTER TÉCNICO F1 -->
+    <!-- FOOTER TÉCNICO -->
     <footer class="footer-chassis">
       <p class="footer-stamp">
         SAN JORGE MOTOS • AGENTE OFICIAL HONDA EN PUERTO IGUAZÚ, MISIONES
@@ -1257,7 +1247,7 @@
 
   </main>
 
-  <!-- MODAL DE ACCESO RÁPIDO WHATSAPP -->
+  <!-- MODAL DE CONTACTO RÁPIDO WHATSAPP -->
   <div class="f1-modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTopicTitle">
     <div class="f1-modal-window">
       <button class="modal-close-trigger" onclick="closeContactModal()" aria-label="Cerrar">&times;</button>
@@ -1280,16 +1270,14 @@
       </a>
     </div>
   </div>
-<!-- ==========================================================================
-       SCRIPTS: TELEMETRÍA HORARIA PUERTO IGUAZÚ, AUDIO HÁPTICO F1 & SHOWROOM
+
+  <!-- ==========================================================================
+       SCRIPTS: AUDIO HÁPTICO F1, TELEMETRÍA IGUAZÚ GMT-3 & SHOWROOM DINÁMICO
        ========================================================================== -->
   <script>
-    /* --------------------------------------------------------------------------
-       1. SÍNTESIS DE AUDIO TÁCTIL MECÁNICO (Web Audio API de Alta Precisión)
-       Efecto estilo selector rotativo de volante de Fórmula 1 / Paddle Shift
-       -------------------------------------------------------------------------- */
+    /* 1. SÍNTESIS DE AUDIO TÁCTIL (PADDLE SHIFT MOTORSPORT) */
     let audioContextInstance = null;
-    let isSoundMuted = true; // Silencioso por defecto para no invadir al usuario
+    let isSoundMuted = true;
 
     function getAudioCtx() {
       if (!audioContextInstance) {
@@ -1309,7 +1297,6 @@
         const osc = ctx.createOscillator();
         const gainNode = ctx.createGain();
 
-        // Tono seco, técnico y amortiguado (tipo relé motorsport)
         osc.type = 'sine';
         osc.frequency.setValueAtTime(820, ctx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.035);
@@ -1343,9 +1330,7 @@
       });
     });
 
-    /* --------------------------------------------------------------------------
-       2. MODO CLARO / OSCURO (Almacenamiento Local & Sincronización Meta)
-       -------------------------------------------------------------------------- */
+    /* 2. MODO CLARO / OSCURO */
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const htmlNode = document.documentElement;
     const metaThemeColorNode = document.getElementById('metaThemeColor');
@@ -1355,7 +1340,7 @@
       localStorage.setItem('sj_f1_theme', theme);
 
       if (theme === 'dark') {
-        metaThemeColorNode.setAttribute('content', '#080A0E');
+        metaThemeColorNode.setAttribute('content', '#07090D');
         themeToggleBtn.innerHTML = `
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"></circle>
@@ -1385,19 +1370,13 @@
       setChassisTheme(activeTheme === 'light' ? 'dark' : 'light');
     });
 
-    /* --------------------------------------------------------------------------
-       3. TELEMETRÍA DE HORARIOS OFICIALES (PUERTO IGUAZÚ - GMT-3)
-       Lunes a Viernes: 08:00 a 12:00 y 15:00 a 19:30
-       Sábados: 08:00 a 12:00
-       Domingos: Local Cerrado (Atención WhatsApp 24hs)
-       -------------------------------------------------------------------------- */
+    /* 3. TELEMETRÍA DE HORARIOS (PUERTO IGUAZÚ - GMT-3) */
     function evaluateBusinessHoursTelemetry() {
       const dateNow = new Date();
-      // Cálculo preciso de hora local Argentina (GMT-3)
       const utcTime = dateNow.getTime() + (dateNow.getTimezoneOffset() * 60000);
       const iguazuLocal = new Date(utcTime - (3600000 * 3));
 
-      const dayOfWeek = iguazuLocal.getDay(); // 0 dom, 6 sab
+      const dayOfWeek = iguazuLocal.getDay();
       const decimalHour = iguazuLocal.getHours() + (iguazuLocal.getMinutes() / 60);
 
       const beacon = document.getElementById('statusBeacon');
@@ -1407,7 +1386,6 @@
       let nextTarget = '';
 
       if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-        // Lunes a Viernes
         if (decimalHour >= 8.0 && decimalHour < 12.0) {
           isOpen = true;
           nextTarget = '12:00';
@@ -1416,7 +1394,6 @@
           nextTarget = '19:30';
         }
       } else if (dayOfWeek === 6) {
-        // Sábado
         if (decimalHour >= 8.0 && decimalHour < 12.0) {
           isOpen = true;
           nextTarget = '12:00';
@@ -1434,9 +1411,7 @@
     evaluateBusinessHoursTelemetry();
     setInterval(evaluateBusinessHoursTelemetry, 30000);
 
-    /* --------------------------------------------------------------------------
-       4. SHOWROOM CONTROLLER: CAMBIO DINÁMICO DE MODELOS Y TELEMETRÍA
-       -------------------------------------------------------------------------- */
+    /* 4. SHOWROOM CONTROLLER */
     const f1Catalog = [
       {
         name: "HONDA BIZ 110",
@@ -1462,7 +1437,7 @@
         name: "HONDA NAVI 110",
         desc: "Automática, urbana y con estilo 100% personalizable",
         badge: "STOCK DISPONIBLE",
-        img: "biz110.webp", // Fallback seguro
+        img: "biz110.webp",
         engine: "109.2 cc",
         trans: "Automática V-Matic",
         brakes: "CBS Combinado",
@@ -1472,7 +1447,7 @@
         name: "XR 300L TORNADO",
         desc: "La leyenda del On-Off renovada con inyección y seguridad",
         badge: "NUEVA GENERACIÓN",
-        img: "cb300.jpg", // Fallback seguro
+        img: "cb300.jpg",
         engine: "293.5 cc PGM-FI",
         trans: "6 Velocidades",
         brakes: "ABS Delantero",
@@ -1506,9 +1481,7 @@
       }, 110);
     }
 
-    /* --------------------------------------------------------------------------
-       5. MODAL FAST CONTACT: CONTROL DE VENTANA
-       -------------------------------------------------------------------------- */
+    /* 5. MODAL DE ASESOR DIRECTO */
     function openContactModal(titleText) {
       if (titleText) {
         document.getElementById('modalTopicTitle').innerText = titleText;
