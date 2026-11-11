@@ -6,65 +6,60 @@
   <title>San Jorge Motos Iguazú | Agente Oficial Honda</title>
   <meta name="description" content="Agente Oficial Honda Motos en Puerto Iguazú. Venta 0KM, repuestos originales, service oficial y financiación solo con tu DNI." />
   
-  <!-- Open Graph / Meta -->
   <meta property="og:title" content="San Jorge Motos Iguazú | Agente Oficial Honda" />
-  <meta property="og:description" content="Subite a tu próxima Honda en Puerto Iguazú. Financiación solo con DNI, promociones del mes y atención por WhatsApp." />
+  <meta property="og:description" content="Tu Honda 0KM en Puerto Iguazú, Misiones. Consultá promociones, stock y financiación con DNI." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#ffffff" id="metaThemeColor" />
 
-  <!-- Tipografías: Space Grotesk + Syne + Barlow Condensed -->
+  <!-- Tipografías Motorsport: Space Grotesk + Syne + Barlow Condensed -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       VARIABLES DE DISEÑO: MODO CLARO (DEFAULT) & MODO OSCURO
+       VARIABLES Y SISTEMA DE COLOR (MODO CLARO POR DEFECTO + MODO OSCURO)
        ========================================================================== */
     :root {
       --sj-blue: #0571d9;
-      --sj-blue-hover: #035bb0;
+      --sj-blue-hover: #0356a6;
       --sj-red: #f60505;
       --honda-red: #e40521;
       --pure-white: #ffffff;
 
       /* MODO CLARO (Default) */
-      --bg-main: #f5f6fa;
+      --bg-main: #f4f6fa;
       --bg-card: #ffffff;
-      --bg-card-subtle: #f0f2f7;
+      --bg-card-subtle: #f0f3f8;
       --border-color: rgba(0, 0, 0, 0.08);
       --border-color-active: rgba(5, 113, 217, 0.35);
-      --text-title: #0a0d14;
-      --text-body: #4a5568;
+      --text-title: #090c12;
+      --text-body: #424e60;
       --text-muted: #718096;
-      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-      --shadow-colored: 0 14px 28px -6px rgba(5, 113, 217, 0.18);
-      --circuit-opacity: 0.07;
-      --circuit-stroke: #0a1128;
+      --shadow-soft: 0 10px 25px -4px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+      --f1-kerb-opacity: 0.12;
 
-      /* Chamfers mecánicos inspirados en McLaren / F1 */
+      /* Chaflanes mecánicos estilo McLaren / F1 */
       --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
       --chamfer-md: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
-      --chamfer-lg: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+      --chamfer-lg: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px);
       
       --font-display: 'Barlow Condensed', sans-serif;
       --font-heading: 'Syne', sans-serif;
-      --font-body: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Space Grotesk', -apple-system, sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg-main: #08090d;
-      --bg-card: #10131a;
-      --bg-card-subtle: #171b24;
+      --bg-main: #07090d;
+      --bg-card: #10141c;
+      --bg-card-subtle: #171c26;
       --border-color: rgba(255, 255, 255, 0.08);
       --border-color-active: rgba(5, 113, 217, 0.45);
       --text-title: #ffffff;
       --text-body: #a0aec0;
       --text-muted: #718096;
       --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
-      --shadow-colored: 0 14px 30px rgba(5, 113, 217, 0.25);
-      --circuit-opacity: 0.12;
-      --circuit-stroke: #ffffff;
+      --f1-kerb-opacity: 0.22;
     }
 
     *, *::before, *::after {
@@ -85,7 +80,37 @@
       touch-action: pan-y;
     }
 
-    /* Fondo de circuito F1 de deriva lenta */
+    /* Rayas de pista F1 infinitas en los laterales (Piano / Kerb simétrico) */
+    .f1-side-kerb {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 14px;
+      z-index: 0;
+      pointer-events: none;
+      opacity: var(--f1-kerb-opacity);
+      background: repeating-linear-gradient(
+        180deg,
+        var(--sj-red) 0px,
+        var(--sj-red) 30px,
+        #ffffff 30px,
+        #ffffff 60px,
+        var(--sj-blue) 60px,
+        var(--sj-blue) 90px,
+        #ffffff 90px,
+        #ffffff 120px
+      );
+      animation: kerb-scroll 18s linear infinite;
+    }
+    .f1-kerb-left { left: 0; }
+    .f1-kerb-right { right: 0; }
+
+    @keyframes kerb-scroll {
+      0% { background-position-y: 0px; }
+      100% { background-position-y: 480px; }
+    }
+
+    /* Canvas de fondo con líneas de pista suaves */
     #f1-track-canvas {
       position: fixed;
       top: 0;
@@ -94,13 +119,10 @@
       height: 100dvh;
       pointer-events: none;
       z-index: 0;
-      opacity: var(--circuit-opacity);
-      transition: opacity 0.3s ease;
+      opacity: 0.08;
     }
 
-    /* ==========================================================================
-       CONTENEDOR A PRUEBA DE INSTAGRAM (Evita que el navegador webview lo aplaste)
-       ========================================================================== */
+    /* Wrapper contenido a prueba de Instagram WebView */
     .app-wrapper {
       position: relative;
       z-index: 1;
@@ -108,21 +130,21 @@
       max-width: 480px;
       margin: 0 auto;
       min-height: 100dvh;
-      padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px));
+      padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(36px + env(safe-area-inset-bottom, 0px));
       display: flex;
       flex-direction: column;
     }
 
-    /* Barra Superior: Horarios + Modo Oscuro + Audio */
+    /* Barra Superior de Horarios y Controles */
     .top-telemetry-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
+      padding: 9px 14px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       clip-path: var(--chamfer-sm);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: var(--shadow-soft);
     }
 
@@ -130,32 +152,33 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      letter-spacing: 0.05em;
       color: var(--text-title);
+      letter-spacing: 0.03em;
     }
+
     .status-pulse {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       background: #00c853;
-      box-shadow: 0 0 10px #00c853;
+      box-shadow: 0 0 12px #00c853;
       animation: pulse-beacon 2s infinite ease-in-out;
     }
     .status-pulse.closed {
       background: var(--sj-red);
-      box-shadow: 0 0 10px var(--sj-red);
+      box-shadow: 0 0 12px var(--sj-red);
     }
     @keyframes pulse-beacon {
       0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(0.8); opacity: 0.4; }
+      50% { transform: scale(0.8); opacity: 0.45; }
     }
 
     .top-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .icon-control-btn {
@@ -177,21 +200,20 @@
     }
 
     /* ==========================================================================
-       HERO LOGO (REGLA DE ORO: SIEMPRE EN FONDO BLANCO EN AMBOS MODOS)
+       HERO LOGO: FONDO BLANCO EN AMBOS MODOS
        ========================================================================== */
     .logo-hero-capsule {
       position: relative;
-      background: var(--pure-white) !important; /* Siempre blanco impecable */
+      background: var(--pure-white) !important;
       border: 1px solid rgba(0, 0, 0, 0.08);
       clip-path: var(--chamfer-lg);
-      padding: 24px 20px 18px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
-      margin-bottom: 16px;
+      padding: 24px 18px 18px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+      margin-bottom: 14px;
       text-align: center;
       overflow: hidden;
     }
 
-    /* Franja superior deportiva (Azul San Jorge + Rojo Competición) */
     .logo-hero-capsule::before {
       content: '';
       position: absolute;
@@ -204,7 +226,7 @@
 
     .official-sj-logo {
       width: 100%;
-      max-width: 290px;
+      max-width: 320px;
       margin: 0 auto;
       display: block;
     }
@@ -212,31 +234,30 @@
       width: 100%;
       height: auto;
       display: block;
-      filter: drop-shadow(0 4px 10px rgba(5, 113, 217, 0.15));
+      filter: drop-shadow(0 3px 8px rgba(5, 113, 217, 0.12));
     }
 
-    /* By Honda Badge */
     .by-honda-container {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       margin-top: 14px;
-      padding: 6px 16px;
+      padding: 6px 18px;
       background: #f8f9fc;
       border: 1px solid rgba(0, 0, 0, 0.08);
       clip-path: var(--chamfer-sm);
     }
     .by-text {
       font-family: var(--font-display);
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       font-weight: 800;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       color: #636d7e;
       text-transform: uppercase;
     }
     .honda-wing-icon {
-      width: 52px;
+      width: 55px;
       height: 22px;
       display: flex;
       align-items: center;
@@ -248,9 +269,9 @@
     }
 
     .location-subtitle {
-      font-size: 0.76rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
       color: #718096;
       text-transform: uppercase;
       margin-top: 12px;
@@ -266,8 +287,22 @@
       background: var(--sj-blue);
     }
 
+    .google-badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #2d3748;
+      background: #edf2f7;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .google-stars { color: #f6ad55; }
+
     /* ==========================================================================
-       PROMO DESTACADA DE NOVIEMBRE (Directo de su feed: CB 300F + SMART TV)
+       PROMO NOVIEMBRE CON FOTO CB300.JPG
        ========================================================================== */
     .promo-banner-card {
       position: relative;
@@ -275,11 +310,12 @@
       color: #ffffff;
       border: 1px solid rgba(246, 5, 5, 0.4);
       clip-path: var(--chamfer-md);
-      padding: 16px;
-      margin-bottom: 16px;
-      display: flex;
+      padding: 14px;
+      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      gap: 12px;
       align-items: center;
-      justify-content: space-between;
       text-decoration: none;
       box-shadow: 0 10px 24px rgba(246, 5, 5, 0.18);
       overflow: hidden;
@@ -297,7 +333,7 @@
       background: var(--sj-red);
       color: #fff;
       font-family: var(--font-display);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 900;
       letter-spacing: 0.14em;
       padding: 3px 12px;
@@ -308,47 +344,49 @@
       margin-top: 14px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
     .promo-headline {
       font-family: var(--font-heading);
-      font-size: 1.05rem;
-      font-weight: 800;
+      font-size: 1rem;
+      font-weight: 900;
       color: #fff;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.15;
     }
     .promo-subtext {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: #cbd5e0;
     }
-    .promo-subtext strong {
-      color: #ffeb3b;
-    }
-    .promo-arrow {
-      width: 38px;
-      height: 38px;
-      flex-shrink: 0;
-      background: var(--sj-red);
+    .promo-subtext strong { color: #ffeb3b; }
+
+    .promo-photo-frame {
+      width: 100px;
+      height: 80px;
       clip-path: var(--chamfer-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      transition: transform 0.2s;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #000;
     }
-    .promo-banner-card:hover .promo-arrow {
-      transform: translate(2px, -2px);
+    .promo-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .promo-banner-card:hover .promo-photo-frame img {
+      transform: scale(1.08);
     }
 
     /* ==========================================================================
-       COLOR BLOCKING DIRECTO (Benetton / McLaren Racing Club)
+       COLOR BLOCKING TILES (Benetton / McLaren Style)
        ========================================================================== */
     .color-blocks-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .color-block-tile {
@@ -359,7 +397,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 140px;
+      min-height: 135px;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -405,7 +443,7 @@
       font-weight: 900;
       text-transform: uppercase;
       line-height: 1.15;
-      margin: 6px 0;
+      margin: 4px 0;
     }
 
     .tile-footer {
@@ -421,21 +459,15 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
-    .tile-footer svg {
-      transition: transform 0.2s;
-    }
-    .color-block-tile:hover .tile-footer svg {
-      transform: translate(2px, -2px);
-    }
 
     /* ==========================================================================
-       BOTONERA TÁCTICA DE ENLACES
+       TACTICAL ACTION STACK (BOTONERA DE CONVERSIÓN)
        ========================================================================== */
     .tactical-stack {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .tactical-btn {
@@ -443,7 +475,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 13px 15px;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       clip-path: var(--chamfer-md);
@@ -463,21 +495,15 @@
       background: var(--sj-blue);
       transition: width 0.2s;
     }
-    .tactical-btn.accent-red::before {
-      background: var(--sj-red);
-    }
-    .tactical-btn.accent-dark::before {
-      background: #718096;
-    }
+    .tactical-btn.accent-red::before { background: var(--sj-red); }
+    .tactical-btn.accent-dark::before { background: #718096; }
 
     .tactical-btn:hover {
       transform: translateX(4px);
       border-color: var(--border-color-active);
       background: var(--bg-card-subtle);
     }
-    .tactical-btn:hover::before {
-      width: 6px;
-    }
+    .tactical-btn:hover::before { width: 6px; }
 
     .tactical-btn-left {
       display: flex;
@@ -496,11 +522,8 @@
       clip-path: var(--chamfer-sm);
       color: var(--sj-blue);
       flex-shrink: 0;
-      transition: background 0.2s, color 0.2s;
     }
-    .tactical-btn.accent-red .tactical-icon {
-      color: var(--sj-red);
-    }
+    .tactical-btn.accent-red .tactical-icon { color: var(--sj-red); }
     .tactical-btn:hover .tactical-icon {
       background: var(--sj-blue);
       color: #fff;
@@ -515,15 +538,15 @@
       flex-direction: column;
     }
     .tactical-tag {
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
     }
     .tactical-label {
       font-family: var(--font-heading);
-      font-size: 0.96rem;
+      font-size: 0.94rem;
       font-weight: 800;
       text-transform: uppercase;
       color: var(--text-title);
@@ -532,18 +555,14 @@
 
     .tactical-arrow {
       color: var(--text-muted);
-      transition: transform 0.2s, color 0.2s;
+      transition: transform 0.2s;
     }
     .tactical-btn:hover .tactical-arrow {
-      color: var(--sj-blue);
       transform: translate(2px, -2px);
-    }
-    .tactical-btn.accent-red:hover .tactical-arrow {
-      color: var(--sj-red);
     }
 
     /* ==========================================================================
-       SHOWROOM INTERACTIVO DE MODELOS REALES
+       SHOWROOM INTERACTIVO DE MODELOS
        ========================================================================== */
     .showroom-deck {
       background: var(--bg-card);
@@ -551,7 +570,7 @@
       clip-path: var(--chamfer-lg);
       padding: 16px;
       box-shadow: var(--shadow-soft);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .deck-header {
@@ -560,11 +579,11 @@
       justify-content: space-between;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .deck-title {
       font-family: var(--font-display);
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 900;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -577,7 +596,6 @@
       text-transform: uppercase;
     }
 
-    /* Píldoras de modelos */
     .model-pills {
       display: flex;
       gap: 6px;
@@ -607,7 +625,6 @@
       color: #fff;
     }
 
-    /* Escenario del Modelo */
     .model-stage {
       background: var(--bg-card-subtle);
       border: 1px solid var(--border-color);
@@ -616,15 +633,34 @@
       margin-top: 6px;
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
+
+    .stage-media-wrap {
+      width: 100%;
+      height: 160px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #0c1017;
+      position: relative;
+      border: 1px solid var(--border-color);
+    }
+    .stage-media-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s;
+    }
+
     .model-stage-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .stage-model-name {
       font-family: var(--font-heading);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 900;
       color: var(--text-title);
       text-transform: uppercase;
@@ -644,23 +680,22 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
-      margin: 12px 0;
+      margin: 10px 0;
     }
     .spec-item {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-left: 2px solid var(--sj-blue);
-      padding: 6px 8px;
+      padding: 5px 8px;
     }
     .spec-key {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
     .spec-val {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: var(--text-title);
     }
@@ -691,7 +726,7 @@
     }
 
     /* ==========================================================================
-       UBICACIÓN & CONTACTO REAL EN PUERTO IGUAZÚ
+       UBICACIÓN JANGADERO 35 - PUERTO IGUAZÚ
        ========================================================================== */
     .location-box {
       background: var(--bg-card);
@@ -699,7 +734,7 @@
       clip-path: var(--chamfer-md);
       padding: 16px;
       box-shadow: var(--shadow-soft);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .location-header {
       font-family: var(--font-display);
@@ -712,8 +747,14 @@
       gap: 8px;
       margin-bottom: 6px;
     }
+    .location-address {
+      font-weight: 700;
+      color: var(--sj-blue);
+      font-size: 0.86rem;
+      margin-bottom: 4px;
+    }
     .location-text {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-body);
       line-height: 1.45;
       margin-bottom: 12px;
@@ -731,15 +772,16 @@
       font-weight: 700;
       background: var(--bg-card-subtle);
       border: 1px solid var(--border-color);
-      padding: 5px 10px;
+      padding: 6px 12px;
       clip-path: var(--chamfer-sm);
       color: var(--text-title);
       text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
+      transition: all 0.2s;
     }
     .phone-chip:hover {
       border-color: #25d366;
       color: #25d366;
+      transform: translateY(-1px);
     }
 
     /* Footer */
@@ -750,23 +792,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-    }
-    .footer-racing-stripe {
-      width: 100%;
-      height: 4px;
-      background: repeating-linear-gradient(
-        90deg,
-        var(--sj-blue) 0px,
-        var(--sj-blue) 18px,
-        transparent 18px,
-        transparent 28px,
-        var(--sj-red) 28px,
-        var(--sj-red) 46px,
-        transparent 46px,
-        transparent 56px
-      );
-      opacity: 0.7;
+      gap: 10px;
     }
     .legal-copy {
       font-size: 0.68rem;
@@ -776,7 +802,7 @@
       line-height: 1.4;
     }
 
-    /* Modal Contacto Rápido */
+    /* Modal Fast Contact */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -788,9 +814,7 @@
       justify-content: center;
       padding: 16px;
     }
-    .modal-backdrop.open {
-      display: flex;
-    }
+    .modal-backdrop.open { display: flex; }
     .modal-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -799,7 +823,7 @@
       width: 100%;
       max-width: 420px;
       position: relative;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
     .modal-close {
       position: absolute;
@@ -810,7 +834,6 @@
       color: var(--text-muted);
       font-size: 1.4rem;
       cursor: pointer;
-      line-height: 1;
     }
     .modal-title {
       font-family: var(--font-heading);
@@ -850,42 +873,42 @@
   </style>
 </head>
 <body>
+<!-- Pistas laterales F1 infinitas y armónicas (Kerbs) -->
+  <div class="f1-side-kerb f1-kerb-left"></div>
+  <div class="f1-side-kerb f1-kerb-right"></div>
 
-  <!-- Canvas con trazado de circuito F1 de deriva lenta y ultra fina -->
+  <!-- Canvas con trazado de circuito F1 de deriva suave -->
   <canvas id="f1-track-canvas"></canvas>
 
   <div class="app-wrapper">
 
-    <!-- BARRA DE TELEMETRÍA SUPERIOR -->
+    <!-- BARRA SUPERIOR: TELEMETRÍA DE HORARIO EXACTO DE GOOGLE -->
     <header class="top-telemetry-bar">
       <div class="telemetry-status">
         <span class="status-pulse" id="statusBeacon"></span>
-        <span id="storeStatusLabel">CONECTANDO SHOWROOM...</span>
+        <span id="storeStatusLabel">ABIERTO • CIERRA 19:30 HS</span>
       </div>
 
       <div class="top-controls">
-        <!-- Control de Sonido Mecánico -->
         <button class="icon-control-btn audio-click" id="audioToggleBtn" title="Activar/Desactivar Sonido">
-          <svg id="audioIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
         </button>
 
-        <!-- Selector Modo Claro / Oscuro -->
-        <button class="icon-control-btn audio-click" id="themeToggleBtn" title="Cambiar Tema">
-          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <button class="icon-control-btn audio-click" id="themeToggleBtn" title="Modo Claro / Oscuro">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
       </div>
     </header>
 
-    <!-- CÁPSULA DEL LOGO OFICIAL (Fondo blanco asegurado en ambos temas) -->
+    <!-- CÁPSULA DEL LOGO COMPLETO SAN JORGE MOTOS (FONDO BLANCO PERMANENTE) -->
     <section class="logo-hero-capsule">
-      <!-- SVG Oficial de San Jorge Motos Iguazú -->
       <div class="official-sj-logo">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1768.8 591.03" role="img" aria-label="San Jorge Motos">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1768.8 591.03" role="img" aria-label="San Jorge Motos Iguazú">
           <defs>
             <style>
               .cls-1 { fill: #fcfcfc; stroke-width: 0px; }
@@ -893,12 +916,16 @@
               .cls-3 { fill: #f60505; stroke-width: 0px; }
             </style>
           </defs>
+          <!-- Letra S de "SAN" incorporada con inclinación deportiva y estrías de velocidad -->
+          <path class="cls-3" d="M605.2,34.2c-15.6-2.1-32.4,1.8-44.8,10.6c-13.4,9.5-20.8,24.1-18.2,40.4c2.8,17.2,18.4,29.8,35.6,35.4c18.2,5.8,37.1,10.2,55.2,16.8c11.4,4.2,20.2,12.8,18.8,25.6c-1.6,14.8-14.2,26.4-29.2,28.8c-18.4,2.9-37.2-2.1-53.6-10.4c-4.2-2.1-7.8-0.8-10.4,2.6l-14.8,18.2c19.2,12.8,42.4,19.2,65.6,18.4c29.8-1.1,56.2-18.2,61.4-47.6c4.6-26.2-11.8-48.4-36.2-57.8c-18.8-7.2-38.4-12.4-57.4-18.8c-9.6-3.2-16.2-8.8-17.4-19.2c-1.2-10.4,6.8-19.6,17.2-22.4c14.2-3.8,29.4-1.2,42.8,4.8c4.2,1.8,7.6,0.6,9.8-2.6l14.2-17.6c-10.2-5.4-21.4-8.8-30.8-10.2z"/>
+          <!-- Trazos originales completos oficiales -->
           <path class="cls-3" d="M185.98,417.57c7.19-1.26,14.75-.01,21.13-3.38,8.34-4.41,17.39-5.48,26.37-7.47-6.14-.76-12.27-1.54-18.41-2.29-1.88-.23-3.74-.28-3.52-3.03.15-1.87-1.59-1.71-2.75-2.25-5.27-2.44-10.75-4.1-16.47-4.21-.29-2.07.81-2.28,1.75-2.38,8.21-.85,15.79-3.42,22.81-7.82,1.31-.82,3.2-.86,4.84-1.01,13.16-1.21,26.4-1.36,39.52-2.8-3,1.66-5.8-.51-8.74-.6-9.99-.3-19.94-1.26-29.82-2.77-1.56-.24-2.82-.17-3.53-2.51-.94-3.11-4.74-2.9-7.39-4-2.49-1.04-7.18-.79-7.13-2.92.07-2.93,4.61-1.94,7.05-3.11,5.51-2.62,11.46-4.08,17.02-6.81,4.39-2.16,10.07-1.68,15.17-2.37,7.27-.98,14.63-.17,21.84-.85-5.67-1.15-11.5-1.35-17.26-2.1-2.8-.36-5.6-.89-8.31-1.65-2.45-.69-5.18-.22-6.46-4.13-.75-2.3-5.31-2.83-8.35-3.64-2.16-.58-4.4-.89-6.54-1.3.22-1.95,1.41-2.08,2.58-2.33,8.59-1.88,16.95-4.28,25.07-7.93,3.99-1.8,9.17-1.1,13.82-1.27,14.48-.51,28.97-.91,43.45-1.33,2.28-.07,4.56,0,6.86-.45-6.92-2.06-14.11-1.51-21.15-2.32-8.75-1.01-17.57-1.45-26.37-2.11-3.97-.3-7.64-1.17-11.32-3-5.37-2.66-11.33-3.66-17.65-3.19.39-2.83,2.46-2.5,4.06-2.97,28.86-8.51,58.5-10.2,88.33-10.21,31.48-.01,62.96,0,94.44-.72-56.94-2.85-113.96-1.85-171.09-4.52,2.96-6.89,9.38-7.2,14.72-9.28,22.91-8.95,47-10.35,71.19-10.9,10.66-.24,21.32-.21,31.99-.35,1.66-.02,3.44.37,6.13-1.26-31.92-2.91-62.84.81-94.47-4,2-.54,3.07-.93,4.17-1.1,21.86-3.52,42.71-11.63,64.81-14.06,21.99-2.42,43.88-3.18,65.37,3.38,28.01,8.55,42.33,27.38,42.95,56.74.46,21.65-5.63,41.89-15.07,61.04-19.6,39.76-50.01,67.78-92.38,81.81-30.9,10.23-62.49,11.07-94.16,3.98-13.17-2.95-26.47-4.54-39.88-6.13,14.25-.56,28.24-3.01,42.35-5.2-2.52-.15-5.04-.32-7.56-.46-14.84-.82-28.72-6.03-43-9.41-5.92-1.4-11.92-2.45-16.55-3.39,38.35-11.42,79.05-8.62,120.22-9.28-1.6-1.77-2.97-1.36-4.12-1.37-21.65-.24-43.3-.77-64.91-2.2-6.98-.46-13.98-.63-20.92-1.41-4.73-.53-8.6-3.83-13.37-4.84-5.36-1.14-10.64-2.53-16.13-2.96-1.71-.13-3.67.24-5.22-1.59ZM412.76,327.99l-.05-1.5c-9.98,0-19.97.01-29.95-.01-1.48,0-3.03.3-4.39-.55-11.69-7.29-24.05-5.72-36.14-1.91-21.76,6.87-36.84,22.05-48.29,41.13-5.77,9.61-10.47,19.77-10.69,31.31-.22,11.25,5.11,17.83,16.1,20.07,10.45,2.14,20.7.71,30.32-3.39,6.97-2.97,14.03-3.74,21.38-3.98,14.15-.45,28.29-1.02,42.43-1.61,1.34-.06,2.91.57,4.27-1.01-16.58-.75-32.92-1.5-49.59-2.25.66-1.64,2.54-1.89,2.26-3.87-4.54.31-9.13.62-14.13.96,3.85-5.41,8.94-6.96,14.15-8.69,7.58-2.52,14.68-6.8,22.18-9,7.78-2.29,16.51-1.34,24.82-1.8,1.5-.08,2.99-.25,4.49-.27,4.08-.04,8.16-.01,12.24-.01-.01-.35-.02-.7-.04-1.05-13.35-.77-26.7-1.53-39-2.24-.93-8.05-8.04-5.97-11.67-8.81.2-1.8,1.26-2.81,3.31-3.44,4.28-1.32,8.34-3.5,12.68-4.43,3.19-.68,4.23-4.22,7.51-4.38,4.15-.21,8.29-.78,12.44-.94,12.64-.5,25.29-.99,37.94-1.2,2.52-.04,5.04-1.92,7.6-.28-.57.56-1.23.88-1.76.74-6.81-1.82-13.8-1.93-20.77-2.31-10.64-.59-21.26-1.3-31.82-2.83-1.1-.16-2.99.21-3.04-1.05-.17-5.09-4.56-4.57-7.46-5.84-2.57-1.12-5.39-1.66-9.25-2.8,4.74-1.68,8.24-3,11.79-4.15,2.21-.72,3.16-1.73,1.61-3.91-2.15-3.02-.18-3.11,2.17-3.16,8.8-.21,17.62,0,26.33-1.55ZM389,278.7c-.05-.31-.11-.62-.16-.92h-13.87c0,.31,0,.62,0,.92h14.02Z"/>
           <path class="cls-3" d="M534.56,434.82c7.7-.59,15.27-1.66,22.65-3.71,2.01-.56,5.28.29,5.31-3.72.01-1.4,1.93-.78,2.99-.79,4.32-.06,8.65-.02,13.83-.02-2.47-1.99-4.55-1.71-6.43-2.07-4.86-.92-9.5.02-14.02-4.91-3.73-4.06-11.19-5.35-17.56-6.2-3.39-.45-6.75-1.16-10.9-1.89,2.13-2.09,3.98-1.85,5.64-2,6.51-.6,12.71-2.53,18.97-4.26,2.09-.58,2.68-1.55,2.12-3.57-.49-1.76-.69-3.6-1.18-5.36-.73-2.65-2.16-3.97-5.31-4.04-16.16-.36-16.07-.42-23.59,13.73-10.14,19.09-20.48,38.08-30.62,57.18-1.17,2.21-2.42,3.11-4.96,3.09-20.33-.11-40.67.34-60.98-.27-8.27-.25-16.37-3.4-24.83-3.39,24.73-9,50.4-9.53,76.14-9.81-9.15-1.91-18.49-1.38-27.69-2.41-1.49-.17-3.07.15-4.48-.22-4.88-1.28-10.08,1.45-15.02-3.46-3.04-3.03-9.75-2.33-14.78-3.44-1.35-.3-3.84.88-3.72-1.78.09-2.11,1.98-2.68,3.98-3.01,8.83-1.45,17.34-3.85,25.78-7.05,6.94-2.64,14.86-1.05,22.31-1.92,1.95-.23,3.95-.03,5.98-.95-5.23-.4-10.47-.82-15.7-1.2-4.59-.33-8.83-.7-13.32-3.03-5.28-2.73-11.8-3.05-17.88-4.43.31-2.35,1.61-3.59,4.05-4.14,9.06-2.04,17.89-4.87,26.77-7.57,6.5-1.97,13.86-1.27,20.84-1.43,8.42-.2,16.84-.05,25.26-1.09-11.45-.79-22.91-1.42-34.33-2.48-3.6-.33-7.37,1.04-10.7-3.39-2.02-2.68-7.97-2.43-12.17-3.43-.96-.23-2.05,0-2.97-.31-1.38-.46-3.98,1.01-3.98-1.43,0-1.92,1.79-2.97,4.13-3.49,8.87-2,17.76-4.02,26.05-8.02,1.41-.68,3.23-.61,4.87-.67,13.46-.48,26.92-.91,40.38-1.6-12.7-1.79-25.53-1.26-38.26-2.36-1.88-.16-5.1,1.21-4.22-3.14.24-1.17-1.47-.97-2.37-1.2-5.77-1.47-11.55-2.92-17.36-4.39.43-2.83,1.96-3.99,4.88-4.63,8.57-1.87,17.18-3.71,25.02-8.03,1.46-.8,3.56-.53,5.37-.59,14.63-.46,29.26-.88,43.93-2.11-10.53-.73-21.07-1.45-31.6-2.18-3.82-.26-7.65-.44-11.47-.81-1.38-.13-4.19,1.05-2.69-2.62.51-1.25-1.55-1.28-2.61-1.54-4.69-1.12-9.42-2.08-14.04-3.44-1.14-.33-3.57.59-3.39-1.66.13-1.7,1-3.56,3.35-3.75,6.88-.53,13.44-2.67,19.71-5.22,12.3-5.02,25.17-3.07,37.8-4.01,4.94-.36,9.93,0,14.82-1.5-10.22-.49-20.46-.7-30.65-1.59-4.32-.38-8.83,1.83-13.08-3.45-2.67-3.3-9.87-2.9-15.01-4.29-1.54-.42-4.31.93-4.39-1.73-.08-2.68,2.2-3.61,4.8-3.96,8.78-1.17,17.11-4.02,25.43-6.91,1.82-.63,3.93-.51,5.91-.57,36.14-1.2,72.31-.81,108.46-1.11,1.66-.01,3.33,0,5-.66-18.82-.38-37.65-.67-56.47-1.16-18.65-.48-37.3-1.41-55.95-1.47-3.48-.01-3.15-3.08-5.52-3.59-5.36-1.15-10.51-3.14-15.98-3.91-1.25-.18-3.6.81-3.55-1.35.05-1.84,1.14-3.63,3.74-3.91,7.48-.81,14.67-3.09,21.72-5.52,11.96-4.12,24.31-2.94,36.51-3.13,24.15-.36,48.3-.11,72.46-.83-14.55-1.55-29.13-1.07-43.69-2.03-16.79-1.11-33.6-1.82-50.42-2.36-3.48-.11-5.56-2.43-8.41-3.42-5.74-2-11.67-2.53-17.67-2.75-.87-.03-2.27.28-2.22-1.21.04-1.07.96-1.8,2.08-1.77,11.61.25,22.26-5.34,33.93-5.19,26.66.36,53.32.18,79.97.44,7.17.07,14.18,1.62,21.03,3.92,19.75,6.63,30.98,22.03,31.06,42.85.14,35.62-24.99,70.5-59.28,82.3-2.16.74-4.32,1.5-6.84,2.37,12.4,24.65,24.65,49.02,37.29,74.14-2.55.14-4.27.31-5.99.31-15.66.02-31.34-.31-46.99.12-11.4.31-22.37-1.06-33.34-4.19-5.92-1.69-12.37-1.5-19.68-2.28,3.53-1.83,6.38-1.19,9.04-1.47,4.96-.52,10.04-.59,14.74-2.3,2.18-.79,6.35.53,6.2-3.25-.16-3.93.11-8.22-5.9-9.86-8.73-2.38-17.41-5.12-26.16-8.1ZM568.12,351.07c5.96.29,12.56.04,18.79-2.82,7.39-3.39,12.36-8.95,14.31-16.83,1.5-6.06-1.14-9.98-7.13-11.44-6.23-1.52-12.57-.41-18.85-.77-2.65-.15-4.15.69-5.36,3.2-4.04,8.36-8.31,16.6-12.64,24.81-1.44,2.74-1.68,4.21,2.18,3.89,2.64-.21,5.31-.04,8.69-.04Z"/>
           <path class="cls-3" d="M1135.72,138c-11.18-.81-23.7-1.88-36.23-2.5-3.49-.17-4.97-.92-5.2-4.65-.61-9.62-1.64-19.21-2.61-30.01-4.21,8.29-8.07,15.66-11.73,23.15-12.7,25.99-25.35,52-37.92,78.05-1.28,2.65-2.63,4.05-5.9,4.03-20.49-.13-40.99.06-61.48-.03-4.05-.02-6.63-4.69-12.02-3.07,2.31-2.58,4.21-2.5,5.99-2.85,1.29-.25,3.11-.32,3.7-1.17,3.71-5.35,9.3-4.21,14.47-4.54,10.38-.67,20.76-1.29,31.14-2.33-12.82-1.09-25.73-.71-38.44-3.04q2.04-6.99-9.84-9.26c-.07-2.35,1.78-1.95,3.12-2.12,6.27-.78,12-2.92,16.55-7.36,1.82-1.78,3.8-1.77,5.91-1.88,15.43-.83,30.83-2.15,46.74-2.24-2.39-1.99-4.81-1.52-7.06-1.63-12.48-.64-24.96-1.19-37.44-1.78-2.17-.1-4.98.24-2.92-3.4.98-1.73.2-2.38-1.3-2.88-2.99-1-5.98-2.02-8.96-3.06-1-.35-2.79.37-2.82-1.26-.03-1.7,1.76-1.54,3.01-1.9,3.03-.87,6.32-1.36,8.99-2.91,13.4-7.78,28.27-7.08,42.89-7.9,6.39-.36,12.78-.58,19.13-1.68-13.95-.8-27.89-1.59-41.84-2.42-2.23-.13-5.7.99-3.94-3.69.58-1.53-1.15-1.82-2.17-2.12-3.66-1.06-7.03-3.08-10.95-3.29-1.08-.06-2.66.11-2.7-1.48-.03-1.14.73-2.14,2.13-2.39,8.86-1.64,16.8-6.13,25.25-8.57,8.43-2.44,17.83-1.52,26.81-2.04,5.68-.32,11.36-.57,17.04-.85-.01-.45-.02-.89-.03-1.34-13.68-.79-27.37-1.58-41.56-2.4,2.55-3.99.43-5.12-2.83-6.21-3.67-1.23-7.4-1.9-11.15-2.61-1.02-.19-2.77.44-2.82-1.22-.05-1.61,1.07-2.61,2.89-2.78,6.39-.6,12.48-2.86,18.03-5.57,12.26-6,25.33-3.99,38.06-5.25,6.9-.68,13.91-.13,20.79-1.83-14.53-.79-29.07-1.55-43.59-2.42-1.94-.12-5.68,1.41-3.94-3.47.48-1.34-1.52-1.39-2.53-1.8-4.8-1.99-9.83-3.05-14.98-3.64-1-.11-2.73.47-2.6-1.38.09-1.31.9-2.58,2.56-2.57,5.64.01,10.98-1.77,15.84-4.1,14.02-6.72,29.09-5.52,43.86-6.67,9.07-.71,18.21-.01,25.2-.94-9.79-2.03-21.84-1.39-33.76-2.7-3.47-.38-7.06-.13-10.44-.88-3.56-.79-7.32,1.2-10.83-3.39-2.6-3.41-8.91-4.74-14.13-5.35-.66-.08-1.39.02-1.98-.22-1.33-.54-4.03.4-3.65-1.92.3-1.79.75-4.39,3.56-4.85,9.76-1.6,18.45-6.13,27.59-9.5,7.37-2.72,16.1-1.92,24.24-2.32,11.81-.59,23.64-.84,35.46-1.26,2.98-.11,5.95-.3,9.85-.5-21.2-1.6-41.45-3.27-61.73-4.5-3.39-.21-4.08-3.25-6.63-4.06-4.6-1.46-9.09-3.19-14.04-3.2-1.73,0-3.69.34-5.23-1.03.54-2.71,2.86-1.99,4.42-2.12,5.02-.43,9.88-1.44,14.51-3.4,5.78-2.45,11.79-3.01,18.03-2.95,16.99.18,33.99.21,50.98-.11,4.61-.09,6.2,1.01,6.54,5.81,2.06,28.58,4.49,57.13,6.79,85.68.05.61.16,1.21.24,1.87.47-.2.95-.27.98-.43,1.62-7.99,7.03-9.07,14.26-9.11,13.95-.07,27.9-1.18,41.87-2.43-16.34-1.07-32.69-2.15-49.69-3.27,2.66-6.31,4.98-11.87,7.34-17.41,1.55-3.65,5-3.45,8.07-3.75,14.59-1.42,29.23-2.14,43.89-2.5,1.6-.04,3.36.34,4.9-1.03-12.24-.85-24.33-1.69-36.42-2.55-4.15-.3-8.29-.77-12.45-.93-2.18-.09-2.55-.7-1.72-2.67,2.71-6.44,5.38-12.91,7.9-19.43.95-2.45,2.6-2.94,5-3.1,18.95-1.27,37.88-2.86,56.88-2.91,1.14,0,2.27-.16,3.43-.78-12.75-.99-25.51-1.99-38.26-2.98-6.14-.48-12.27-1.12-18.42-1.38-3.03-.13-3.34-1.28-2.37-3.69,1.43-3.55,2.92-7.08,4.13-10.7.72-2.16,2.24-2.09,3.93-2.09,22.99,0,45.98,0,69.74,0-3.52,7.82-6.77,15.37-10.29,22.81-20.9,44.2-41.92,88.34-62.71,132.6-2.05,4.37-4.74,4.62-8.72,3.9-20.85-3.73-41.79-6.56-63.06-5.61-3.99.18-8.02.24-11.95.88-4.58.75-7.08-.22-6.38-5.42.15-1.14.16-2.39-.14-3.48-1.18-4.27.89-5.33,4.71-5.56,9.64-.59,19.26-1.48,28.89-2.22,2.53-.19,5.08-.01,6.25-.57ZM1185.05,110.14c-6.52-.3-14.15-.58-21.78-1.02q-19.54-1.15-23.18,2.19c15.98.37,31.03,0,44.96-1.17Z"/>
           <path class="cls-3" d="M717.14,202.75c22.98-10.28,47.38-8.81,71.47-9.77,1.75-.07,3.68.59,5.78-1.36-17.39-.48-34.16-2.42-52-2.18,2.3-2.88,3.98-4.99,5.65-7.08-2.43-2.4-5.85-1.34-8.79-3.06,1.44-1.56,3.1-1.53,4.58-1.77,5.18-.82,10.13-2.47,14.25-5.66,3.67-2.84,7.63-3.6,12.06-3.78,10.48-.43,20.96-1.09,31.43-1.72,1.35-.08,2.89.36,4.99-1.47-13.03-2.05-25.3-1.8-37.73-2.15q4.64-7.7-4.77-11.52c5.26-1.66,10.69-2.99,15.49-5.7,13.98-7.91,29.46-4.68,44.29-6.03,8.07-.74,16.26-.13,24.4-.13,0-.51,0-1.02,0-1.53-18.48-.83-36.96-1.65-55.47-2.48-.19-2.28,2.46-2.77,2.56-4.96-5.35-3.18-11.54-4.06-18.22-4.47.82-2.45,2.31-3.16,4.44-3.5,10.34-1.68,20.37-4.31,29.98-8.72,2.99-1.37,6.87-.96,10.35-1.11,15.27-.67,30.55-1.25,45.86-2.7-16.61-.75-33.21-1.5-50.46-2.27,1.28-1.78,2.27-3.16,3.41-4.74-6.75-3.94-14.29-4.54-21.82-5.28.78-2.99,2.98-2.53,4.6-2.77,11.56-1.72,22.58-5.25,33.39-9.6,1.63-.66,3.59-.62,5.41-.69,14.48-.61,28.97-1.16,43.45-1.76,1.62-.07,3.24-.29,4.82-.9-15.93-.91-31.85-1.81-47.79-2.72-.77-2.08,2.05-2.63,1.57-4.5-7.13-2.86-14.72-4.45-22.78-4.53.43-3.4,2.8-3.41,5.12-3.65,12-1.23,23.45-4.55,34.53-9.2,1.78-.75,3.58-.72,5.38-.78,13.65-.47,27.31-.83,40.96-1.31,4.39-.15,8.76-.56,12.29-.8-16.91-1.17-34.69-2.39-52.48-3.62-.48-1.76,1.88-2.31,1.64-3.66-7.31-3.75-15.13-5.05-23.37-5.89,1.33-3.84,3.46-5.37,7.31-5.9,11.73-1.6,23-5.07,33.93-9.62,1.47-.61,2.92-.57,4.39-.66,23.95-1.46,47.9-2.8,71.91-2.75,3.93,0,7.86-.34,10.24-.45-18.75-1.25-39.04-2.6-59.33-3.95-.66-.04-1.33-.08-1.99-.2-6.32-1.11-12.96.78-18.91-4.16-3.26-2.7-8.59-3.2-13.35-3.26-3.46-.04-6.91-.61-10.42-.94.54-1.64,1.59-1.91,2.82-1.92,8.07-.09,15.85-1.89,23.46-4.33,6.29-2.02,12.65-2.55,19.19-2.53,23.49.09,46.99.1,70.48-.05,3.74-.02,4.82.68,4.2,4.72-9.2,60.27-18.22,120.57-27.3,180.86-.77,5.1-2.2,10.15-2.46,15.27-.21,4.23-2.13,4.65-5.57,4.64-22.66-.07-45.32-.04-67.98.08-3.3.02-4.23-.2-2.9-4.01,2.02-5.77,4.95-8.18,11.37-7.93,8.62.33,17.3-.67,25.94-1.13,1.12-.06,2.37.23,3.54-1.33-8.17-.5-16.05-.89-23.92-1.52-3.72-.29-8.91,1.1-10.66-1.67-1.19-1.87,2.57-6.46,3.21-10,1.68-9.33,7.17-12.21,16.15-11.42,5.15.46,10.44-.59,15.61-.95.1-2.13-1.21-1.77-2.05-1.82-6.15-.38-12.31-.63-18.45-1.07-2.01-.14-5.54,1.36-4.21-3.38.36-1.3-1.31-1.12-2.24-1.12-16.33-.01-32.66.02-48.99-.02-1.96,0-2.98,1.19-4.07,2.47-11.86,13.96-23.8,27.86-35.54,41.92-1.81,2.17-3.54,2.99-6.3,2.98-22.49-.08-44.99.06-67.48-.06-6.25-.03-11.63-4.52-18.07-3.29ZM884.63,120.74c10.42,0,19.67-.01,28.93.01,1.5,0,2.75-.38,2.88-2.02.55-7.12,5.09-8.24,11-7.61.99.11,2.36.39,3.34-1.56h-11.21c3.83-12.72,8.44-24.61,11.66-37.99-15.79,16.66-30.8,32.5-46.59,49.17ZM813.6,165.29c-2.56-1.25-4.62-1.33-7.15,0,2.52,1.35,4.59,1.25,7.15,0Z"/>
           <path class="cls-3" d="M639.9,417.76c15.71.86,28.41-9.58,43.45-11.07-5.33-.5-10.68-.85-15.97-1.59-1.98-.28-4.98.21-4.72-3.6.11-1.63-1.86-1.57-2.96-2.19-4.62-2.59-9.94-3.19-15.65-5.16,17.64-5.63,33.6-14.24,52.4-11.46-.07-.68-.14-1.35-.22-2.03-3.28-.39-6.56-.78-9.84-1.17-3.3-.38-6.61-.77-9.92-1.13-3.17-.34-5.88-.39-8.31-3.77-2.01-2.79-6.66-3.4-10.32-4.53-.84-.26-2.15-.34-2.08-1.66.07-1.16,1.1-1.53,2.07-1.87,15.11-5.2,29.49-13.34,46.46-11.2-5.82-2.52-12.01-2.58-17.85-4.19-1.72-.47-3.26-.66-4.09-3.35-1.11-3.58-5.68-3.29-8.85-4.53-1.26-.49-3.53.08-3.55-1.76-.02-1.82,2.15-1.62,3.55-2.02,7.16-2.07,14.29-4,21.2-7.07,5.56-2.47,12.13-1.67,18.26-1.98,11.98-.6,23.97-.78,35.96-1.18,2.87-.1,5.74-.37,7.93-.52-15.14-1.41-30.96-2.85-46.77-4.37-3.56-.34-6.74-1.23-10.08-3.2-4.48-2.65-10.09-3.17-15.76-2.98.49-3.91,3.7-2.91,5.69-3.57,28.08-9.23,57.26-8.96,86.3-9.81,11.16-.33,22.32-.36,33.48-.53,2.39-.04,4.83.3,6.79-1.14-38.94-1.28-78.25-.3-117.92-3.44,1.95-2.69,3.67-5.1,6.9-6.41,28.33-11.42,58.01-14.07,88.18-14.12,18.81-.03,37.65.76,56.42-1.38,2.94-.34,5.98.1,8.97.26.38.02.75.48,1.06,1.56-43.68-4.49-87.57-.45-131.29-4.57,28.76-9.08,57.76-16.72,88.14-17.81,30.44-1.09,60.55,1.46,91.08,7.47-3.04,6.35-5.95,12.43-8.86,18.5-5.53,11.55-11.23,23.02-16.51,34.68-1.76,3.9-3.79,4.87-7.97,4.04-17.88-3.53-35.94-5.41-54.15-3.48-30.74,3.26-57.35,14.54-75.75,40.72-6.8,9.68-11.59,20.26-10.9,32.52.54,9.62,4.95,16.72,13.88,20.79,9.85,4.49,20.05,4.11,30.36,2.26.93-.17,2.36-.59,2.57-1.23,1.75-5.23,6.07-4.17,9.94-4.34,8.82-.38,17.64-.77,26.46-1.22,1.26-.06,2.69.22,4.05-1.46-10.29-.52-20.22-.95-30.15-1.57-1.67-.1-5.55,1.6-3.45-3.2.69-1.58-1.45-1.39-2.37-1.79-5.85-2.59-12.22-2.77-18.58-3.51.68-2.06,2.15-1.87,3.34-1.92,7.07-.29,13.74-2.38,20.42-4.44,2.17-.67,4.51-1.07,5.65-3.61.83-1.85,2.76-1.45,4.42-1.52,11.49-.48,22.97-.97,34.45-1.52,2.75-.13,5.48-.49,8.22-.43-2.22,1.33-4.36-.51-6.56-.48-5.83.06-11.71.25-17.48-.45-7.5-.9-15.15.58-22.55-3.32-5.89-3.11-13.2-2.47-19.93-3.87,10.87-.94,21.09-5.4,31.95-5.53,20.31-.25,40.63-.07,61.55-.07-3.59,7.57-6.96,14.76-10.41,21.9-7.45,15.43-14.98,30.82-22.4,46.26-1.55,3.22-3.46,5.97-6.59,7.89-35.52,21.78-73.7,31.28-115.1,23.77-14.02-2.55-27.74-6.82-42.16-8.87,9.31-1.37,18.63-2.73,27.94-4.1-19.85-4.09-38.98-11.01-58.84-15.31,7.75-1.07,15.52-1.37,23.04-3.39,23.93-6.43,48.45-4.74,72.8-5.34,10.31-.25,20.66.53,30.93-1.19,1.9-.32,3.93-.34,6.27.71-2.42,1.81-4.81,1.48-6.86,1.04-10.84-2.32-21.85-2.12-32.81-2.27-20.67-.28-41.26-1.97-61.87-3.3-5.55-.36-10.11-3.73-15.44-5.04-6.16-1.51-12.47-2.34-18.72-4.27Z"/>
           <path class="cls-3" d="M931.17,406.63c-12.08-.75-24.17-1.45-36.25-2.32-1.93-.14-5.43,1.67-4.96-3.03.1-1-1.61-.88-2.53-1.09-4.37-1.02-8.77-1.89-13.12-2.97-1.21-.3-3.56.64-3.24-1.84.2-1.58,1.32-2.65,3.32-3.12,5.82-1.37,11.82-2.52,17.22-4.95,13.4-6.03,27.62-3.96,41.51-5.13,2.91-.24,5.91.37,8.76-1.53-6.17-.35-12.35-.74-18.52-1.05-5.49-.28-11-.29-16.47-.8-1.66-.16-5.69,1.69-4.28-3.25.23-.81-1.56-.92-2.49-1.16-4.17-1.1-8.39-2.07-12.5-3.38-1.22-.39-3.52.25-3.54-1.78-.03-2.14,1.85-2.66,3.78-3.18,6.09-1.65,12.46-2.86,18.05-5.61,8.27-4.06,16.87-4.03,25.59-4.1,11.96-.09,23.93-.02,35.89-.02,0-.62,0-1.24.01-1.85-11.59-.67-23.17-1.35-34.76-2.01-3.49-.2-7.03-.06-10.46-.63-2.06-.34-5.73,1.48-5.77-3.29,0-.58-3.54-1.18-5.46-1.67-3.38-.87-6.8-1.6-10.17-2.52-1.37-.37-3.88.6-3.66-1.99.15-1.77,1.36-3.32,3.59-3.54,6.19-.62,12.19-2.48,17.74-4.92,11.08-4.88,22.69-3.72,34.16-4.33,12.29-.65,24.66.4,36.9-1.52,1.22-.19,2.67-.6,3.61.85-1.19,1.46-2.79.93-4.17.71-17.65-2.79-35.55-2.32-53.28-3.99-2.57-.24-5.05.63-7.24-2.9-1.44-2.32-6.58-2.47-10.12-3.31-2.9-.68-5.89-.94-8.98-1.41.31-3.12,1.76-4.42,4.95-4.99,8.18-1.46,16.1-4.02,23.85-7.03,2.13-.82,4.26-.6,6.39-.69,29.31-1.17,58.64-.91,87.95-1.26,1.76-.02,3.53,0,5.3-.48-29.3-.85-58.61-1.65-87.91-2.62-3.39-.11-6.66.71-9.99-2.94-2.52-2.76-8.38-2.39-12.67-3.67-2.04-.61-5.62.2-5.8-2.23-.24-3.34,3.18-3.98,6.03-4.58,3.25-.69,6.53-1.39,9.63-2.54,10.89-4.06,22.16-5.38,33.69-5.5,24.99-.27,49.98-.82,74.97-1.02,4.08-.03,8.03-1.51,12.24-1.16-.13,1.53-1.06,1.51-1.74,1.39-14.71-2.41-29.59-.98-44.37-1.98-17.44-1.18-34.94-1.67-52.42-2.23-3.28-.11-5.25-2.37-7.88-3.34-4.66-1.72-9.56-2.78-14.62-2.86-1.26-.02-3.46.95-3.68-1.24-.19-1.92,1.79-1.93,3.27-2.26,19.42-4.28,39.05-5.27,58.92-4.94,30.98.51,61.98.12,92.97.11,1.78,0,3.57,0,6.27,0-6.02,12.46-11.69,24.22-17.38,35.97-3.33,6.88-6.86,13.68-9.91,20.69-1.34,3.08-3.02,4.08-6.34,4.05-18.99-.17-37.99-.02-56.98-.16-3.09-.02-4.76.89-6.06,3.75-2.5,5.52-5.77,10.68-7.87,16.9h63.9c-2.51,5.67-4.71,10.73-6.99,15.76-5.77,12.72-11.76,25.35-17.25,38.19-1.63,3.81-3.8,4.58-7.53,4.55-18.99-.17-37.99,0-56.98-.19-3.53-.03-5.41,1.04-6.74,4.31-2.07,5.08-4.47,10.04-7.03,14.9-1.77,3.36-.97,4.18,2.65,4.16,19.99-.09,39.99-.01,59.98.02,6.84.01,6.87.05,4.11,6.03-5.86,12.69-11.82,25.34-17.59,38.07-1.03,2.28-2.22,3.2-4.82,3.2-45.49-.05-90.98.14-136.46-.09-7.8-.04-15.33-3.37-23.38-3.67,6.55-2.06,13.36-2.48,19.53-5.05,9.99-4.17,20.52-3.34,30.88-3.79,17.47-.75,34.96-1.03,52.45-1.71-16.78-.52-33.58-.42-50.34-1.56-6.31-.43-12.71-1.02-18.96-.39-3.81.38-4.02-3.48-7.11-3.83-5.37-.6-10.4-3.21-16.07-2.99.4-3.66,2.11-4.93,5.39-5.73,7.99-1.95,16.37-2.81,23.51-7.57,1.09-.73,2.9-.53,4.37-.54,14.64-.03,29.27-.02,44.37-.02-.95-3.33-2.59-2.5-3.67-2.55-7.82-.33-15.72-1.33-23.46-.6-13.92,1.31-25.58-6.99-38.9-7.67.3-3.14,1.9-4.18,4.53-4.73,8.57-1.8,17.13-3.56,24.89-8.14,2.21-1.3,5.52-.85,8.33-.98,11.8-.54,23.6-.99,35.4-1.47,0-.14,0-.28,0-.42ZM928.05,431.62c-.31-.05-.61-.15-.92-.14-.58.02-.61.22-.06.37.29.08.62-.01.94-.04.02,0,.03-.12.04-.2Z"/>
+          <path class="cls-3" d="M684.26,104.68c-34.46-.45-67.68-11.44-102.2-10.6,20.39-1.92,41.01-1.13,61.32-7.3-7.35-.16-8.72-4.88-8.76-10.5-.02-2.86-2.16-2.42-3.82-2.81-11.69-2.75-23.58-4.01-35.53-4.77-.62-.04-1.23-.15-1.88-1.16,4.26-.31,8.51-.76,12.77-.91,11.39-.39,22.29-2.77,33.03-6.7,4.21-1.54,9.2-1.05,13.85-1.3,15.11-.82,30.22-1.55,45.35-2.88-11.47-1.1-22.94-2.23-34.41-3.28-5.8-.53-11.62-.97-17.44-1.3-3.5-.2-5.63-3.15-9.13-3.82-7.95-1.52-15.96-2.34-24.01-3.13.52-2,1.95-1.95,3.28-1.96,10.96-.08,21.71-2.53,31.61-6.42,9.63-3.78,19.31-3.72,29.14-5.19-12.73-.4-24.83-4.39-37.43-6.2,13.25-1.6,25.78-6.93,39.36-7.41.2,3.36-3.49,4.11-3.3,7.05,31.15-1.49,62.31-1.81,93.48-2.25-37.76-2.57-75.76-2.15-113.15-10.26,15.06-1.95,28.53-10.15,44.18-10.34,24.48-.31,48.94-2.12,73.44-.73,12.14.69,24.24,1.76,36.26,3.75,2.81.46,3.35,1.18,1.97,3.72-8.4,15.53-16.75,31.08-24.98,46.69-1.39,2.64-3.28,1.67-5.12,1.33-17-3.19-34.08-3.55-51.23-1.64-5.36.6-10.42,2.31-14.89,5.36-3.33,2.27-5.59,5.37-4.94,9.68.59,3.94,3.83,5.2,7.09,6.16,7.97,2.34,16.13,4.14,23.94,6.93,12.78,4.57,24.05,11.17,27.27,25.88,2.6,11.89.06,23.26-4.76,34.05-8.65,19.37-22.71,33.88-41.43,43.79-26.83,14.21-55.85,19.13-85.82,19.71-17.67.34-35.45.24-52.84-2.59-16.82-2.74-33.6-5.25-50.6-6.75,4.94-.31,9.89-.91,14.83-.88,10.56.05,20.77-2.11,31.11-3.84,6.82-1.14,10.22-4.21,11.78-10.35-14.64-4.74-30.03-4.65-45.19-6.25,15.5-1.43,30.93-1.97,46.14-4.84,3.02-.57,6.25-.41,8-3.96.95-1.94,3.33-1.02,5.07-1.04,27.16-.21,54.31-.35,81.47-.56,1.55-.01,3.3.61,5.01-1.12-11.45-.45-22.55-.99-33.65-1.29-16.82-.45-33.64-.73-50.46-1.12-2-.05-5.23,1.07-3.18-3.37.96-2.09-1.55-1.54-2.59-1.76-12.09-2.59-24.39-3.2-36.69-3.78-2.65-.12-5.31-.02-8.03-.02.24-2.26,1.74-1.58,2.71-1.63,35.71-2.13,71.31-6.18,107.18-5.37,9.19.21,18.19-1.92,26.57-6.01,3.97-1.94,7.38-4.56,9.51-8.54,2.74-5.12,1.61-8.87-3.48-11.68-3.84-2.12-8.08-3.05-12.37-3.71-14.65-2.25-29.38-3.76-44.12-5.2-1.23-.12-2.67.32-4.13-1.4,15.25-1.34,29.79-5.49,44.88-4.18Z"/>
           <path class="cls-2" d="M1541.5,413.82c5.29-26.63,20.73-42.74,44.53-51.52,19.33-7.13,38.41-4.64,57.21,1.98,40.12,14.12,70.84,39.18,89.1,78.15,8.71,18.59,12.56,38.19,9.74,58.81-3.58,26.16-18.73,42.2-43.48,49.9-1.74.54-3.51.97-6.37,1.76,26.15,9.06,51.36,17.8,76.57,26.54-197.29-20.24-392.9-51.1-587.6-88.64,29.41.41,58.66,1.87,87.89,3.97,23.09,1.66,46.21,2.92,69.23,5.52,32.43,3.67,64.81,7.66,97.11,12.34,49.92,7.23,99.59,16.22,149.65,22.45,20.85,2.59,41.83,4.19,62.63-.88,19.5-4.76,34.48-15.05,40.94-34.92,4.92-15.12,2.49-29.87-4.98-43.5-16.31-29.76-40.61-50.36-73.09-60.63-20.69-6.54-47.22-5.96-69.09,18.67Z"/>
           <path class="cls-2" d="M1352.03,462.26c-9.19-10.78-17.16-22.26-23.94-34.82-2.2-4.07-1.85-7.55-2.61-11.24-2.67-12.93-.61-25.19,6.45-36.46,4.21-6.72,9.95-12.12,15.94-17.14,19.82-16.62,42.85-25.86,68.39-29.17,14.57-1.89,29.21-2.37,43.87-2.34,1.92,0,3.84,0,5.82.46-11.25,3.58-22.72,6.07-33.86,9.78-15.19,5.06-30.17,10.53-43.7,19.32-10.28,6.68-18.34,14.92-19.96,27.82-.97,7.73,1.2,14.89,4.14,21.82,11.72,27.62,31.71,48.27,56.16,64.74,11.03,7.43,24.44,9.43,37.04,13.07,20.14,5.81,40.48,10.84,60.95,15.37.94.21,1.82.71,3.31,1.3-22.89-.34-44.89-3.27-66.91-5.98-43.37-5.34-85.62-16.44-128.4-24.83-1.63-.32-3.29-.73-4.92-.71-11.08.14-21.32-2.55-30.9-8.23-6.24-3.7-12.82-6.82-19.49-10.32-.68,3.06-.14,5.49.15,7.92,1.11,9.32-1.28,13.6-9.77,18.04-17.67,9.24-36.41,11.32-55.82,8.11-46.18-7.66-76.5-35.8-96.87-76.18-10.93-21.67-16.48-44.66-13.17-69.09,4.04-29.79,23.78-50.03,53.1-57.23,7.55-1.85,14.81-4.75,22.69-4.75,31.41,0,58.99,10.46,82.95,30.66,3.42,2.88,6.75,5.87,10.45,9.09-16.72,8.39-31.09,19.99-45.56,31.46-3.91,3.1-7.84,6.21-11.56,9.54-8.28,7.39-14.94,15.52-10.65,28.38-5.52-2.86-9.62-6.67-14.82-8.5-.08-.03-1,.54-.47-.76,2.49-6.07,3.94-12.49,7.9-18.04,3.98-5.57,10.53-6.79,15.66-10.34,3.38-2.34,3.84-3.4.68-6.23-13.26-11.86-27.73-21.22-45.8-23.79-26-3.71-47.23,14.53-47.29,40.88-.08,31.73,14.13,57.02,36.29,78.38,12.66,12.2,27.41,21.21,44.99,24.5,12.24,2.29,24.14,1.34,35.29-5.08,8.73-5.02,13.79-12.69,17.49-21.7,1.62-3.94-3.03-5.17-2.95-9.1,9.23,5.04,19.54,4,29.03,6.85,3.5,1.05,6.28.41,9.24-1.77,4.7-3.46,9.58-6.7,13.45-11.1,3.07-3.5,6.9-2.48,9.47-.67,2.49,1.76,1.54,5.45-.05,8.09-4.43,7.34-4.46,7.29.62,14,1.5,1.99,2.88,4.09,4.23,6.18,4.72,7.32,11.8,9.62,19.9,8.48,3.84-.54,7.27-1.63,10.57,1.31.6.53,1.91.27,2.9.36.34.1.95.33.97.29.27-.59-.24-.54-.59-.63Z"/>
           <path class="cls-3" d="M20.04,425.09c1.17-1.93,2.47-1.53,3.53-1.55,9.71-.13,19.34-1.35,28.55-4.23,9.29-2.91,18.95-.61,28.18-2.94,2.89-.73,6.13-1.12,8.48-2.73,5.22-3.57,10.94-3.32,16.73-3.51,15.29-.5,30.57-1.08,45.85-2.07-16.93-1.49-33.82-3.11-51.02-2.73,2.21-4.97,2.13-4.74-2.97-6.46-8.72-2.94-17.88-2.71-26.88-3.95.28-2.3,1.85-2.4,3.35-2.37,11.12.21,22.21-1.47,32.29-5.55,16.27-6.59,33.21-3.39,49.72-5.56,1.12-.15,2.27-.02,3.44-.9-9.93-.43-19.86-.88-29.8-1.29-3.66-.15-7.33-.15-10.99-.31-1.07-.04-2.92-.07-1.68-1.84,2.46-3.5-.52-3.25-2.38-3.83-8.15-2.55-16.5-3.78-25.02-4.11-1.23-.05-2.68.4-3.77-.92.34-1.78,1.8-1.63,3.03-1.68,11.72-.48,23.5-2.22,34.06-6.84,11.13-4.87,22.38-2.74,33.53-3.93,10.83-1.16,21.81.22,33.43-1.66-.9.83-1.22,1.35-1.45,1.31-16.81-2.73-33.82-2.41-50.73-3.59-1.56-.11-6.61,2.51-4.51-3.49.48-1.36-1.75-.97-2.72-1.29-9.54-3.13-19.46-4.13-29.39-4.99,0-2.47,1.7-2.34,3.14-2.45,14.19-1.01,27.86-4.15,41-9.65,1.3-.54,2.96-.24,4.45-.28,16.62-.41,33.25-.8,49.88-2.11-13.18-.73-26.39-1.09-39.51-2.39-4.23-.42-10.34,3.56-12.74-3.71-5.75-.89-11.01-3.74-16.89-4.14-4.64-.32-9.27-.7-13.96-1.06.26-3.18,2.52-2.8,4.41-2.97,12.82-1.15,25.15-4.26,37.12-8.97,1.78-.7,3.93-.53,5.91-.6,16.15-.56,32.32-.19,48.45-1.36,3.19-.23,6.18-1.35,9.34-1.4,1.43-.02,3.18-.71,4.18.75,1.07,1.55-.39,2.8-1.06,4.05-8.31,15.66-16.56,31.34-25.01,46.92-11.66,21.48-24.04,42.6-35.1,64.38-16.71,32.9-44.02,48.99-79.69,53.25-16.61,1.98-33.24,1.78-49.89,1.81-2.76,0-5.2-1.07-7.75-1.77-8.9-2.45-18.11-2.33-27.22-3.26.19-.98.91-.87,1.45-.89,9.99-.43,20.06-.91,29.59-3.98,10.52-3.39,21.22-2.65,31.92-2.97,1.48-.04,2.96-.19,4.45-1.09h-28c2.98-5.7-.49-5.99-4.08-7.02-8.38-2.4-17.01-2.86-25.72-3.87.28-2.03,1.64-1.94,2.87-2.01,10.51-.55,20.75-2.8,30.99-5.02,1.45-.31,3.66-.45,4.12-1.37,2.19-4.33,5.98-3.42,9.52-3.48,18.16-.31,36.31-.61,54.47-.93,1.64-.03,3.28-.18,4.91-.82-15.26-.44-30.51-.89-45.77-1.31-2.5-.07-5.06.32-7.48-.11-3.99-.7-7.87,1.09-12.14-2.76-3.46-3.11-10.37-2.54-15.8-3.24-4.93-.64-9.93-.78-15.26-1.17Z"/>
@@ -928,7 +955,7 @@
         </svg>
       </div>
 
-      <!-- Endoso Oficial "By Honda" -->
+      <!-- Placa Oficial By HONDA -->
       <div class="by-honda-container">
         <span class="by-text">By</span>
         <div class="honda-wing-icon">
@@ -983,21 +1010,28 @@
         <span class="dot"></span>
         <span>PUERTO IGUAZÚ</span>
       </div>
+
+      <div>
+        <span class="google-badge-chip">
+          <span class="google-stars">★★★★☆</span>
+          <span>4.1 en Google (130 opiniones)</span>
+        </span>
+      </div>
     </section>
 
-    <!-- PROMO DE NOVIEMBRE REAL (Instagram Feed: CB 300F + SMART TV 43'') -->
+    <!-- PROMO DE NOVIEMBRE OFICIAL CON FOTO CB300.JPG -->
     <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20aprovechar%20la%20Promo%20de%20la%20CB300F%20Twister%20con%20Smart%20TV%2043%22%20de%20regalo." target="_blank" rel="noopener noreferrer" class="promo-banner-card audio-click">
       <span class="promo-tag-strip">PROMO NOVIEMBRE</span>
       <div class="promo-content">
-        <div class="promo-headline">COMPRÁ TU HONDA CB 300F TWISTER</div>
-        <div class="promo-subtext">¡Y llevate una <strong>Smart TV LED 43" BGH</strong> de regalo!</div>
+        <div class="promo-headline">HONDA CB 300F TWISTER</div>
+        <div class="promo-subtext">Comprá tu 300F y llevate una <strong>Smart TV LED 43" BGH</strong> de regalo.</div>
       </div>
-      <div class="promo-arrow">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      <div class="promo-photo-frame">
+        <img src="cb300.jpg" alt="Honda CB 300F Twister" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=300&q=80';" />
       </div>
     </a>
 
-    <!-- COLOR BLOCKING MODULAR (Benetton / McLaren Racing) -->
+    <!-- COLOR BLOCKING MODULAR (BENETTON / MCLAREN STYLE) -->
     <div class="color-blocks-grid">
       <!-- Tarjeta Azul: Financiación con DNI -->
       <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20consultar%20por%20la%20financiacion%20solo%20con%20DNI." target="_blank" rel="noopener noreferrer" class="color-block-tile tile-blue audio-click">
@@ -1021,8 +1055,7 @@
         </div>
       </a>
     </div>
-
-    <!-- BOTONERA TÁCTICA DE ACCIONES -->
+<!-- BOTONERA TÁCTICA DE ACCIONES -->
     <div class="tactical-stack">
       
       <!-- Honda Plan de Ahorro -->
@@ -1083,27 +1116,32 @@
 
     </div>
 
-    <!-- SHOWROOM INTERACTIVO DE MODELOS REALES DE SAN JORGE -->
+    <!-- SHOWROOM INTERACTIVO CON TUS FOTOS DE GITHUB (biz110.webp y cb300.jpg) -->
     <section class="showroom-deck">
       <div class="deck-header">
         <h2 class="deck-title">MODELOS DISPONIBLES</h2>
-        <span class="deck-subtitle">STOCK 0KM</span>
+        <span class="deck-subtitle">ENTREGA INMEDIATA</span>
       </div>
 
-      <!-- Selector de píldoras -->
+      <!-- Selector de modelos -->
       <div class="model-pills" id="modelPills">
         <button class="model-pill-btn active" onclick="selectModel(0)">BIZ 110</button>
-        <button class="model-pill-btn" onclick="selectModel(1)">NAVI 110</button>
-        <button class="model-pill-btn" onclick="selectModel(2)">CB 300F</button>
+        <button class="model-pill-btn" onclick="selectModel(1)">CB 300F</button>
+        <button class="model-pill-btn" onclick="selectModel(2)">NAVI 110</button>
         <button class="model-pill-btn" onclick="selectModel(3)">XR 300L</button>
       </div>
 
       <!-- Escenario dinámico -->
       <div class="model-stage" id="modelStage">
+        <!-- Foto cargada desde el repositorio de GitHub -->
+        <div class="stage-media-wrap">
+          <img id="stageImage" src="biz110.webp" alt="Honda Biz 110" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&q=80';" />
+        </div>
+
         <div class="model-stage-top">
           <div>
             <div class="stage-model-name" id="stageName">HONDA BIZ 110</div>
-            <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700;" id="stageDesc">Práctica, económica y lista para entrega</span>
+            <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700;" id="stageDesc">Práctica, económica y lista para entrega</span>
           </div>
           <span class="stage-badge" id="stageBadge">FINANCIACIÓN DNI</span>
         </div>
@@ -1124,27 +1162,28 @@
         </div>
 
         <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20cotizar%20la%20Honda%20Biz%20110." id="stageCtaBtn" target="_blank" rel="noopener noreferrer" class="consult-model-btn audio-click">
-          <span>CONSULTAR PRECIO & FINANCIACIÓN</span>
+          <span>CONSULTAR DISPONIBILIDAD & FINANCIACIÓN</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </section>
 
-    <!-- UBICACIÓN & CONTACTOS REALES -->
+    <!-- UBICACIÓN EXACTA JANGADERO 35 - PUERTO IGUAZÚ -->
     <section class="location-box">
       <div class="location-header">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sj-red)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>CONCESIONARIA EN PUERTO IGUAZÚ</span>
+        <span>CONCESIONARIO OFICIAL PUERTO IGUAZÚ</span>
       </div>
+      <div class="location-address">Jangadero 35, N3370 Puerto Iguazú, Misiones</div>
       <p class="location-text">
-        Vení a conocer tu próxima moto en nuestro salón de ventas oficial, con taller especializado y entrega rápida en Misiones.
+        Vení a conocer tu próxima moto a nuestro salón de ventas oficial, con taller especializado y entrega inmediata en Misiones.
       </p>
       <div class="phones-row">
         <a href="https://wa.me/5493757679972" target="_blank" class="phone-chip audio-click">
           <span>📲 Ventas: +54 3757 67-9972</span>
         </a>
         <a href="https://wa.me/5493757312390" target="_blank" class="phone-chip audio-click">
-          <span>📲 Taller: +54 3757 31-2390</span>
+          <span>🔧 Taller: +54 3757 31-2390</span>
         </a>
       </div>
     </section>
@@ -1159,7 +1198,7 @@
 
   </div>
 
-  <!-- MODAL DE ELECCIÓN RÁPIDA DE ASESOR -->
+  <!-- MODAL DE ELECCIÓN RÁPIDA DE ASESOR WHATSAPP -->
   <div class="modal-backdrop" id="contactModal">
     <div class="modal-card">
       <button class="modal-close" onclick="closeContactModal()">&times;</button>
@@ -1184,12 +1223,11 @@
   </div>
 
   <!-- ==========================================================================
-       SCRIPTS: AUDIO SYNTH, TEMA CLARO/OSCURO, HORARIO IGUAZÚ Y CANVAS F1
-       ========================================================================== */
-  -->
+       SCRIPTS: AUDIO SYNTH, TEMA CLARO/OSCURO, HORARIO REAL IGUAZÚ Y CANVAS F1
+       ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
-       1. SISTEMA DE AUDIO MECÁNICO (Web Audio API nativo sin audios externos)
+       1. SISTEMA DE AUDIO MECÁNICO (Web Audio API nativo)
        -------------------------------------------------------------------------- */
     let audioCtx = null;
     let soundActive = false;
@@ -1277,7 +1315,6 @@
       }
     }
 
-    // Default: light mode
     const savedTheme = localStorage.getItem('sj_theme') || 'light';
     applyTheme(savedTheme);
 
@@ -1287,14 +1324,17 @@
     });
 
     /* --------------------------------------------------------------------------
-       3. HORARIOS COMERCIALES DE PUERTO IGUAZÚ (GMT-3)
+       3. HORARIOS REALES DE ATENCIÓN DE GOOGLE (PUERTO IGUAZÚ GMT-3)
+       Lunes a Viernes: 8:00 a 12:00 y 15:00 a 19:30
+       Sábados: 8:00 a 12:00
+       Domingos: Cerrado
        -------------------------------------------------------------------------- */
     function checkIguazuBusinessHours() {
       const now = new Date();
       const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-      const iguazu = new Date(utc - (3600000 * 3)); // GMT-3
+      const iguazu = new Date(utc - (3600000 * 3)); // GMT-3 oficial
 
-      const day = iguazu.getDay(); // 0 domingo, 6 sábado
+      const day = iguazu.getDay(); // 0 dom, 6 sab
       const hours = iguazu.getHours();
       const mins = iguazu.getMinutes();
       const currentDec = hours + (mins / 60);
@@ -1303,21 +1343,26 @@
       const label = document.getElementById('storeStatusLabel');
 
       let isOpen = false;
-      // Lunes a Viernes: 8:00 a 12:00 y 16:00 a 20:00
-      if (day >= 1 && day <= 5) {
-        if ((currentDec >= 8 && currentDec < 12) || (currentDec >= 16 && currentDec < 20)) {
+      let closeTime = '';
+
+      if (day >= 1 && day <= 5) { // Lunes a Viernes
+        if (currentDec >= 8 && currentDec < 12) {
           isOpen = true;
+          closeTime = '12:00';
+        } else if (currentDec >= 15 && currentDec < 19.5) { // 3:00 p.m. a 7:30 p.m.
+          isOpen = true;
+          closeTime = '19:30';
         }
-      } else if (day === 6) {
-        // Sábados: 8:00 a 12:30
-        if (currentDec >= 8 && currentDec < 12.5) {
+      } else if (day === 6) { // Sábado
+        if (currentDec >= 8 && currentDec < 12) {
           isOpen = true;
+          closeTime = '12:00';
         }
       }
 
       if (isOpen) {
         beacon.className = 'status-pulse';
-        label.innerText = 'LOCAL ABIERTO EN IGUAZÚ';
+        label.innerText = `ABIERTO AHORA • CIERRA ${closeTime} HS`;
       } else {
         beacon.className = 'status-pulse closed';
         label.innerText = 'LOCAL CERRADO • WHATSAPP 24HS';
@@ -1327,40 +1372,44 @@
     setInterval(checkIguazuBusinessHours, 30000);
 
     /* --------------------------------------------------------------------------
-       4. SHOWROOM CONTROLLER CON MODELOS Y DATOS REALES
+       4. SHOWROOM CONTROLLER CON TUS FOTOS DE GITHUB (biz110.webp y cb300.jpg)
        -------------------------------------------------------------------------- */
     const realModels = [
       {
         name: "HONDA BIZ 110",
         desc: "Práctica, económica y lista para entrega inmediata",
         badge: "FINANCIACIÓN DNI",
+        img: "biz110.webp",
         engine: "109.1 cc",
         trans: "4 Marchas",
         brakes: "Tambor CBS",
         waQuery: "Hola San Jorge Motos! Me interesa consultar por la Honda Biz 110 y su financiación solo con DNI."
       },
       {
-        name: "HONDA NAVI 110",
-        desc: "Automática, urbana y con estilo 100% personalizable",
-        badge: "SÚPER PEDIDA",
-        engine: "109.2 cc",
-        trans: "Automática V-Matic",
-        brakes: "CBS Combinado",
-        waQuery: "Hola San Jorge Motos! Quiero cotizar la Honda Navi 110 y ver colores disponibles."
-      },
-      {
         name: "CB 300F TWISTER",
         desc: "Motor OHC 4 válvulas con control de tracción y ABS",
         badge: "SMART TV 43'' REGALO",
+        img: "cb300.jpg",
         engine: "293 cc",
         trans: "6 Velocidades",
         brakes: "ABS Doble Canal",
         waQuery: "Hola San Jorge Motos! Quiero aprovechar la promo de la CB300F Twister con Smart TV 43 de regalo."
       },
       {
+        name: "HONDA NAVI 110",
+        desc: "Automática, urbana y con estilo 100% personalizable",
+        badge: "SÚPER PEDIDA",
+        img: "biz110.webp", // Fallback seguro
+        engine: "109.2 cc",
+        trans: "Automática V-Matic",
+        brakes: "CBS Combinado",
+        waQuery: "Hola San Jorge Motos! Quiero cotizar la Honda Navi 110 y ver colores disponibles."
+      },
+      {
         name: "XR 300L TORNADO",
         desc: "La leyenda del On-Off renovada con inyección y seguridad",
         badge: "NUEVA GENERACIÓN",
+        img: "cb300.jpg", // Fallback seguro
         engine: "293.5 cc PGM-FI",
         trans: "6 Velocidades",
         brakes: "ABS Delantero",
@@ -1381,6 +1430,8 @@
         document.getElementById('stageName').innerText = item.name;
         document.getElementById('stageDesc').innerText = item.desc;
         document.getElementById('stageBadge').innerText = item.badge;
+        document.getElementById('stageImage').src = item.img;
+        document.getElementById('stageImage').alt = item.name;
         document.getElementById('stageEngine').innerText = item.engine;
         document.getElementById('stageTrans').innerText = item.trans;
         document.getElementById('stageBrakes').innerText = item.brakes;
@@ -1393,7 +1444,7 @@
     }
 
     /* --------------------------------------------------------------------------
-       5. MODAL FAST ACTION
+       5. MODAL DE ASESOR WHATSAPP
        -------------------------------------------------------------------------- */
     function openContactModal(title) {
       document.getElementById('modalTopicTitle').innerText = title;
@@ -1407,7 +1458,7 @@
     });
 
     /* --------------------------------------------------------------------------
-       6. CANVAS DE TRAZADO DE CIRCUITO F1 ELEGANTE (Deriva Suave y Sutil)
+       6. CANVAS DE TRAZADO DE CIRCUITO F1 ELEGANTE (Deriva Suave y Armónica)
        -------------------------------------------------------------------------- */
     const canvas = document.getElementById('f1-track-canvas');
     const ctx = canvas.getContext('2d');
@@ -1420,7 +1471,6 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Generador de curvas orgánicas tipo circuito de carreras
     let offset = 0;
     function drawCircuitTrack() {
       ctx.clearRect(0, 0, width, height);
@@ -1429,38 +1479,38 @@
       ctx.strokeStyle = isDark ? '#ffffff' : '#0a1428';
       ctx.lineWidth = 1;
 
-      offset += 0.15; // Velocidad de deriva extremadamente suave y casi imperceptible
+      offset += 0.12; // Movimiento zen casi imperceptible
 
-      // Pista 1
+      // Pista 1: Curva de alta velocidad superior
       ctx.beginPath();
-      ctx.setLineDash([12, 18]);
-      ctx.moveTo(-50, (height * 0.2) + Math.sin((offset + 10) * 0.02) * 20);
+      ctx.setLineDash([16, 20]);
+      ctx.moveTo(-50, (height * 0.18) + Math.sin((offset + 10) * 0.02) * 15);
       ctx.bezierCurveTo(
-        width * 0.3, (height * 0.1) + Math.cos(offset * 0.02) * 30,
-        width * 0.7, (height * 0.35) + Math.sin(offset * 0.02) * 25,
-        width + 50, (height * 0.25)
+        width * 0.35, (height * 0.08) + Math.cos(offset * 0.02) * 20,
+        width * 0.65, (height * 0.28) + Math.sin(offset * 0.02) * 20,
+        width + 50, (height * 0.18)
       );
       ctx.stroke();
 
-      // Pista 2: Circuito principal envolvente
+      // Pista 2: Sector principal de frenada y horquilla
       ctx.beginPath();
-      ctx.setLineDash([35, 12, 6, 12]);
-      ctx.moveTo(-60, (height * 0.65));
+      ctx.setLineDash([35, 14, 8, 14]);
+      ctx.moveTo(-60, (height * 0.62));
       ctx.bezierCurveTo(
-        width * 0.35, (height * 0.5) + Math.sin(offset * 0.015) * 40,
-        width * 0.45, (height * 0.85) + Math.cos(offset * 0.018) * 30,
-        width + 60, (height * 0.6) + Math.sin((offset + 50) * 0.02) * 20
+        width * 0.35, (height * 0.48) + Math.sin(offset * 0.015) * 30,
+        width * 0.50, (height * 0.82) + Math.cos(offset * 0.018) * 25,
+        width + 60, (height * 0.58) + Math.sin((offset + 40) * 0.02) * 15
       );
       ctx.stroke();
 
       // Pista 3: Curva inferior
       ctx.beginPath();
-      ctx.setLineDash([8, 14]);
-      ctx.moveTo(width * 0.1, height + 40);
+      ctx.setLineDash([10, 16]);
+      ctx.moveTo(width * 0.1, height + 30);
       ctx.bezierCurveTo(
         width * 0.4, (height * 0.88),
         width * 0.8, (height * 0.94),
-        width + 40, (height * 0.8)
+        width + 40, (height * 0.82)
       );
       ctx.stroke();
 
