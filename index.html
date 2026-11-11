@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>San Jorge Motos Iguazú | Agente Oficial Honda</title>
+  <meta name="description" content="Agente Oficial Honda Motos en Puerto Iguazú. Venta 0KM, repuestos originales, service oficial y financiación solo con tu DNI." />
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="San Jorge Motos Iguazú | Agente Oficial Honda" />
+  <meta property="og:description" content="Subite a tu próxima Honda en Puerto Iguazú. Financiación solo con DNI, promociones del mes y atención por WhatsApp." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#ffffff" id="metaThemeColor" />
+
+  <!-- Tipografías: Space Grotesk + Syne + Barlow Condensed -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,800&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES DE DISEÑO: MODO CLARO (DEFAULT) & MODO OSCURO
+       ========================================================================== */
+    :root {
+      --sj-blue: #0571d9;
+      --sj-blue-hover: #035bb0;
+      --sj-red: #f60505;
+      --honda-red: #e40521;
+      --pure-white: #ffffff;
+
+      /* MODO CLARO (Default) */
+      --bg-main: #f5f6fa;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f0f2f7;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-color-active: rgba(5, 113, 217, 0.35);
+      --text-title: #0a0d14;
+      --text-body: #4a5568;
+      --text-muted: #718096;
+      --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+      --shadow-colored: 0 14px 28px -6px rgba(5, 113, 217, 0.18);
+      --circuit-opacity: 0.07;
+      --circuit-stroke: #0a1128;
+
+      /* Chamfers mecánicos inspirados en McLaren / F1 */
+      --chamfer-sm: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+      --chamfer-md: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+      --chamfer-lg: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+      
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-heading: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-main: #08090d;
+      --bg-card: #10131a;
+      --bg-card-subtle: #171b24;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-color-active: rgba(5, 113, 217, 0.45);
+      --text-title: #ffffff;
+      --text-body: #a0aec0;
+      --text-muted: #718096;
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.5);
+      --shadow-colored: 0 14px 30px rgba(5, 113, 217, 0.25);
+      --circuit-opacity: 0.12;
+      --circuit-stroke: #ffffff;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100dvh;
+      background-color: var(--bg-main);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      touch-action: pan-y;
+    }
+
+    /* Fondo de circuito F1 de deriva lenta */
+    #f1-track-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100dvh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: var(--circuit-opacity);
+      transition: opacity 0.3s ease;
+    }
+
+    /* ==========================================================================
+       CONTENEDOR A PRUEBA DE INSTAGRAM (Evita que el navegador webview lo aplaste)
+       ========================================================================== */
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      padding: calc(12px + env(safe-area-inset-top, 0px)) 16px calc(40px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Barra Superior: Horarios + Modo Oscuro + Audio */
+    .top-telemetry-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-sm);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .telemetry-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--text-title);
+    }
+    .status-pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00c853;
+      box-shadow: 0 0 10px #00c853;
+      animation: pulse-beacon 2s infinite ease-in-out;
+    }
+    .status-pulse.closed {
+      background: var(--sj-red);
+      box-shadow: 0 0 10px var(--sj-red);
+    }
+    @keyframes pulse-beacon {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.8); opacity: 0.4; }
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-control-btn {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-title);
+      width: 32px;
+      height: 32px;
+      clip-path: var(--chamfer-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .icon-control-btn:hover {
+      border-color: var(--sj-blue);
+      color: var(--sj-blue);
+    }
+
+    /* ==========================================================================
+       HERO LOGO (REGLA DE ORO: SIEMPRE EN FONDO BLANCO EN AMBOS MODOS)
+       ========================================================================== */
+    .logo-hero-capsule {
+      position: relative;
+      background: var(--pure-white) !important; /* Siempre blanco impecable */
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      clip-path: var(--chamfer-lg);
+      padding: 24px 20px 18px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+      margin-bottom: 16px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Franja superior deportiva (Azul San Jorge + Rojo Competición) */
+    .logo-hero-capsule::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--sj-blue) 0%, var(--sj-blue) 50%, var(--sj-red) 50%, var(--sj-red) 100%);
+    }
+
+    .official-sj-logo {
+      width: 100%;
+      max-width: 290px;
+      margin: 0 auto;
+      display: block;
+    }
+    .official-sj-logo svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(5, 113, 217, 0.15));
+    }
+
+    /* By Honda Badge */
+    .by-honda-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 6px 16px;
+      background: #f8f9fc;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      clip-path: var(--chamfer-sm);
+    }
+    .by-text {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #636d7e;
+      text-transform: uppercase;
+    }
+    .honda-wing-icon {
+      width: 52px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+    }
+    .honda-wing-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--honda-red);
+    }
+
+    .location-subtitle {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #718096;
+      text-transform: uppercase;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .location-subtitle span.dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--sj-blue);
+    }
+
+    /* ==========================================================================
+       PROMO DESTACADA DE NOVIEMBRE (Directo de su feed: CB 300F + SMART TV)
+       ========================================================================== */
+    .promo-banner-card {
+      position: relative;
+      background: linear-gradient(135deg, #10141d 0%, #06070a 100%);
+      color: #ffffff;
+      border: 1px solid rgba(246, 5, 5, 0.4);
+      clip-path: var(--chamfer-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      box-shadow: 0 10px 24px rgba(246, 5, 5, 0.18);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .promo-banner-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--sj-red);
+    }
+    .promo-tag-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: var(--sj-red);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      padding: 3px 12px;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+      text-transform: uppercase;
+    }
+    .promo-content {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .promo-headline {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    .promo-subtext {
+      font-size: 0.78rem;
+      color: #cbd5e0;
+    }
+    .promo-subtext strong {
+      color: #ffeb3b;
+    }
+    .promo-arrow {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      background: var(--sj-red);
+      clip-path: var(--chamfer-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      transition: transform 0.2s;
+    }
+    .promo-banner-card:hover .promo-arrow {
+      transform: translate(2px, -2px);
+    }
+
+    /* ==========================================================================
+       COLOR BLOCKING DIRECTO (Benetton / McLaren Racing Club)
+       ========================================================================== */
+    .color-blocks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .color-block-tile {
+      position: relative;
+      padding: 16px 14px;
+      clip-path: var(--chamfer-md);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 140px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .color-block-tile:hover {
+      transform: translateY(-3px);
+    }
+
+    .tile-blue {
+      background: linear-gradient(145deg, #0571d9 0%, #034f99 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(5, 113, 217, 0.25);
+    }
+    .tile-red {
+      background: linear-gradient(145deg, #f60505 0%, #ba0303 100%);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(246, 5, 5, 0.25);
+    }
+
+    .tile-pattern {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 65px;
+      height: 65px;
+      opacity: 0.16;
+      background: repeating-linear-gradient(45deg, #fff, #fff 3px, transparent 3px, transparent 7px);
+      pointer-events: none;
+    }
+
+    .tile-category {
+      font-family: var(--font-display);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .tile-name {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 6px 0;
+    }
+
+    .tile-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      padding-top: 8px;
+    }
+    .tile-footer span {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .tile-footer svg {
+      transition: transform 0.2s;
+    }
+    .color-block-tile:hover .tile-footer svg {
+      transform: translate(2px, -2px);
+    }
+
+    /* ==========================================================================
+       BOTONERA TÁCTICA DE ENLACES
+       ========================================================================== */
+    .tactical-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tactical-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-md);
+      text-decoration: none;
+      color: var(--text-title);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background 0.2s;
+    }
+    .tactical-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--sj-blue);
+      transition: width 0.2s;
+    }
+    .tactical-btn.accent-red::before {
+      background: var(--sj-red);
+    }
+    .tactical-btn.accent-dark::before {
+      background: #718096;
+    }
+
+    .tactical-btn:hover {
+      transform: translateX(4px);
+      border-color: var(--border-color-active);
+      background: var(--bg-card-subtle);
+    }
+    .tactical-btn:hover::before {
+      width: 6px;
+    }
+
+    .tactical-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tactical-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-sm);
+      color: var(--sj-blue);
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tactical-btn.accent-red .tactical-icon {
+      color: var(--sj-red);
+    }
+    .tactical-btn:hover .tactical-icon {
+      background: var(--sj-blue);
+      color: #fff;
+    }
+    .tactical-btn.accent-red:hover .tactical-icon {
+      background: var(--sj-red);
+      color: #fff;
+    }
+
+    .tactical-btn-texts {
+      display: flex;
+      flex-direction: column;
+    }
+    .tactical-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .tactical-label {
+      font-family: var(--font-heading);
+      font-size: 0.96rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-title);
+      line-height: 1.2;
+    }
+
+    .tactical-arrow {
+      color: var(--text-muted);
+      transition: transform 0.2s, color 0.2s;
+    }
+    .tactical-btn:hover .tactical-arrow {
+      color: var(--sj-blue);
+      transform: translate(2px, -2px);
+    }
+    .tactical-btn.accent-red:hover .tactical-arrow {
+      color: var(--sj-red);
+    }
+
+    /* ==========================================================================
+       SHOWROOM INTERACTIVO DE MODELOS REALES
+       ========================================================================== */
+    .showroom-deck {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .deck-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .deck-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-title);
+    }
+    .deck-subtitle {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--sj-blue);
+      text-transform: uppercase;
+    }
+
+    /* Píldoras de modelos */
+    .model-pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .model-pills::-webkit-scrollbar { display: none; }
+
+    .model-pill-btn {
+      flex: 0 0 auto;
+      padding: 6px 12px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      clip-path: var(--chamfer-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .model-pill-btn.active, .model-pill-btn:hover {
+      background: var(--sj-blue);
+      border-color: var(--sj-blue);
+      color: #fff;
+    }
+
+    /* Escenario del Modelo */
+    .model-stage {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-md);
+      padding: 14px;
+      margin-top: 6px;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .model-stage-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .stage-model-name {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--text-title);
+      text-transform: uppercase;
+    }
+    .stage-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      background: rgba(0, 200, 83, 0.15);
+      border: 1px solid rgba(0, 200, 83, 0.35);
+      color: #00a844;
+      clip-path: var(--chamfer-sm);
+      text-transform: uppercase;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 12px 0;
+    }
+    .spec-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 2px solid var(--sj-blue);
+      padding: 6px 8px;
+    }
+    .spec-key {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .spec-val {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-title);
+    }
+
+    .consult-model-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--honda-red);
+      color: #fff;
+      border: none;
+      clip-path: var(--chamfer-sm);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .consult-model-btn:hover {
+      background: #c7031b;
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       UBICACIÓN & CONTACTO REAL EN PUERTO IGUAZÚ
+       ========================================================================== */
+    .location-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-md);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 24px;
+    }
+    .location-header {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-title);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .location-text {
+      font-size: 0.82rem;
+      color: var(--text-body);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+    .phones-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .phone-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      padding: 5px 10px;
+      clip-path: var(--chamfer-sm);
+      color: var(--text-title);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .phone-chip:hover {
+      border-color: #25d366;
+      color: #25d366;
+    }
+
+    /* Footer */
+    .footer-section {
+      text-align: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-racing-stripe {
+      width: 100%;
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--sj-blue) 0px,
+        var(--sj-blue) 18px,
+        transparent 18px,
+        transparent 28px,
+        var(--sj-red) 28px,
+        var(--sj-red) 46px,
+        transparent 46px,
+        transparent 56px
+      );
+      opacity: 0.7;
+    }
+    .legal-copy {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+    }
+
+    /* Modal Contacto Rápido */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-lg);
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text-title);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .modal-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .modal-wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      clip-path: var(--chamfer-sm);
+      text-decoration: none;
+      color: var(--text-title);
+      font-family: var(--font-heading);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+    .modal-wa-btn:hover {
+      background: #25d366;
+      border-color: #25d366;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas con trazado de circuito F1 de deriva lenta y ultra fina -->
+  <canvas id="f1-track-canvas"></canvas>
+
+  <div class="app-wrapper">
+
+    <!-- BARRA DE TELEMETRÍA SUPERIOR -->
+    <header class="top-telemetry-bar">
+      <div class="telemetry-status">
+        <span class="status-pulse" id="statusBeacon"></span>
+        <span id="storeStatusLabel">CONECTANDO SHOWROOM...</span>
+      </div>
+
+      <div class="top-controls">
+        <!-- Control de Sonido Mecánico -->
+        <button class="icon-control-btn audio-click" id="audioToggleBtn" title="Activar/Desactivar Sonido">
+          <svg id="audioIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Selector Modo Claro / Oscuro -->
+        <button class="icon-control-btn audio-click" id="themeToggleBtn" title="Cambiar Tema">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- CÁPSULA DEL LOGO OFICIAL (Fondo blanco asegurado en ambos temas) -->
+    <section class="logo-hero-capsule">
+      <!-- SVG Oficial de San Jorge Motos Iguazú -->
+      <div class="official-sj-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1768.8 591.03" role="img" aria-label="San Jorge Motos">
+          <defs>
+            <style>
+              .cls-1 { fill: #fcfcfc; stroke-width: 0px; }
+              .cls-2 { fill: #0571d9; stroke-width: 0px; }
+              .cls-3 { fill: #f60505; stroke-width: 0px; }
+            </style>
+          </defs>
+          <path class="cls-3" d="M185.98,417.57c7.19-1.26,14.75-.01,21.13-3.38,8.34-4.41,17.39-5.48,26.37-7.47-6.14-.76-12.27-1.54-18.41-2.29-1.88-.23-3.74-.28-3.52-3.03.15-1.87-1.59-1.71-2.75-2.25-5.27-2.44-10.75-4.1-16.47-4.21-.29-2.07.81-2.28,1.75-2.38,8.21-.85,15.79-3.42,22.81-7.82,1.31-.82,3.2-.86,4.84-1.01,13.16-1.21,26.4-1.36,39.52-2.8-3,1.66-5.8-.51-8.74-.6-9.99-.3-19.94-1.26-29.82-2.77-1.56-.24-2.82-.17-3.53-2.51-.94-3.11-4.74-2.9-7.39-4-2.49-1.04-7.18-.79-7.13-2.92.07-2.93,4.61-1.94,7.05-3.11,5.51-2.62,11.46-4.08,17.02-6.81,4.39-2.16,10.07-1.68,15.17-2.37,7.27-.98,14.63-.17,21.84-.85-5.67-1.15-11.5-1.35-17.26-2.1-2.8-.36-5.6-.89-8.31-1.65-2.45-.69-5.18-.22-6.46-4.13-.75-2.3-5.31-2.83-8.35-3.64-2.16-.58-4.4-.89-6.54-1.3.22-1.95,1.41-2.08,2.58-2.33,8.59-1.88,16.95-4.28,25.07-7.93,3.99-1.8,9.17-1.1,13.82-1.27,14.48-.51,28.97-.91,43.45-1.33,2.28-.07,4.56,0,6.86-.45-6.92-2.06-14.11-1.51-21.15-2.32-8.75-1.01-17.57-1.45-26.37-2.11-3.97-.3-7.64-1.17-11.32-3-5.37-2.66-11.33-3.66-17.65-3.19.39-2.83,2.46-2.5,4.06-2.97,28.86-8.51,58.5-10.2,88.33-10.21,31.48-.01,62.96,0,94.44-.72-56.94-2.85-113.96-1.85-171.09-4.52,2.96-6.89,9.38-7.2,14.72-9.28,22.91-8.95,47-10.35,71.19-10.9,10.66-.24,21.32-.21,31.99-.35,1.66-.02,3.44.37,6.13-1.26-31.92-2.91-62.84.81-94.47-4,2-.54,3.07-.93,4.17-1.1,21.86-3.52,42.71-11.63,64.81-14.06,21.99-2.42,43.88-3.18,65.37,3.38,28.01,8.55,42.33,27.38,42.95,56.74.46,21.65-5.63,41.89-15.07,61.04-19.6,39.76-50.01,67.78-92.38,81.81-30.9,10.23-62.49,11.07-94.16,3.98-13.17-2.95-26.47-4.54-39.88-6.13,14.25-.56,28.24-3.01,42.35-5.2-2.52-.15-5.04-.32-7.56-.46-14.84-.82-28.72-6.03-43-9.41-5.92-1.4-11.92-2.45-16.55-3.39,38.35-11.42,79.05-8.62,120.22-9.28-1.6-1.77-2.97-1.36-4.12-1.37-21.65-.24-43.3-.77-64.91-2.2-6.98-.46-13.98-.63-20.92-1.41-4.73-.53-8.6-3.83-13.37-4.84-5.36-1.14-10.64-2.53-16.13-2.96-1.71-.13-3.67.24-5.22-1.59ZM412.76,327.99l-.05-1.5c-9.98,0-19.97.01-29.95-.01-1.48,0-3.03.3-4.39-.55-11.69-7.29-24.05-5.72-36.14-1.91-21.76,6.87-36.84,22.05-48.29,41.13-5.77,9.61-10.47,19.77-10.69,31.31-.22,11.25,5.11,17.83,16.1,20.07,10.45,2.14,20.7.71,30.32-3.39,6.97-2.97,14.03-3.74,21.38-3.98,14.15-.45,28.29-1.02,42.43-1.61,1.34-.06,2.91.57,4.27-1.01-16.58-.75-32.92-1.5-49.59-2.25.66-1.64,2.54-1.89,2.26-3.87-4.54.31-9.13.62-14.13.96,3.85-5.41,8.94-6.96,14.15-8.69,7.58-2.52,14.68-6.8,22.18-9,7.78-2.29,16.51-1.34,24.82-1.8,1.5-.08,2.99-.25,4.49-.27,4.08-.04,8.16-.01,12.24-.01-.01-.35-.02-.7-.04-1.05-13.35-.77-26.7-1.53-39-2.24-.93-8.05-8.04-5.97-11.67-8.81.2-1.8,1.26-2.81,3.31-3.44,4.28-1.32,8.34-3.5,12.68-4.43,3.19-.68,4.23-4.22,7.51-4.38,4.15-.21,8.29-.78,12.44-.94,12.64-.5,25.29-.99,37.94-1.2,2.52-.04,5.04-1.92,7.6-.28-.57.56-1.23.88-1.76.74-6.81-1.82-13.8-1.93-20.77-2.31-10.64-.59-21.26-1.3-31.82-2.83-1.1-.16-2.99.21-3.04-1.05-.17-5.09-4.56-4.57-7.46-5.84-2.57-1.12-5.39-1.66-9.25-2.8,4.74-1.68,8.24-3,11.79-4.15,2.21-.72,3.16-1.73,1.61-3.91-2.15-3.02-.18-3.11,2.17-3.16,8.8-.21,17.62,0,26.33-1.55ZM389,278.7c-.05-.31-.11-.62-.16-.92h-13.87c0,.31,0,.62,0,.92h14.02Z"/>
+          <path class="cls-3" d="M534.56,434.82c7.7-.59,15.27-1.66,22.65-3.71,2.01-.56,5.28.29,5.31-3.72.01-1.4,1.93-.78,2.99-.79,4.32-.06,8.65-.02,13.83-.02-2.47-1.99-4.55-1.71-6.43-2.07-4.86-.92-9.5.02-14.02-4.91-3.73-4.06-11.19-5.35-17.56-6.2-3.39-.45-6.75-1.16-10.9-1.89,2.13-2.09,3.98-1.85,5.64-2,6.51-.6,12.71-2.53,18.97-4.26,2.09-.58,2.68-1.55,2.12-3.57-.49-1.76-.69-3.6-1.18-5.36-.73-2.65-2.16-3.97-5.31-4.04-16.16-.36-16.07-.42-23.59,13.73-10.14,19.09-20.48,38.08-30.62,57.18-1.17,2.21-2.42,3.11-4.96,3.09-20.33-.11-40.67.34-60.98-.27-8.27-.25-16.37-3.4-24.83-3.39,24.73-9,50.4-9.53,76.14-9.81-9.15-1.91-18.49-1.38-27.69-2.41-1.49-.17-3.07.15-4.48-.22-4.88-1.28-10.08,1.45-15.02-3.46-3.04-3.03-9.75-2.33-14.78-3.44-1.35-.3-3.84.88-3.72-1.78.09-2.11,1.98-2.68,3.98-3.01,8.83-1.45,17.34-3.85,25.78-7.05,6.94-2.64,14.86-1.05,22.31-1.92,1.95-.23,3.95-.03,5.98-.95-5.23-.4-10.47-.82-15.7-1.2-4.59-.33-8.83-.7-13.32-3.03-5.28-2.73-11.8-3.05-17.88-4.43.31-2.35,1.61-3.59,4.05-4.14,9.06-2.04,17.89-4.87,26.77-7.57,6.5-1.97,13.86-1.27,20.84-1.43,8.42-.2,16.84-.05,25.26-1.09-11.45-.79-22.91-1.42-34.33-2.48-3.6-.33-7.37,1.04-10.7-3.39-2.02-2.68-7.97-2.43-12.17-3.43-.96-.23-2.05,0-2.97-.31-1.38-.46-3.98,1.01-3.98-1.43,0-1.92,1.79-2.97,4.13-3.49,8.87-2,17.76-4.02,26.05-8.02,1.41-.68,3.23-.61,4.87-.67,13.46-.48,26.92-.91,40.38-1.6-12.7-1.79-25.53-1.26-38.26-2.36-1.88-.16-5.1,1.21-4.22-3.14.24-1.17-1.47-.97-2.37-1.2-5.77-1.47-11.55-2.92-17.36-4.39.43-2.83,1.96-3.99,4.88-4.63,8.57-1.87,17.18-3.71,25.02-8.03,1.46-.8,3.56-.53,5.37-.59,14.63-.46,29.26-.88,43.93-2.11-10.53-.73-21.07-1.45-31.6-2.18-3.82-.26-7.65-.44-11.47-.81-1.38-.13-4.19,1.05-2.69-2.62.51-1.25-1.55-1.28-2.61-1.54-4.69-1.12-9.42-2.08-14.04-3.44-1.14-.33-3.57.59-3.39-1.66.13-1.7,1-3.56,3.35-3.75,6.88-.53,13.44-2.67,19.71-5.22,12.3-5.02,25.17-3.07,37.8-4.01,4.94-.36,9.93,0,14.82-1.5-10.22-.49-20.46-.7-30.65-1.59-4.32-.38-8.83,1.83-13.08-3.45-2.67-3.3-9.87-2.9-15.01-4.29-1.54-.42-4.31.93-4.39-1.73-.08-2.68,2.2-3.61,4.8-3.96,8.78-1.17,17.11-4.02,25.43-6.91,1.82-.63,3.93-.51,5.91-.57,36.14-1.2,72.31-.81,108.46-1.11,1.66-.01,3.33,0,5-.66-18.82-.38-37.65-.67-56.47-1.16-18.65-.48-37.3-1.41-55.95-1.47-3.48-.01-3.15-3.08-5.52-3.59-5.36-1.15-10.51-3.14-15.98-3.91-1.25-.18-3.6.81-3.55-1.35.05-1.84,1.14-3.63,3.74-3.91,7.48-.81,14.67-3.09,21.72-5.52,11.96-4.12,24.31-2.94,36.51-3.13,24.15-.36,48.3-.11,72.46-.83-14.55-1.55-29.13-1.07-43.69-2.03-16.79-1.11-33.6-1.82-50.42-2.36-3.48-.11-5.56-2.43-8.41-3.42-5.74-2-11.67-2.53-17.67-2.75-.87-.03-2.27.28-2.22-1.21.04-1.07.96-1.8,2.08-1.77,11.61.25,22.26-5.34,33.93-5.19,26.66.36,53.32.18,79.97.44,7.17.07,14.18,1.62,21.03,3.92,19.75,6.63,30.98,22.03,31.06,42.85.14,35.62-24.99,70.5-59.28,82.3-2.16.74-4.32,1.5-6.84,2.37,12.4,24.65,24.65,49.02,37.29,74.14-2.55.14-4.27.31-5.99.31-15.66.02-31.34-.31-46.99.12-11.4.31-22.37-1.06-33.34-4.19-5.92-1.69-12.37-1.5-19.68-2.28,3.53-1.83,6.38-1.19,9.04-1.47,4.96-.52,10.04-.59,14.74-2.3,2.18-.79,6.35.53,6.2-3.25-.16-3.93.11-8.22-5.9-9.86-8.73-2.38-17.41-5.12-26.16-8.1ZM568.12,351.07c5.96.29,12.56.04,18.79-2.82,7.39-3.39,12.36-8.95,14.31-16.83,1.5-6.06-1.14-9.98-7.13-11.44-6.23-1.52-12.57-.41-18.85-.77-2.65-.15-4.15.69-5.36,3.2-4.04,8.36-8.31,16.6-12.64,24.81-1.44,2.74-1.68,4.21,2.18,3.89,2.64-.21,5.31-.04,8.69-.04Z"/>
+          <path class="cls-3" d="M1135.72,138c-11.18-.81-23.7-1.88-36.23-2.5-3.49-.17-4.97-.92-5.2-4.65-.61-9.62-1.64-19.21-2.61-30.01-4.21,8.29-8.07,15.66-11.73,23.15-12.7,25.99-25.35,52-37.92,78.05-1.28,2.65-2.63,4.05-5.9,4.03-20.49-.13-40.99.06-61.48-.03-4.05-.02-6.63-4.69-12.02-3.07,2.31-2.58,4.21-2.5,5.99-2.85,1.29-.25,3.11-.32,3.7-1.17,3.71-5.35,9.3-4.21,14.47-4.54,10.38-.67,20.76-1.29,31.14-2.33-12.82-1.09-25.73-.71-38.44-3.04q2.04-6.99-9.84-9.26c-.07-2.35,1.78-1.95,3.12-2.12,6.27-.78,12-2.92,16.55-7.36,1.82-1.78,3.8-1.77,5.91-1.88,15.43-.83,30.83-2.15,46.74-2.24-2.39-1.99-4.81-1.52-7.06-1.63-12.48-.64-24.96-1.19-37.44-1.78-2.17-.1-4.98.24-2.92-3.4.98-1.73.2-2.38-1.3-2.88-2.99-1-5.98-2.02-8.96-3.06-1-.35-2.79.37-2.82-1.26-.03-1.7,1.76-1.54,3.01-1.9,3.03-.87,6.32-1.36,8.99-2.91,13.4-7.78,28.27-7.08,42.89-7.9,6.39-.36,12.78-.58,19.13-1.68-13.95-.8-27.89-1.59-41.84-2.42-2.23-.13-5.7.99-3.94-3.69.58-1.53-1.15-1.82-2.17-2.12-3.66-1.06-7.03-3.08-10.95-3.29-1.08-.06-2.66.11-2.7-1.48-.03-1.14.73-2.14,2.13-2.39,8.86-1.64,16.8-6.13,25.25-8.57,8.43-2.44,17.83-1.52,26.81-2.04,5.68-.32,11.36-.57,17.04-.85-.01-.45-.02-.89-.03-1.34-13.68-.79-27.37-1.58-41.56-2.4,2.55-3.99.43-5.12-2.83-6.21-3.67-1.23-7.4-1.9-11.15-2.61-1.02-.19-2.77.44-2.82-1.22-.05-1.61,1.07-2.61,2.89-2.78,6.39-.6,12.48-2.86,18.03-5.57,12.26-6,25.33-3.99,38.06-5.25,6.9-.68,13.91-.13,20.79-1.83-14.53-.79-29.07-1.55-43.59-2.42-1.94-.12-5.68,1.41-3.94-3.47.48-1.34-1.52-1.39-2.53-1.8-4.8-1.99-9.83-3.05-14.98-3.64-1-.11-2.73.47-2.6-1.38.09-1.31.9-2.58,2.56-2.57,5.64.01,10.98-1.77,15.84-4.1,14.02-6.72,29.09-5.52,43.86-6.67,9.07-.71,18.21-.01,25.2-.94-9.79-2.03-21.84-1.39-33.76-2.7-3.47-.38-7.06-.13-10.44-.88-3.56-.79-7.32,1.2-10.83-3.39-2.6-3.41-8.91-4.74-14.13-5.35-.66-.08-1.39.02-1.98-.22-1.33-.54-4.03.4-3.65-1.92.3-1.79.75-4.39,3.56-4.85,9.76-1.6,18.45-6.13,27.59-9.5,7.37-2.72,16.1-1.92,24.24-2.32,11.81-.59,23.64-.84,35.46-1.26,2.98-.11,5.95-.3,9.85-.5-21.2-1.6-41.45-3.27-61.73-4.5-3.39-.21-4.08-3.25-6.63-4.06-4.6-1.46-9.09-3.19-14.04-3.2-1.73,0-3.69.34-5.23-1.03.54-2.71,2.86-1.99,4.42-2.12,5.02-.43,9.88-1.44,14.51-3.4,5.78-2.45,11.79-3.01,18.03-2.95,16.99.18,33.99.21,50.98-.11,4.61-.09,6.2,1.01,6.54,5.81,2.06,28.58,4.49,57.13,6.79,85.68.05.61.16,1.21.24,1.87.47-.2.95-.27.98-.43,1.62-7.99,7.03-9.07,14.26-9.11,13.95-.07,27.9-1.18,41.87-2.43-16.34-1.07-32.69-2.15-49.69-3.27,2.66-6.31,4.98-11.87,7.34-17.41,1.55-3.65,5-3.45,8.07-3.75,14.59-1.42,29.23-2.14,43.89-2.5,1.6-.04,3.36.34,4.9-1.03-12.24-.85-24.33-1.69-36.42-2.55-4.15-.3-8.29-.77-12.45-.93-2.18-.09-2.55-.7-1.72-2.67,2.71-6.44,5.38-12.91,7.9-19.43.95-2.45,2.6-2.94,5-3.1,18.95-1.27,37.88-2.86,56.88-2.91,1.14,0,2.27-.16,3.43-.78-12.75-.99-25.51-1.99-38.26-2.98-6.14-.48-12.27-1.12-18.42-1.38-3.03-.13-3.34-1.28-2.37-3.69,1.43-3.55,2.92-7.08,4.13-10.7.72-2.16,2.24-2.09,3.93-2.09,22.99,0,45.98,0,69.74,0-3.52,7.82-6.77,15.37-10.29,22.81-20.9,44.2-41.92,88.34-62.71,132.6-2.05,4.37-4.74,4.62-8.72,3.9-20.85-3.73-41.79-6.56-63.06-5.61-3.99.18-8.02.24-11.95.88-4.58.75-7.08-.22-6.38-5.42.15-1.14.16-2.39-.14-3.48-1.18-4.27.89-5.33,4.71-5.56,9.64-.59,19.26-1.48,28.89-2.22,2.53-.19,5.08-.01,6.25-.57ZM1185.05,110.14c-6.52-.3-14.15-.58-21.78-1.02q-19.54-1.15-23.18,2.19c15.98.37,31.03,0,44.96-1.17Z"/>
+          <path class="cls-3" d="M717.14,202.75c22.98-10.28,47.38-8.81,71.47-9.77,1.75-.07,3.68.59,5.78-1.36-17.39-.48-34.16-2.42-52-2.18,2.3-2.88,3.98-4.99,5.65-7.08-2.43-2.4-5.85-1.34-8.79-3.06,1.44-1.56,3.1-1.53,4.58-1.77,5.18-.82,10.13-2.47,14.25-5.66,3.67-2.84,7.63-3.6,12.06-3.78,10.48-.43,20.96-1.09,31.43-1.72,1.35-.08,2.89.36,4.99-1.47-13.03-2.05-25.3-1.8-37.73-2.15q4.64-7.7-4.77-11.52c5.26-1.66,10.69-2.99,15.49-5.7,13.98-7.91,29.46-4.68,44.29-6.03,8.07-.74,16.26-.13,24.4-.13,0-.51,0-1.02,0-1.53-18.48-.83-36.96-1.65-55.47-2.48-.19-2.28,2.46-2.77,2.56-4.96-5.35-3.18-11.54-4.06-18.22-4.47.82-2.45,2.31-3.16,4.44-3.5,10.34-1.68,20.37-4.31,29.98-8.72,2.99-1.37,6.87-.96,10.35-1.11,15.27-.67,30.55-1.25,45.86-2.7-16.61-.75-33.21-1.5-50.46-2.27,1.28-1.78,2.27-3.16,3.41-4.74-6.75-3.94-14.29-4.54-21.82-5.28.78-2.99,2.98-2.53,4.6-2.77,11.56-1.72,22.58-5.25,33.39-9.6,1.63-.66,3.59-.62,5.41-.69,14.48-.61,28.97-1.16,43.45-1.76,1.62-.07,3.24-.29,4.82-.9-15.93-.91-31.85-1.81-47.79-2.72-.77-2.08,2.05-2.63,1.57-4.5-7.13-2.86-14.72-4.45-22.78-4.53.43-3.4,2.8-3.41,5.12-3.65,12-1.23,23.45-4.55,34.53-9.2,1.78-.75,3.58-.72,5.38-.78,13.65-.47,27.31-.83,40.96-1.31,4.39-.15,8.76-.56,12.29-.8-16.91-1.17-34.69-2.39-52.48-3.62-.48-1.76,1.88-2.31,1.64-3.66-7.31-3.75-15.13-5.05-23.37-5.89,1.33-3.84,3.46-5.37,7.31-5.9,11.73-1.6,23-5.07,33.93-9.62,1.47-.61,2.92-.57,4.39-.66,23.95-1.46,47.9-2.8,71.91-2.75,3.93,0,7.86-.34,10.24-.45-18.75-1.25-39.04-2.6-59.33-3.95-.66-.04-1.33-.08-1.99-.2-6.32-1.11-12.96.78-18.91-4.16-3.26-2.7-8.59-3.2-13.35-3.26-3.46-.04-6.91-.61-10.42-.94.54-1.64,1.59-1.91,2.82-1.92,8.07-.09,15.85-1.89,23.46-4.33,6.29-2.02,12.65-2.55,19.19-2.53,23.49.09,46.99.1,70.48-.05,3.74-.02,4.82.68,4.2,4.72-9.2,60.27-18.22,120.57-27.3,180.86-.77,5.1-2.2,10.15-2.46,15.27-.21,4.23-2.13,4.65-5.57,4.64-22.66-.07-45.32-.04-67.98.08-3.3.02-4.23-.2-2.9-4.01,2.02-5.77,4.95-8.18,11.37-7.93,8.62.33,17.3-.67,25.94-1.13,1.12-.06,2.37.23,3.54-1.33-8.17-.5-16.05-.89-23.92-1.52-3.72-.29-8.91,1.1-10.66-1.67-1.19-1.87,2.57-6.46,3.21-10,1.68-9.33,7.17-12.21,16.15-11.42,5.15.46,10.44-.59,15.61-.95.1-2.13-1.21-1.77-2.05-1.82-6.15-.38-12.31-.63-18.45-1.07-2.01-.14-5.54,1.36-4.21-3.38.36-1.3-1.31-1.12-2.24-1.12-16.33-.01-32.66.02-48.99-.02-1.96,0-2.98,1.19-4.07,2.47-11.86,13.96-23.8,27.86-35.54,41.92-1.81,2.17-3.54,2.99-6.3,2.98-22.49-.08-44.99.06-67.48-.06-6.25-.03-11.63-4.52-18.07-3.29ZM884.63,120.74c10.42,0,19.67-.01,28.93.01,1.5,0,2.75-.38,2.88-2.02.55-7.12,5.09-8.24,11-7.61.99.11,2.36.39,3.34-1.56h-11.21c3.83-12.72,8.44-24.61,11.66-37.99-15.79,16.66-30.8,32.5-46.59,49.17ZM813.6,165.29c-2.56-1.25-4.62-1.33-7.15,0,2.52,1.35,4.59,1.25,7.15,0Z"/>
+          <path class="cls-3" d="M639.9,417.76c15.71.86,28.41-9.58,43.45-11.07-5.33-.5-10.68-.85-15.97-1.59-1.98-.28-4.98.21-4.72-3.6.11-1.63-1.86-1.57-2.96-2.19-4.62-2.59-9.94-3.19-15.65-5.16,17.64-5.63,33.6-14.24,52.4-11.46-.07-.68-.14-1.35-.22-2.03-3.28-.39-6.56-.78-9.84-1.17-3.3-.38-6.61-.77-9.92-1.13-3.17-.34-5.88-.39-8.31-3.77-2.01-2.79-6.66-3.4-10.32-4.53-.84-.26-2.15-.34-2.08-1.66.07-1.16,1.1-1.53,2.07-1.87,15.11-5.2,29.49-13.34,46.46-11.2-5.82-2.52-12.01-2.58-17.85-4.19-1.72-.47-3.26-.66-4.09-3.35-1.11-3.58-5.68-3.29-8.85-4.53-1.26-.49-3.53.08-3.55-1.76-.02-1.82,2.15-1.62,3.55-2.02,7.16-2.07,14.29-4,21.2-7.07,5.56-2.47,12.13-1.67,18.26-1.98,11.98-.6,23.97-.78,35.96-1.18,2.87-.1,5.74-.37,7.93-.52-15.14-1.41-30.96-2.85-46.77-4.37-3.56-.34-6.74-1.23-10.08-3.2-4.48-2.65-10.09-3.17-15.76-2.98.49-3.91,3.7-2.91,5.69-3.57,28.08-9.23,57.26-8.96,86.3-9.81,11.16-.33,22.32-.36,33.48-.53,2.39-.04,4.83.3,6.79-1.14-38.94-1.28-78.25-.3-117.92-3.44,1.95-2.69,3.67-5.1,6.9-6.41,28.33-11.42,58.01-14.07,88.18-14.12,18.81-.03,37.65.76,56.42-1.38,2.94-.34,5.98.1,8.97.26.38.02.75.48,1.06,1.56-43.68-4.49-87.57-.45-131.29-4.57,28.76-9.08,57.76-16.72,88.14-17.81,30.44-1.09,60.55,1.46,91.08,7.47-3.04,6.35-5.95,12.43-8.86,18.5-5.53,11.55-11.23,23.02-16.51,34.68-1.76,3.9-3.79,4.87-7.97,4.04-17.88-3.53-35.94-5.41-54.15-3.48-30.74,3.26-57.35,14.54-75.75,40.72-6.8,9.68-11.59,20.26-10.9,32.52.54,9.62,4.95,16.72,13.88,20.79,9.85,4.49,20.05,4.11,30.36,2.26.93-.17,2.36-.59,2.57-1.23,1.75-5.23,6.07-4.17,9.94-4.34,8.82-.38,17.64-.77,26.46-1.22,1.26-.06,2.69.22,4.05-1.46-10.29-.52-20.22-.95-30.15-1.57-1.67-.1-5.55,1.6-3.45-3.2.69-1.58-1.45-1.39-2.37-1.79-5.85-2.59-12.22-2.77-18.58-3.51.68-2.06,2.15-1.87,3.34-1.92,7.07-.29,13.74-2.38,20.42-4.44,2.17-.67,4.51-1.07,5.65-3.61.83-1.85,2.76-1.45,4.42-1.52,11.49-.48,22.97-.97,34.45-1.52,2.75-.13,5.48-.49,8.22-.43-2.22,1.33-4.36-.51-6.56-.48-5.83.06-11.71.25-17.48-.45-7.5-.9-15.15.58-22.55-3.32-5.89-3.11-13.2-2.47-19.93-3.87,10.87-.94,21.09-5.4,31.95-5.53,20.31-.25,40.63-.07,61.55-.07-3.59,7.57-6.96,14.76-10.41,21.9-7.45,15.43-14.98,30.82-22.4,46.26-1.55,3.22-3.46,5.97-6.59,7.89-35.52,21.78-73.7,31.28-115.1,23.77-14.02-2.55-27.74-6.82-42.16-8.87,9.31-1.37,18.63-2.73,27.94-4.1-19.85-4.09-38.98-11.01-58.84-15.31,7.75-1.07,15.52-1.37,23.04-3.39,23.93-6.43,48.45-4.74,72.8-5.34,10.31-.25,20.66.53,30.93-1.19,1.9-.32,3.93-.34,6.27.71-2.42,1.81-4.81,1.48-6.86,1.04-10.84-2.32-21.85-2.12-32.81-2.27-20.67-.28-41.26-1.97-61.87-3.3-5.55-.36-10.11-3.73-15.44-5.04-6.16-1.51-12.47-2.34-18.72-4.27Z"/>
+          <path class="cls-3" d="M931.17,406.63c-12.08-.75-24.17-1.45-36.25-2.32-1.93-.14-5.43,1.67-4.96-3.03.1-1-1.61-.88-2.53-1.09-4.37-1.02-8.77-1.89-13.12-2.97-1.21-.3-3.56.64-3.24-1.84.2-1.58,1.32-2.65,3.32-3.12,5.82-1.37,11.82-2.52,17.22-4.95,13.4-6.03,27.62-3.96,41.51-5.13,2.91-.24,5.91.37,8.76-1.53-6.17-.35-12.35-.74-18.52-1.05-5.49-.28-11-.29-16.47-.8-1.66-.16-5.69,1.69-4.28-3.25.23-.81-1.56-.92-2.49-1.16-4.17-1.1-8.39-2.07-12.5-3.38-1.22-.39-3.52.25-3.54-1.78-.03-2.14,1.85-2.66,3.78-3.18,6.09-1.65,12.46-2.86,18.05-5.61,8.27-4.06,16.87-4.03,25.59-4.1,11.96-.09,23.93-.02,35.89-.02,0-.62,0-1.24.01-1.85-11.59-.67-23.17-1.35-34.76-2.01-3.49-.2-7.03-.06-10.46-.63-2.06-.34-5.73,1.48-5.77-3.29,0-.58-3.54-1.18-5.46-1.67-3.38-.87-6.8-1.6-10.17-2.52-1.37-.37-3.88.6-3.66-1.99.15-1.77,1.36-3.32,3.59-3.54,6.19-.62,12.19-2.48,17.74-4.92,11.08-4.88,22.69-3.72,34.16-4.33,12.29-.65,24.66.4,36.9-1.52,1.22-.19,2.67-.6,3.61.85-1.19,1.46-2.79.93-4.17.71-17.65-2.79-35.55-2.32-53.28-3.99-2.57-.24-5.05.63-7.24-2.9-1.44-2.32-6.58-2.47-10.12-3.31-2.9-.68-5.89-.94-8.98-1.41.31-3.12,1.76-4.42,4.95-4.99,8.18-1.46,16.1-4.02,23.85-7.03,2.13-.82,4.26-.6,6.39-.69,29.31-1.17,58.64-.91,87.95-1.26,1.76-.02,3.53,0,5.3-.48-29.3-.85-58.61-1.65-87.91-2.62-3.39-.11-6.66.71-9.99-2.94-2.52-2.76-8.38-2.39-12.67-3.67-2.04-.61-5.62.2-5.8-2.23-.24-3.34,3.18-3.98,6.03-4.58,3.25-.69,6.53-1.39,9.63-2.54,10.89-4.06,22.16-5.38,33.69-5.5,24.99-.27,49.98-.82,74.97-1.02,4.08-.03,8.03-1.51,12.24-1.16-.13,1.53-1.06,1.51-1.74,1.39-14.71-2.41-29.59-.98-44.37-1.98-17.44-1.18-34.94-1.67-52.42-2.23-3.28-.11-5.25-2.37-7.88-3.34-4.66-1.72-9.56-2.78-14.62-2.86-1.26-.02-3.46.95-3.68-1.24-.19-1.92,1.79-1.93,3.27-2.26,19.42-4.28,39.05-5.27,58.92-4.94,30.98.51,61.98.12,92.97.11,1.78,0,3.57,0,6.27,0-6.02,12.46-11.69,24.22-17.38,35.97-3.33,6.88-6.86,13.68-9.91,20.69-1.34,3.08-3.02,4.08-6.34,4.05-18.99-.17-37.99-.02-56.98-.16-3.09-.02-4.76.89-6.06,3.75-2.5,5.52-5.77,10.68-7.87,16.9h63.9c-2.51,5.67-4.71,10.73-6.99,15.76-5.77,12.72-11.76,25.35-17.25,38.19-1.63,3.81-3.8,4.58-7.53,4.55-18.99-.17-37.99,0-56.98-.19-3.53-.03-5.41,1.04-6.74,4.31-2.07,5.08-4.47,10.04-7.03,14.9-1.77,3.36-.97,4.18,2.65,4.16,19.99-.09,39.99-.01,59.98.02,6.84.01,6.87.05,4.11,6.03-5.86,12.69-11.82,25.34-17.59,38.07-1.03,2.28-2.22,3.2-4.82,3.2-45.49-.05-90.98.14-136.46-.09-7.8-.04-15.33-3.37-23.38-3.67,6.55-2.06,13.36-2.48,19.53-5.05,9.99-4.17,20.52-3.34,30.88-3.79,17.47-.75,34.96-1.03,52.45-1.71-16.78-.52-33.58-.42-50.34-1.56-6.31-.43-12.71-1.02-18.96-.39-3.81.38-4.02-3.48-7.11-3.83-5.37-.6-10.4-3.21-16.07-2.99.4-3.66,2.11-4.93,5.39-5.73,7.99-1.95,16.37-2.81,23.51-7.57,1.09-.73,2.9-.53,4.37-.54,14.64-.03,29.27-.02,44.37-.02-.95-3.33-2.59-2.5-3.67-2.55-7.82-.33-15.72-1.33-23.46-.6-13.92,1.31-25.58-6.99-38.9-7.67.3-3.14,1.9-4.18,4.53-4.73,8.57-1.8,17.13-3.56,24.89-8.14,2.21-1.3,5.52-.85,8.33-.98,11.8-.54,23.6-.99,35.4-1.47,0-.14,0-.28,0-.42ZM928.05,431.62c-.31-.05-.61-.15-.92-.14-.58.02-.61.22-.06.37.29.08.62-.01.94-.04.02,0,.03-.12.04-.2Z"/>
+          <path class="cls-2" d="M1541.5,413.82c5.29-26.63,20.73-42.74,44.53-51.52,19.33-7.13,38.41-4.64,57.21,1.98,40.12,14.12,70.84,39.18,89.1,78.15,8.71,18.59,12.56,38.19,9.74,58.81-3.58,26.16-18.73,42.2-43.48,49.9-1.74.54-3.51.97-6.37,1.76,26.15,9.06,51.36,17.8,76.57,26.54-197.29-20.24-392.9-51.1-587.6-88.64,29.41.41,58.66,1.87,87.89,3.97,23.09,1.66,46.21,2.92,69.23,5.52,32.43,3.67,64.81,7.66,97.11,12.34,49.92,7.23,99.59,16.22,149.65,22.45,20.85,2.59,41.83,4.19,62.63-.88,19.5-4.76,34.48-15.05,40.94-34.92,4.92-15.12,2.49-29.87-4.98-43.5-16.31-29.76-40.61-50.36-73.09-60.63-20.69-6.54-47.22-5.96-69.09,18.67Z"/>
+          <path class="cls-2" d="M1352.03,462.26c-9.19-10.78-17.16-22.26-23.94-34.82-2.2-4.07-1.85-7.55-2.61-11.24-2.67-12.93-.61-25.19,6.45-36.46,4.21-6.72,9.95-12.12,15.94-17.14,19.82-16.62,42.85-25.86,68.39-29.17,14.57-1.89,29.21-2.37,43.87-2.34,1.92,0,3.84,0,5.82.46-11.25,3.58-22.72,6.07-33.86,9.78-15.19,5.06-30.17,10.53-43.7,19.32-10.28,6.68-18.34,14.92-19.96,27.82-.97,7.73,1.2,14.89,4.14,21.82,11.72,27.62,31.71,48.27,56.16,64.74,11.03,7.43,24.44,9.43,37.04,13.07,20.14,5.81,40.48,10.84,60.95,15.37.94.21,1.82.71,3.31,1.3-22.89-.34-44.89-3.27-66.91-5.98-43.37-5.34-85.62-16.44-128.4-24.83-1.63-.32-3.29-.73-4.92-.71-11.08.14-21.32-2.55-30.9-8.23-6.24-3.7-12.82-6.82-19.49-10.32-.68,3.06-.14,5.49.15,7.92,1.11,9.32-1.28,13.6-9.77,18.04-17.67,9.24-36.41,11.32-55.82,8.11-46.18-7.66-76.5-35.8-96.87-76.18-10.93-21.67-16.48-44.66-13.17-69.09,4.04-29.79,23.78-50.03,53.1-57.23,7.55-1.85,14.81-4.75,22.69-4.75,31.41,0,58.99,10.46,82.95,30.66,3.42,2.88,6.75,5.87,10.45,9.09-16.72,8.39-31.09,19.99-45.56,31.46-3.91,3.1-7.84,6.21-11.56,9.54-8.28,7.39-14.94,15.52-10.65,28.38-5.52-2.86-9.62-6.67-14.82-8.5-.08-.03-1,.54-.47-.76,2.49-6.07,3.94-12.49,7.9-18.04,3.98-5.57,10.53-6.79,15.66-10.34,3.38-2.34,3.84-3.4.68-6.23-13.26-11.86-27.73-21.22-45.8-23.79-26-3.71-47.23,14.53-47.29,40.88-.08,31.73,14.13,57.02,36.29,78.38,12.66,12.2,27.41,21.21,44.99,24.5,12.24,2.29,24.14,1.34,35.29-5.08,8.73-5.02,13.79-12.69,17.49-21.7,1.62-3.94-3.03-5.17-2.95-9.1,9.23,5.04,19.54,4,29.03,6.85,3.5,1.05,6.28.41,9.24-1.77,4.7-3.46,9.58-6.7,13.45-11.1,3.07-3.5,6.9-2.48,9.47-.67,2.49,1.76,1.54,5.45-.05,8.09-4.43,7.34-4.46,7.29.62,14,1.5,1.99,2.88,4.09,4.23,6.18,4.72,7.32,11.8,9.62,19.9,8.48,3.84-.54,7.27-1.63,10.57,1.31.6.53,1.91.27,2.9.36.34.1.95.33.97.29.27-.59-.24-.54-.59-.63Z"/>
+          <path class="cls-3" d="M20.04,425.09c1.17-1.93,2.47-1.53,3.53-1.55,9.71-.13,19.34-1.35,28.55-4.23,9.29-2.91,18.95-.61,28.18-2.94,2.89-.73,6.13-1.12,8.48-2.73,5.22-3.57,10.94-3.32,16.73-3.51,15.29-.5,30.57-1.08,45.85-2.07-16.93-1.49-33.82-3.11-51.02-2.73,2.21-4.97,2.13-4.74-2.97-6.46-8.72-2.94-17.88-2.71-26.88-3.95.28-2.3,1.85-2.4,3.35-2.37,11.12.21,22.21-1.47,32.29-5.55,16.27-6.59,33.21-3.39,49.72-5.56,1.12-.15,2.27-.02,3.44-.9-9.93-.43-19.86-.88-29.8-1.29-3.66-.15-7.33-.15-10.99-.31-1.07-.04-2.92-.07-1.68-1.84,2.46-3.5-.52-3.25-2.38-3.83-8.15-2.55-16.5-3.78-25.02-4.11-1.23-.05-2.68.4-3.77-.92.34-1.78,1.8-1.63,3.03-1.68,11.72-.48,23.5-2.22,34.06-6.84,11.13-4.87,22.38-2.74,33.53-3.93,10.83-1.16,21.81.22,33.43-1.66-.9.83-1.22,1.35-1.45,1.31-16.81-2.73-33.82-2.41-50.73-3.59-1.56-.11-6.61,2.51-4.51-3.49.48-1.36-1.75-.97-2.72-1.29-9.54-3.13-19.46-4.13-29.39-4.99,0-2.47,1.7-2.34,3.14-2.45,14.19-1.01,27.86-4.15,41-9.65,1.3-.54,2.96-.24,4.45-.28,16.62-.41,33.25-.8,49.88-2.11-13.18-.73-26.39-1.09-39.51-2.39-4.23-.42-10.34,3.56-12.74-3.71-5.75-.89-11.01-3.74-16.89-4.14-4.64-.32-9.27-.7-13.96-1.06.26-3.18,2.52-2.8,4.41-2.97,12.82-1.15,25.15-4.26,37.12-8.97,1.78-.7,3.93-.53,5.91-.6,16.15-.56,32.32-.19,48.45-1.36,3.19-.23,6.18-1.35,9.34-1.4,1.43-.02,3.18-.71,4.18.75,1.07,1.55-.39,2.8-1.06,4.05-8.31,15.66-16.56,31.34-25.01,46.92-11.66,21.48-24.04,42.6-35.1,64.38-16.71,32.9-44.02,48.99-79.69,53.25-16.61,1.98-33.24,1.78-49.89,1.81-2.76,0-5.2-1.07-7.75-1.77-8.9-2.45-18.11-2.33-27.22-3.26.19-.98.91-.87,1.45-.89,9.99-.43,20.06-.91,29.59-3.98,10.52-3.39,21.22-2.65,31.92-2.97,1.48-.04,2.96-.19,4.45-1.09h-28c2.98-5.7-.49-5.99-4.08-7.02-8.38-2.4-17.01-2.86-25.72-3.87.28-2.03,1.64-1.94,2.87-2.01,10.51-.55,20.75-2.8,30.99-5.02,1.45-.31,3.66-.45,4.12-1.37,2.19-4.33,5.98-3.42,9.52-3.48,18.16-.31,36.31-.61,54.47-.93,1.64-.03,3.28-.18,4.91-.82-15.26-.44-30.51-.89-45.77-1.31-2.5-.07-5.06.32-7.48-.11-3.99-.7-7.87,1.09-12.14-2.76-3.46-3.11-10.37-2.54-15.8-3.24-4.93-.64-9.93-.78-15.26-1.17Z"/>
+          <path class="cls-2" d="M1541.73,348.18c4.04-1.25,8.07-2.51,12.11-3.75,19.36-5.9,39.35-8.42,59.32-11.08,1.97-.26,4.02-.47,5.84-1.2,3.68-1.47,5.47-4.14,4.42-8.3-1.48-5.85-3.8-11.36-6.85-16.54-18.92-32.2-43.82-58.96-73.82-81.1-19.87-14.67-40.55-28-63.29-37.86-3.05-1.32-2.95-3.06-1.97-5.48,2.93-7.18,8.94-10.6,15.9-12.47,11.3-3.04,22.74-2.78,34.15-.45,31.04,6.32,56.82,22.39,79.27,43.97,21.64,20.8,38.33,45.15,48.83,73.44,4.48,12.08,7.53,24.53,7.42,37.54-.16,17.77-10.28,26.74-27.95,24.49-31.05-3.96-62.1-4.27-93.39-1.21Z"/>
+          <path class="cls-2" d="M236,553.54c13.54-14.57,26.19-28.02,38.62-41.68,2.36-2.6,4.72-3.6,8.17-3.55,12.65.18,25.31.16,37.97,0,3.63-.04,3.88,1,2.4,3.96-12.38,24.88-24.7,49.79-36.94,74.73-1.04,2.11-2.34,2.91-4.62,2.89-9.65-.08-19.3-.03-30.08-.03,7.29-15.04,14.24-29.36,21.18-43.68l-1.37-.94c-3.22,3.38-6.5,6.7-9.64,10.14-9.75,10.71-19.5,21.43-29.14,32.24-1.5,1.68-3.1,2.26-5.23,2.24-5.16-.05-10.33,0-15.49.05-6.95.06-6.99.07-6.49-7.1.82-11.79,1.69-23.58,2.53-35.37.13-1.77.17-3.55-.49-5.58-3.4,6.75-6.83,13.49-10.19,20.26-3.92,7.9-7.91,15.77-11.6,23.77-1.28,2.77-2.79,4.03-5.96,3.96-8.32-.17-16.65-.09-24.98.06-2.89.05-3.51-.63-2.14-3.34,12.71-25.25,25.38-50.53,37.95-75.85,1.12-2.25,2.67-2.5,4.8-2.49,13.32.06,26.65.15,39.97-.06,3.55-.05,4.13,1.26,3.83,4.36-1.12,11.6-2.07,23.21-3.05,34.82-.13,1.58-.02,3.18-.02,6.15Z"/>
+          <path class="cls-2" d="M1502.48,157.35c-6.83-3.62-13.68-7.18-20.47-10.87-10.54-5.71-21.32-10.92-32.25-15.82-4.71-2.11-9.33-2.56-14.53-1.6-20.89,3.84-40.81,10.82-60.75,17.82-3.88,1.36-7.81,2.93-12.86,2.29,9.97-4.59,18.49-10.07,24.85-18.83-2.57-1.28-5.27-.79-7.77-1.31-18.66-3.91-34.03-13.29-45.75-28.26-7.69-9.83-8.97-21.35-6.49-33.24,1.7-8.12,5.52-9.43,12.34-4.56,16.64,11.88,34.64,20.57,55.15,22.95,12.5,1.45,11.03,2.03,14.63-9.29,4.11-12.92.8-25.4-5.26-37.09-8.59-16.58-21.96-28.22-38.67-36.2-1.35-.64-2.71-1.25-4.06-1.9-.11-.05-.17-.23-.25-.35,19.5-2.92,43.88,8.9,56.44,27.03,15.12,21.82,14.59,44.79,5.59,68.53-3.36,8.87-7.41,17.38-12.27,25.98,4.34-1.85,8.66-3.73,13.01-5.55,11.45-4.79,23.05-6.4,34.91-1.45,5.62,2.34,10.3,6.13,14.9,9.95,11.12,9.22,21.24,19.45,30.27,30.73-.24.35-.48.7-.71,1.06ZM1349.91,77.44c-.73-2.42-3.05-3.3-4.79-2.89-1.63.38-.8,2.89-.94,4.46-.61,6.93-1.16,13.85-3.33,20.53-.41,1.25-.43,2.57,1.46,3.27,2.1-7.46,2.35-15.08,3.19-22.58.4-3.61,1.67-4,4.51-2.88,13,9.02,27.78,12.39,43.24,13.59-7.94-1.61-15.98-2.91-23.62-5.72-6.63-2.44-13.15-5.18-19.71-7.79Z"/>
+          <path class="cls-2" d="M411.85,590.27c-9.15.14-18.34.82-27.42-.91-13.03-2.49-17.85-10.75-12.96-22.99,5-12.53,10.99-24.63,17.92-36.21,8.28-13.84,21.16-20.48,36.82-21.63,14.79-1.09,29.64-.74,44.47-.19.83.03,1.67.11,2.49.24,16.28,2.73,21.2,11.82,14.18,26.81-4.59,9.8-9.52,19.44-14.55,29.02-8.75,16.65-22.66,25.26-41.46,25.83-6.49.2-12.99.03-19.49.03ZM420.2,571.51c4.81.09,11.5.55,15.64-4.99,7.28-9.77,12.16-20.96,16.93-32.11,1.56-3.64-.37-6.04-4.36-6.61-4.8-.69-9.61-.63-14.43-.25-6.54.52-11.18,3.73-14.05,9.65-3.26,6.73-6.64,13.4-9.96,20.11-6.14,12.41-5.02,14.2,10.22,14.21Z"/>
+          <path class="cls-2" d="M773.97,508.33c9.12.11,18.32-1.13,27.37.93,12.04,2.74,16.81,10.18,12.41,21.74-5.61,14.77-12.61,29.01-21.53,42.12-6.2,9.13-15.45,14.31-26.19,15.87-18.52,2.67-37.21,2.67-55.73.31-14.17-1.8-18.73-10.25-13.36-23.57,4.97-12.34,10.93-24.28,17.77-35.68,8.48-14.13,21.78-20.57,37.8-21.64,7.12-.47,14.31-.08,21.46-.08ZM745.34,571.52c5.4.15,12.2.29,16.26-5.59,6.72-9.74,11.61-20.55,16.19-31.43,1.38-3.27-.03-5.83-3.89-6.56-4.63-.87-9.29-.65-13.94-.48-6.54.24-11.44,3.18-14.42,9.08-3.52,6.98-7.15,13.9-10.47,20.97-5.84,12.44-4.71,14.08,10.26,14Z"/>
+          <path class="cls-2" d="M945.6,508.32c11.32-.2,22.63.04,33.93.86,3.54.26,3.92,1.13,2.42,4.06-2.65,5.17-3.84,12.11-7.97,15.21-4.04,3.03-10.87-.11-16.49-.39-9.15-.46-18.29-1.11-27.45-.54-3.31.21-6.75.31-9.43,2.66-1.66,1.45-3.11,3.35-2.49,5.65.63,2.32,2.94,2.41,4.95,2.51,7.32.37,14.64.66,21.95,1.05,4.99.27,9.97.81,14.69,2.56,6.65,2.47,9.36,6.59,7.29,13.19-7.58,24.16-17.38,33.51-40.33,34.88-21.11,1.26-42.27.83-63.38-.96-3.08-.26-3.98-1-2.17-3.75.45-.69.75-1.48,1.12-2.23,2.15-4.29,3.25-10.28,6.72-12.43,3.96-2.45,10.01-.35,15.12.07,10.81.89,21.63.81,32.45.69,4.7-.05,9.41-.65,11.8-5.78,1.49-3.2.96-5.19-2.89-5.4-6.65-.36-13.3-.65-19.95-.98-6.32-.31-12.67-.58-18.68-2.83-6.38-2.39-8.97-6.39-6.91-12.86,7.59-23.84,17.27-33.38,40.21-35.15,8.44-.65,16.97-.11,25.46-.11Z"/>
+          <path class="cls-2" d="M1169.4,171.59c-15.24.73-30.24.13-45.2,1.72-7.13.76-14.23,1.72-21.11,3.78-7.36,2.22-8.74,6.98-3.4,12.52,7.32,7.58,16.01,13.57,24.67,19.48,24.5,16.73,50.3,31.32,76.24,45.65,1.57.87,3.07,1.85,4.41,3.69-6.45-.77-12.9-1.52-19.35-2.31-16.85-2.08-33.65-4.72-50.67-5.08-6.93-.15-13.03-2.79-18.63-6.46-19.61-12.84-35.85-29.17-49.09-48.48-1.21-1.77-2.19-3.74-3.05-5.71-5.78-13.36-1.09-23.23,13-27.23,10.79-3.06,21.85-2.32,32.78-1.48,18.78,1.44,37.25,5.14,55.71,8.8,1.25.25,2.46.73,3.69,1.11Z"/>
+          <path class="cls-2" d="M584.88,528.36c-7.84,0-15.13-.17-22.39.07-3.77.12-3.92-1.21-2.33-3.93.08-.14.13-.31.21-.45,2.61-5.01,4.09-11.5,8.16-14.6,4.15-3.16,10.92-.89,16.54-.92,21.5-.11,43,.05,64.49-.12,4.55-.04,5.18,1.07,2.9,4.86-2.9,4.81-3.55,12.03-8.16,14.43-4.34,2.26-10.81,1.16-16.22.49-7.09-.88-10.49,1.88-13.41,8.28-7.68,16.81-16.32,33.18-24.4,49.81-1.28,2.63-2.7,3.67-5.65,3.61-8.66-.18-17.33-.15-25.99.06-3.74.09-3.76-1.1-2.32-3.96,8.84-17.54,17.59-35.12,26.35-52.7.72-1.45,1.34-2.94,2.24-4.92Z"/>
+          <path class="cls-2" d="M1580.65,505.53c8.8,1.09,17.43,2.88,26.27,3.12,8.05.21,15.98-.16,23.66-2.84,12.86-4.5,18.73-14.4,15.99-27.74-3.81-18.55-15.38-32.12-29.11-44.2-7.99-7.02-17.06-12.5-27.46-18.51,9.11-.29,16.38,1.74,23.55,4.01,24.09,7.61,43.33,21.53,56.34,43.54,3.11,5.26,5.01,10.9,5.95,16.85,2.42,15.29-4.65,28.17-18.96,35-10.79,5.15-22.23,5.62-33.75,4.22-14.94-1.82-29.02-6.68-42.49-13.45Z"/>
+          <path class="cls-2" d="M1307.99,111.37c-9.77-4.44-18.27-10.86-26.49-17.58-2.86-2.34-4.52-1.87-7.12.05-5.38,3.97-8.92,9.37-12.38,14.86-14.09,22.31-22.87,46.82-29.95,72.05-2.65,9.43-5.37,18.84-7.55,29.48-.41-1.5-.64-1.99-.66-2.5-1.82-34.92,2.23-68.79,18.41-100.39,9.01-17.6,20.19-33.58,35.05-46.91,14.12-12.67,30.49-12.99,49.05-9.78-6.75,1.66-12.08,3.36-16.94,6.36-13.28,8.19-17.75,22.57-11.32,36.76,2.28,5.02,5.18,9.67,8.39,14.14.72,1.01,2.6,1.74,1.47,3.58l.06-.12Z"/>
+          <path class="cls-3" d="M238.34,275.76c-17.26-1.08-34.52-2.16-51.78-3.25-4.77-.3-9.26-.24-13.99-2.74-6.26-3.31-13.75-3.55-20.96-3.78,31.73-8.82,64.14-5.01,97.18-5.95-5.91,11.27-11.84,21.54-16.73,32.28-3.7,8.12-7.97,11.04-17.71,9.84-16.45-2.04-33.23-1.38-49.87-2-1.51-.06-4.91,1.68-3.77-2.78.35-1.38-1.74-1.02-2.7-1.43-7.3-3.11-15.19-3.37-22.87-4.66-1.09-.18-3.14.81-3.1-1.31.04-1.65,1.53-2.35,3.24-2.43,9.9-.41,19.51-2.76,28.64-6.21,11.58-4.37,23.53-3.08,35.31-3.73,12.93-.71,25.93-.16,38.9-.16.07-.56.14-1.13.21-1.69Z"/>
+          <path class="cls-2" d="M1171.28,380.93c-.26.66-.29,1.03-.49,1.22-8.86,8.19-8.4,11.87,2.67,17.16,12.26,5.85,24.75,8.62,37.78,1.84,3.55-1.85,12.7,3.51,13.34,7.44,1.02,6.35,4.32,11.47,8.71,15.91,3.14,3.17,6.59,6.03,10.79,9.84-31.87,6.33-60.83,2.15-87.1-16.46-5.27-3.73-8.88-9.01-10.99-15.13-3.44-9.99,1.4-18.96,11.59-21.66,4.51-1.19,9.05-1.15,13.7-.16Z"/>
+          <path class="cls-2" d="M1271,214.34c9.64,7.14,21.43,5.88,32.42,8.64-4.68,1.39-9.43,2.61-14.04,4.22-8.33,2.9-9.47,5-7.17,13.3,5.77,20.88,18.44,37.07,34.98,50.46,16.82,13.62,35.98,23.21,55.79,32.54-2.48,0-4.96.13-7.43-.02-14.94-.94-30.09-1.12-44.32-6.36-37.23-13.73-58.33-54.2-48.18-92.51,1.16-4.36-1.09-6.72-2.36-9.87.1-.14.2-.27.31-.4Z"/>
+          <path class="cls-2" d="M1456.26,205.48c-9.78.67-18.86,1.25-27.94,1.93-26.4,1.98-52.12,6.72-75.92,19.04-11.59,5.99-22.38,13.11-31.67,22.37-.76.75-1.31,1.9-2.99,1.9,2.98-7.79,6.88-14.88,12.16-21.11,2.47-2.91,1.49-3.87-1.59-4.32-7.36-1.06-14.73-2.07-23.42-3.29,7.55-3.38,14.19-5.89,19.98-9.98,1.36-.96,2.09-.07,2.91.82,1.02,1.09,2.02,2.23,3.18,3.16,5.41,4.31,6.53,4.33,11.79-.23,7.1-6.15,14.92-11.22,23.46-15,25.29-11.19,51.17-13.13,72.28-5.49,6.28,2.27,12.06,5.37,17.76,10.21Z"/>
+          <path class="cls-2" d="M1322.59,320.69c6.76,3.88,13.51,7.77,20.27,11.65,1.43.82,2.92,1.34,2,3.72-3.55,9.14-6.63,18.46-10.64,27.45-3.86,8.65-10.09,14.72-18.47,18.81-1.79.88-3.58,1.77-5.34,2.71-2.21,1.16-5.32,1.85-6.34,3.69-1.31,2.35,2.1,3.9,3.36,5.82,1.74,2.65.61,4.92-.44,7.05-3.84,7.79-9.21,14.5-15.78,21.61-.87-10-7.02-15.36-14.04-20.06-7.42-4.98-16.16-2.28-24.79-4.31,16.76-6.76,30.97-16.84,45.47-26.43,7.23-4.78,14.17-9.98,20.5-15.89,13.13-12.28,13.87-20.7,3.47-34.97.26-.27.52-.55.78-.82Z"/>
+          <path class="cls-2" d="M1428.73,232.19c6.38-.86,11.94-1.64,17.51-2.35,4.52-.58,8.82-1.75,12.55-4.46,1.26-.92,2.29-.9,3.63-.2,29.32,15.31,58.52,30.84,86.16,49.86-22.02,1.76-95.35-24.42-119.86-42.86Z"/>
+          <path class="cls-2" d="M1345.8,182.05c-4.76,2.4-9.04,4.45-13.21,6.71-2.63,1.43-4.98,3.32-7.04,5.54-.98,1.05-1.52,3.25-3.11,2.83-1.75-.47-3.21-2.59-3.07-4.22.41-4.55-2.76-5.76-5.84-6.8-9.36-3.14-18.65-7.96-28.72-2-2.16,1.28-4.26,2.55-6.08,4.3-.74.71-1.35,2.23-2.76,1.39-1.17-.69-.91-2.05-.82-3.2.41-5.44,3.33-9.67,6.71-13.64,4.96-5.83,4.98-6.1.03-11.94-.85-1-1.75-1.97-2.65-2.99,11.76-6.39,27.55-2.48,31.38,10.45.74,2.49,2.11,3.35,4.38,4,8.63,2.49,17.2,5.16,25.78,7.79,1.52.47,3,1.06,5.01,1.77Z"/>
+          <path class="cls-2" d="M1321.81,321.51c-.78-.49-1.56-.98-2.48-1.55,1.54-.97,2.42-.21,3.26.73-.26.27-.52.55-.78.82Z"/>
+          <path class="cls-2" d="M1307.93,111.5c.31-.71.69-.41,1.04-.06.08.08.09.39.03.43-.57.35-.81-.05-1.01-.5,0,0-.06.13-.06.13Z"/>
+          <path class="cls-2" d="M1270.69,214.74c-.14-.31-.43-.87-.39-.89.53-.33.61.11.7.49-.11.13-.21.26-.31.4Z"/>
+          <path class="cls-1" d="M813.6,165.29c-2.56,1.24-4.63,1.34-7.15,0,2.52-1.32,4.59-1.25,7.15,0Z"/>
+          <path class="cls-1" d="M928.05,431.62c-.01.07-.02.19-.04.19-.31.03-.65.12-.94.04-.55-.15-.52-.35.06-.37.3,0,.61.09.92.14Z"/>
+          <path class="cls-1" d="M1352.03,462.26c.34.09.85.04.59.63-.02.04-.63-.19-.97-.29.13-.11.25-.23.38-.35Z"/>
+        </svg>
+      </div>
+
+      <!-- Endoso Oficial "By Honda" -->
+      <div class="by-honda-container">
+        <span class="by-text">By</span>
+        <div class="honda-wing-icon">
+          <svg viewBox="-1181 -632 2000 1605" xmlns="http://www.w3.org/2000/svg">
+            <path d="M-860.666,696.668c0,0-12.333-40.002-34-61.668S-1083.334,446.334-1108,421.667s-73-72.665-73-142.666
+              c0-70,59-120,130.333-148.667S180.667-369,266.667-405s209.667-91.333,265.667-118S747-624.75,752.25-627.583
+              S760.333-632,762.833-632s4.834,2.167,4.834,5s-1.834,6.75-2.417,8.667S716.667-473.667,678.667-425S622-355.667,440-291.667
+              S-957.335,199.001-988.001,211.001s-100,33.333-100,84.667c0,41.333,41.333,73.334,53.333,84s338.667,316.999,338.667,316.999
+              H-860.666z"/>
+            <path d="M-1004,365.5c0,0-29.667-27.5-33.667-31.5s-12.667-18.999-12.667-29.666s2-36.334,47-50.334
+              S92.001-105.667,149.334-123.667S545.25-254,605.5-281c12.75-5.5,15-6.833,17-6.833s4.583,1.25,4.583,4.333s-1.417,5.417-2.5,7.167
+              S565.5-155.5,531.5-118S467-54,405-38.5S-623.5,237-629.75,238.75s-13.5,7.5-13.5,15.25c0,12.75,10.5,13.75,10.5,13.75L-1004,365.5z"/>
+            <path d="M-982.5,384.5L-897,464l443.5-83.5c0,0-11.5-7.25-11.5-15.625s6.75-13.875,14.875-15.5
+              s651.125-126.374,691.125-133.374s92.666-18.667,135.666-70.667S461.375,23.875,462.75,21.75s1.875-3.375,1.875-4.625
+              s-0.75-4.375-4-4.375s-5,0.75-8.25,2S-982.5,384.5-982.5,384.5z"/>
+            <path d="M275,267.5c-1.817,0.413-1151.667,215.833-1151.667,215.833l99.667,92.166l531.835-66.999
+              c0,0-10-3.666-10-14s9.833-14.167,15.5-15.167s273.667-40.335,305.167-45.002s83.333-15.5,127-61.5s86.668-97,88.334-99
+              s1.915-3.248,1.915-4.248S281.5,266.5,279,266.5C278.334,266.5,276.833,267.084,275,267.5z"/>
+            <polygon points="-753.333,597 -646.666,697 57.334,697 -206,533 "/>
+            <path d="M-789.78,773c3-0.333,28.333-4,28.333-4v-29.667h-179.886V769c0,0,25.333,3.667,28.333,4
+              s16.333,3.333,16.333,18.333v37.669h-138.78v-37.669c0-15,13.333-18,16.333-18.333s28.333-4,28.333-4v-29.667h-179.886V769
+              c0,0,25.333,3.667,28.333,4s16.333,3.333,16.333,18.333v121.256c0,15-13.333,18-16.333,18.333s-28.333,3.15-28.333,3.15v29.667
+              h179.886v-29.667c0,0-25.333-2.817-28.333-3.15s-16.333-3.333-16.333-18.333v-37.92h138.78v37.92c0,15-13.333,18-16.333,18.333
+              s-28.333,3.15-28.333,3.15v29.667h179.886v-29.667c0,0-25.333-2.817-28.333-3.15s-16.333-3.333-16.333-18.333V791.333
+              C-806.113,776.333-792.78,773.333-789.78,773z"/>
+            <path d="M-568.333,732.002c-116,0-183.667,42.098-183.667,120.123s67.667,120.123,183.667,120.123
+              s183.667-42.098,183.667-120.123S-452.333,732.002-568.333,732.002z M-568.333,930.796c-22.667,0-79.667,0.662-79.667-78.671
+              s57-78.671,79.667-78.671s79.667-0.662,79.667,78.671S-545.666,930.796-568.333,930.796z"/>
+            <path d="M-121.833,769.5v-30.501h144.5v30c0,0-25.167,2.501-30.042,3.126S-23,777.625-23,791.375S-23,955.25-23,964
+              c0,0-106.333,0-111.667,0s-13.083-1.5-17.583-7S-274.5,797.5-274.5,797.5c0,13.75,0,108.25,0,117s8.625,14.625,15,15.5
+              s30.5,3.917,30.5,3.917V964v-30.083V964l-144.667,0.001v-30c0,0,25.167-2.501,30.042-3.126s15.625-5.5,15.625-19.25
+              s0-114.125,0-122.875s-8.625-14.625-15-15.5s-30.5-3.5-30.5-3.5V739c0,0,151.833,0,157.167,0s13.083,1.5,17.583,7
+              S-76.5,905.5-76.5,905.5c0-13.75,0-108.25,0-117s-8.625-14.625-15-15.5S-121.833,769.5-121.833,769.5V739"/>
+            <path d="M270.669,739c-43.595,0-232.835,0-232.835,0v30.75c0,0,24.125,2.625,30.5,3.5s15,6.75,15,15.5
+              s0,109.125,0,122.875s-10.75,18.625-15.625,19.25s-30.042,3.126-30.042,3.126v30L270.669,964c75.419,0,139.081-35,139.081-113.5
+              S338,739,270.669,739z M248,921.334h-77.333v-139c0,0,49,0,77.667,0s57.333,9.666,57.333,68.333S283,921.334,248,921.334z"/>
+            <path d="M787,930.625c-11.625-1.25-17.625-12.375-19.125-14.625S661.625,753.875,657.5,747.875
+              s-12.375-8.5-16.625-8.5s-173.875,0-173.875,0v30.5c0,0,36.875,3.625,41.5,4.125s9.375,9,9.375,11.875s-1.625,5.625-2.625,7.375
+              s-74.875,122.375-78.75,128.375s-10.375,8.75-15.125,9.125S392,933.335,392,933.335v30.666h143.333v-29.666l-28.999-3.668
+              c-6.5-1.167-8.333-8.5-8.333-10.333s1-4.667,2.833-7.5c0.414-0.64,4.604-7.412,10.835-17.499h138.349
+              c6.656,10.087,11.121,16.859,11.535,17.499c1.833,2.833,2.833,5.667,2.833,7.5s-1.833,9.166-8.333,10.333L623,933.335v30.666
+              h194.333v-29.666C817.333,934.335,798.625,931.875,787,930.625z M535.946,856.001C556.524,822.646,578.5,787,578.5,787
+              s23.537,35.646,45.557,69.001H535.946z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="location-subtitle">
+        <span>AGENTE OFICIAL</span>
+        <span class="dot"></span>
+        <span>REPUESTOS & ACCESORIOS</span>
+        <span class="dot"></span>
+        <span>PUERTO IGUAZÚ</span>
+      </div>
+    </section>
+
+    <!-- PROMO DE NOVIEMBRE REAL (Instagram Feed: CB 300F + SMART TV 43'') -->
+    <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20aprovechar%20la%20Promo%20de%20la%20CB300F%20Twister%20con%20Smart%20TV%2043%22%20de%20regalo." target="_blank" rel="noopener noreferrer" class="promo-banner-card audio-click">
+      <span class="promo-tag-strip">PROMO NOVIEMBRE</span>
+      <div class="promo-content">
+        <div class="promo-headline">COMPRÁ TU HONDA CB 300F TWISTER</div>
+        <div class="promo-subtext">¡Y llevate una <strong>Smart TV LED 43" BGH</strong> de regalo!</div>
+      </div>
+      <div class="promo-arrow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </div>
+    </a>
+
+    <!-- COLOR BLOCKING MODULAR (Benetton / McLaren Racing) -->
+    <div class="color-blocks-grid">
+      <!-- Tarjeta Azul: Financiación con DNI -->
+      <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20consultar%20por%20la%20financiacion%20solo%20con%20DNI." target="_blank" rel="noopener noreferrer" class="color-block-tile tile-blue audio-click">
+        <div class="tile-pattern"></div>
+        <div class="tile-category">CRÉDITOS EN EL ACTO</div>
+        <div class="tile-name">SOLO CON TU DNI</div>
+        <div class="tile-footer">
+          <span>CONSULTAR CUOTAS</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </div>
+      </a>
+
+      <!-- Tarjeta Roja: Asesor WhatsApp Directo -->
+      <a href="javascript:void(0)" onclick="openContactModal('Ventas WhatsApp')" class="color-block-tile tile-red audio-click">
+        <div class="tile-pattern"></div>
+        <div class="tile-category">VENTAS 0KM</div>
+        <div class="tile-name">ASESOR EN LÍNEA</div>
+        <div class="tile-footer">
+          <span>WHATSAPP DIRECTO</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <!-- BOTONERA TÁCTICA DE ACCIONES -->
+    <div class="tactical-stack">
+      
+      <!-- Honda Plan de Ahorro -->
+      <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20asesoramiento%20sobre%20Honda%20Plan%20de%20Ahorro." target="_blank" rel="noopener noreferrer" class="tactical-btn audio-click">
+        <div class="tactical-btn-left">
+          <div class="tactical-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div class="tactical-btn-texts">
+            <span class="tactical-tag">CUOTAS EN PESOS</span>
+            <span class="tactical-label">Honda Plan de Ahorro</span>
+          </div>
+        </div>
+        <svg class="tactical-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Service Oficial & Repuestos Genuinos -->
+      <a href="https://wa.me/5493757312390?text=Hola%20San%20Jorge%20Motos!%20Necesito%20un%20turno%20de%20service%20o%20consultar%20por%20repuestos%20originales%20Honda." target="_blank" rel="noopener noreferrer" class="tactical-btn accent-red audio-click">
+        <div class="tactical-btn-left">
+          <div class="tactical-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="tactical-btn-texts">
+            <span class="tactical-tag">HONDA GENUINE PARTS</span>
+            <span class="tactical-label">Taller Oficial & Repuestos</span>
+          </div>
+        </div>
+        <svg class="tactical-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Cascos y Equipamiento -->
+      <a href="https://wa.me/5493757679972?text=Hola!%20Quiero%20ver%20el%20catalogo%20de%20cascos%20y%20accesorios%20disponibles%20en%20el%20local." target="_blank" rel="noopener noreferrer" class="tactical-btn audio-click">
+        <div class="tactical-btn-left">
+          <div class="tactical-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 10 10 0 0 0 9.5-13.5L12 12"/></svg>
+          </div>
+          <div class="tactical-btn-texts">
+            <span class="tactical-tag">SEGURIDAD VIAL</span>
+            <span class="tactical-label">Cascos, Guantes & Accesorios</span>
+          </div>
+        </div>
+        <svg class="tactical-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+      <!-- Instagram Oficial de Iguazú -->
+      <a href="https://www.instagram.com/sanjorgemotosiguazu" target="_blank" rel="noopener noreferrer" class="tactical-btn accent-dark audio-click">
+        <div class="tactical-btn-left">
+          <div class="tactical-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div class="tactical-btn-texts">
+            <span class="tactical-tag">NUESTRA COMUNIDAD</span>
+            <span class="tactical-label">Seguinos en Instagram</span>
+          </div>
+        </div>
+        <svg class="tactical-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+      </a>
+
+    </div>
+
+    <!-- SHOWROOM INTERACTIVO DE MODELOS REALES DE SAN JORGE -->
+    <section class="showroom-deck">
+      <div class="deck-header">
+        <h2 class="deck-title">MODELOS DISPONIBLES</h2>
+        <span class="deck-subtitle">STOCK 0KM</span>
+      </div>
+
+      <!-- Selector de píldoras -->
+      <div class="model-pills" id="modelPills">
+        <button class="model-pill-btn active" onclick="selectModel(0)">BIZ 110</button>
+        <button class="model-pill-btn" onclick="selectModel(1)">NAVI 110</button>
+        <button class="model-pill-btn" onclick="selectModel(2)">CB 300F</button>
+        <button class="model-pill-btn" onclick="selectModel(3)">XR 300L</button>
+      </div>
+
+      <!-- Escenario dinámico -->
+      <div class="model-stage" id="modelStage">
+        <div class="model-stage-top">
+          <div>
+            <div class="stage-model-name" id="stageName">HONDA BIZ 110</div>
+            <span style="font-size:0.7rem; color:var(--text-muted); font-weight:700;" id="stageDesc">Práctica, económica y lista para entrega</span>
+          </div>
+          <span class="stage-badge" id="stageBadge">FINANCIACIÓN DNI</span>
+        </div>
+
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-key">MOTOR</div>
+            <div class="spec-val" id="stageEngine">109.1 cc</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">TRANSMISIÓN</div>
+            <div class="spec-val" id="stageTrans">4 Marchas</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-key">FRENO</div>
+            <div class="spec-val" id="stageBrakes">Tambor CBS</div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20cotizar%20la%20Honda%20Biz%20110." id="stageCtaBtn" target="_blank" rel="noopener noreferrer" class="consult-model-btn audio-click">
+          <span>CONSULTAR PRECIO & FINANCIACIÓN</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- UBICACIÓN & CONTACTOS REALES -->
+    <section class="location-box">
+      <div class="location-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--sj-red)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>CONCESIONARIA EN PUERTO IGUAZÚ</span>
+      </div>
+      <p class="location-text">
+        Vení a conocer tu próxima moto en nuestro salón de ventas oficial, con taller especializado y entrega rápida en Misiones.
+      </p>
+      <div class="phones-row">
+        <a href="https://wa.me/5493757679972" target="_blank" class="phone-chip audio-click">
+          <span>📲 Ventas: +54 3757 67-9972</span>
+        </a>
+        <a href="https://wa.me/5493757312390" target="_blank" class="phone-chip audio-click">
+          <span>📲 Taller: +54 3757 31-2390</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-section">
+      <div class="footer-racing-stripe"></div>
+      <p class="legal-copy">
+        SAN JORGE MOTOS • CONCESIONARIO OFICIAL HONDA EN PUERTO IGUAZÚ, MISIONES
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- MODAL DE ELECCIÓN RÁPIDA DE ASESOR -->
+  <div class="modal-backdrop" id="contactModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      <div class="modal-title" id="modalTopicTitle">ATENCIÓN SAN JORGE MOTOS</div>
+      <div class="modal-sub">Elegí tu canal para hablar con el equipo directo por WhatsApp:</div>
+
+      <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20asesoramiento%20para%20comprar%20una%20moto%200KM." target="_blank" class="modal-wa-btn audio-click">
+        <span>ASESOR DE VENTAS 0KM</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://wa.me/5493757679972?text=Hola%20San%20Jorge%20Motos!%20Quiero%20consultar%20por%20financiacion%20con%20DNI." target="_blank" class="modal-wa-btn audio-click">
+        <span>FINANCIACIÓN CON DNI</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+
+      <a href="https://wa.me/5493757312390?text=Hola%20San%20Jorge%20Motos!%20Quiero%20un%20turno%20de%20service%20o%20repuesto%20oficial." target="_blank" class="modal-wa-btn audio-click">
+        <span>TALLER & REPUESTOS OFICIALES</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCRIPTS: AUDIO SYNTH, TEMA CLARO/OSCURO, HORARIO IGUAZÚ Y CANVAS F1
+       ========================================================================== */
+  -->
+  <script>
+    /* --------------------------------------------------------------------------
+       1. SISTEMA DE AUDIO MECÁNICO (Web Audio API nativo sin audios externos)
+       -------------------------------------------------------------------------- */
+    let audioCtx = null;
+    let soundActive = false;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playMechanicalClick() {
+      if (!soundActive) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(950, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.04);
+
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.04);
+      } catch (e) {}
+    }
+
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    audioToggleBtn.addEventListener('click', () => {
+      soundActive = !soundActive;
+      audioToggleBtn.style.color = soundActive ? 'var(--sj-blue)' : '';
+      audioToggleBtn.style.borderColor = soundActive ? 'var(--sj-blue)' : '';
+      if (soundActive) {
+        getAudioContext();
+        playMechanicalClick();
+      }
+      if ('vibrate' in navigator) navigator.vibrate(15);
+    });
+
+    document.querySelectorAll('.audio-click').forEach(item => {
+      item.addEventListener('click', () => {
+        playMechanicalClick();
+        if ('vibrate' in navigator) navigator.vibrate(12);
+      });
+    });
+
+    /* --------------------------------------------------------------------------
+       2. MODO CLARO / OSCURO (Con persistencia en localStorage)
+       -------------------------------------------------------------------------- */
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const htmlElem = document.documentElement;
+    const metaThemeColor = document.getElementById('metaThemeColor');
+
+    function applyTheme(theme) {
+      htmlElem.setAttribute('data-theme', theme);
+      localStorage.setItem('sj_theme', theme);
+      if (theme === 'dark') {
+        metaThemeColor.setAttribute('content', '#08090d');
+        themeToggleBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>`;
+      } else {
+        metaThemeColor.setAttribute('content', '#ffffff');
+        themeToggleBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>`;
+      }
+    }
+
+    // Default: light mode
+    const savedTheme = localStorage.getItem('sj_theme') || 'light';
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const current = htmlElem.getAttribute('data-theme');
+      applyTheme(current === 'light' ? 'dark' : 'light');
+    });
+
+    /* --------------------------------------------------------------------------
+       3. HORARIOS COMERCIALES DE PUERTO IGUAZÚ (GMT-3)
+       -------------------------------------------------------------------------- */
+    function checkIguazuBusinessHours() {
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const iguazu = new Date(utc - (3600000 * 3)); // GMT-3
+
+      const day = iguazu.getDay(); // 0 domingo, 6 sábado
+      const hours = iguazu.getHours();
+      const mins = iguazu.getMinutes();
+      const currentDec = hours + (mins / 60);
+
+      const beacon = document.getElementById('statusBeacon');
+      const label = document.getElementById('storeStatusLabel');
+
+      let isOpen = false;
+      // Lunes a Viernes: 8:00 a 12:00 y 16:00 a 20:00
+      if (day >= 1 && day <= 5) {
+        if ((currentDec >= 8 && currentDec < 12) || (currentDec >= 16 && currentDec < 20)) {
+          isOpen = true;
+        }
+      } else if (day === 6) {
+        // Sábados: 8:00 a 12:30
+        if (currentDec >= 8 && currentDec < 12.5) {
+          isOpen = true;
+        }
+      }
+
+      if (isOpen) {
+        beacon.className = 'status-pulse';
+        label.innerText = 'LOCAL ABIERTO EN IGUAZÚ';
+      } else {
+        beacon.className = 'status-pulse closed';
+        label.innerText = 'LOCAL CERRADO • WHATSAPP 24HS';
+      }
+    }
+    checkIguazuBusinessHours();
+    setInterval(checkIguazuBusinessHours, 30000);
+
+    /* --------------------------------------------------------------------------
+       4. SHOWROOM CONTROLLER CON MODELOS Y DATOS REALES
+       -------------------------------------------------------------------------- */
+    const realModels = [
+      {
+        name: "HONDA BIZ 110",
+        desc: "Práctica, económica y lista para entrega inmediata",
+        badge: "FINANCIACIÓN DNI",
+        engine: "109.1 cc",
+        trans: "4 Marchas",
+        brakes: "Tambor CBS",
+        waQuery: "Hola San Jorge Motos! Me interesa consultar por la Honda Biz 110 y su financiación solo con DNI."
+      },
+      {
+        name: "HONDA NAVI 110",
+        desc: "Automática, urbana y con estilo 100% personalizable",
+        badge: "SÚPER PEDIDA",
+        engine: "109.2 cc",
+        trans: "Automática V-Matic",
+        brakes: "CBS Combinado",
+        waQuery: "Hola San Jorge Motos! Quiero cotizar la Honda Navi 110 y ver colores disponibles."
+      },
+      {
+        name: "CB 300F TWISTER",
+        desc: "Motor OHC 4 válvulas con control de tracción y ABS",
+        badge: "SMART TV 43'' REGALO",
+        engine: "293 cc",
+        trans: "6 Velocidades",
+        brakes: "ABS Doble Canal",
+        waQuery: "Hola San Jorge Motos! Quiero aprovechar la promo de la CB300F Twister con Smart TV 43 de regalo."
+      },
+      {
+        name: "XR 300L TORNADO",
+        desc: "La leyenda del On-Off renovada con inyección y seguridad",
+        badge: "NUEVA GENERACIÓN",
+        engine: "293.5 cc PGM-FI",
+        trans: "6 Velocidades",
+        brakes: "ABS Delantero",
+        waQuery: "Hola San Jorge Motos! Quiero información y disponibilidad de la nueva XR 300L Tornado."
+      }
+    ];
+
+    function selectModel(idx) {
+      const pills = document.querySelectorAll('.model-pill-btn');
+      pills.forEach((p, i) => p.classList.toggle('active', i === idx));
+
+      const stage = document.getElementById('modelStage');
+      stage.style.opacity = '0.3';
+      stage.style.transform = 'translateY(3px)';
+
+      setTimeout(() => {
+        const item = realModels[idx];
+        document.getElementById('stageName').innerText = item.name;
+        document.getElementById('stageDesc').innerText = item.desc;
+        document.getElementById('stageBadge').innerText = item.badge;
+        document.getElementById('stageEngine').innerText = item.engine;
+        document.getElementById('stageTrans').innerText = item.trans;
+        document.getElementById('stageBrakes').innerText = item.brakes;
+        
+        document.getElementById('stageCtaBtn').href = `https://wa.me/5493757679972?text=${encodeURIComponent(item.waQuery)}`;
+
+        stage.style.opacity = '1';
+        stage.style.transform = 'translateY(0)';
+      }, 120);
+    }
+
+    /* --------------------------------------------------------------------------
+       5. MODAL FAST ACTION
+       -------------------------------------------------------------------------- */
+    function openContactModal(title) {
+      document.getElementById('modalTopicTitle').innerText = title;
+      document.getElementById('contactModal').classList.add('open');
+    }
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('open');
+    }
+    document.getElementById('contactModal').addEventListener('click', (e) => {
+      if (e.target.id === 'contactModal') closeContactModal();
+    });
+
+    /* --------------------------------------------------------------------------
+       6. CANVAS DE TRAZADO DE CIRCUITO F1 ELEGANTE (Deriva Suave y Sutil)
+       -------------------------------------------------------------------------- */
+    const canvas = document.getElementById('f1-track-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Generador de curvas orgánicas tipo circuito de carreras
+    let offset = 0;
+    function drawCircuitTrack() {
+      ctx.clearRect(0, 0, width, height);
+
+      const isDark = htmlElem.getAttribute('data-theme') === 'dark';
+      ctx.strokeStyle = isDark ? '#ffffff' : '#0a1428';
+      ctx.lineWidth = 1;
+
+      offset += 0.15; // Velocidad de deriva extremadamente suave y casi imperceptible
+
+      // Pista 1
+      ctx.beginPath();
+      ctx.setLineDash([12, 18]);
+      ctx.moveTo(-50, (height * 0.2) + Math.sin((offset + 10) * 0.02) * 20);
+      ctx.bezierCurveTo(
+        width * 0.3, (height * 0.1) + Math.cos(offset * 0.02) * 30,
+        width * 0.7, (height * 0.35) + Math.sin(offset * 0.02) * 25,
+        width + 50, (height * 0.25)
+      );
+      ctx.stroke();
+
+      // Pista 2: Circuito principal envolvente
+      ctx.beginPath();
+      ctx.setLineDash([35, 12, 6, 12]);
+      ctx.moveTo(-60, (height * 0.65));
+      ctx.bezierCurveTo(
+        width * 0.35, (height * 0.5) + Math.sin(offset * 0.015) * 40,
+        width * 0.45, (height * 0.85) + Math.cos(offset * 0.018) * 30,
+        width + 60, (height * 0.6) + Math.sin((offset + 50) * 0.02) * 20
+      );
+      ctx.stroke();
+
+      // Pista 3: Curva inferior
+      ctx.beginPath();
+      ctx.setLineDash([8, 14]);
+      ctx.moveTo(width * 0.1, height + 40);
+      ctx.bezierCurveTo(
+        width * 0.4, (height * 0.88),
+        width * 0.8, (height * 0.94),
+        width + 40, (height * 0.8)
+      );
+      ctx.stroke();
+
+      requestAnimationFrame(drawCircuitTrack);
+    }
+    requestAnimationFrame(drawCircuitTrack);
+  </script>
+</body>
+</html>
